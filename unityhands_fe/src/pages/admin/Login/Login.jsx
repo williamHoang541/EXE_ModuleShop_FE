@@ -55,7 +55,7 @@ const Login = () => {
                   </div>
                 </div>
                 <div className="login_forget_password">
-                  <a href="#">Quên mật khẩu</a>
+                  <Link to={PATH_NAME.FORGOT_PASSWORD}>Quên mật khẩu</Link>
                 </div>
                 <button className="login_button" type="submit">
                   Đăng nhập
