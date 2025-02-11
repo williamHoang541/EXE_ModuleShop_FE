@@ -1,0 +1,38 @@
+@import "../../styles/variables.scss";
+
+.footer {
+    margin-top: 3em;
+    padding: 0 4em;
+    background-color: $primary-color;
+    &__logo {
+      margin-top: 0.3em;
+      height: 15em;
+      width: 15em;
+    }
+  
+    &__item {
+  margin-top: 1em;
+      &__title {
+        font-size: 1em;
+        margin-bottom: 1em;
+        color: white;
+      }
+  
+      &__content {
+        font-size: 0.9em;
+        color: rgb(197, 176, 176);
+        cursor: pointer;
+        line-height: 1.8em;
+      }
+  
+      p:hover {
+        color: black;
+      }
+  
+      &__button {
+          font-weight: bolder;
+          height: 2.7em;
+          margin-top:2em;
+      }
+    }
+  }

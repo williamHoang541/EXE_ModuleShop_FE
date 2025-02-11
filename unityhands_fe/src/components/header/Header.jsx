@@ -12,10 +12,10 @@ function Header() {
         </Link>
         <Flex className="header__item__menu" >
           <p onClick={() => nav("/")}>Trang chủ</p>
-          <p onClick={() => nav("/booking")}>Dự án</p>
-          <p onClick={() => nav("/feedback")}>Tổ chức</p>
-          <p onClick={() => nav("/about-us")}>Liên hệ</p>
-          <p onClick={() => nav("/about-us")}>About</p>
+          <p onClick={() => nav("/items")}>Sản phẩm</p>
+          <p onClick={() => nav("/location")}>Chi nhánh</p>
+          <p onClick={() => nav("/contact")}>Liên hệ</p>
+          <p onClick={() => nav("/about-us")}>Về chúng tôi</p>
         </Flex>
         <Flex className="header__item__button">
           <ConfigProvider
@@ -56,7 +56,7 @@ function Header() {
               },
             }}
           >
-            <Link to="/sign-up">
+            <Link to="/register">
               <Button className="header__item__button__right">Đăng kí</Button>
             </Link>
           </ConfigProvider>
