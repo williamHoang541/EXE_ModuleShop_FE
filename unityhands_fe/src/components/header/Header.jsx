@@ -1,9 +1,12 @@
-import "./Header.scss";
+import "./Header.css";
 import { Button, ConfigProvider, Flex } from "antd";
 import logo2 from "../../../src/assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { PATH_NAME } from "../../constant/pathname";
+
 
 function Header() {
+  const nav = useNavigate();
   return (
     <header className="header">
       <Flex justify="space-between" align="center" className="header__item">
@@ -11,20 +14,18 @@ function Header() {
           <img className="header__item__logo" src={logo2} alt="Logo" />
         </Link>
         <Flex className="header__item__menu" >
-          <p onClick={() => nav("/")}>Trang chủ</p>
-          <p onClick={() => nav("/items")}>Sản phẩm</p>
-          <p onClick={() => nav("/location")}>Chi nhánh</p>
-          <p onClick={() => nav("/contact")}>Liên hệ</p>
-          <p onClick={() => nav("/about-us")}>Về chúng tôi</p>
+          <p onClick={() => nav(PATH_NAME.HOMEPAGE)}>Trang chủ</p>
+          <p onClick={() => nav(PATH_NAME.ITEMS)}>Sản phẩm</p>
+          <p onClick={() => nav(PATH_NAME.ABOUT_US)}>Về chúng tôi</p>
         </Flex>
         <Flex className="header__item__button">
           <ConfigProvider
             theme={{
               components: {
                 Button: {
-                  defaultColor: "rgb(44, 133, 51)",
+                  defaultColor: "#936a49",
                   defaultBg: "none",
-                  defaultBorderColor: "rgb(190, 190, 190)",
+                  defaultBorderColor: "rgb(243, 241, 241)",
                   defaultHoverBorderColor: "white",
                   defaultHoverColor: "none",
                   defaultHoverBg: "none",
@@ -43,8 +44,8 @@ function Header() {
             theme={{
               components: {
                 Button: {
-                  defaultColor: "black",
-                  defaultBg: "rgb(190, 190, 190)",
+                  defaultColor: "white",
+                  defaultBg: "#936a49",
                   defaultBorderColor: "rgb(190, 190, 190)",
                   defaultHoverBorderColor: "white",
                   defaultHoverColor: "black",
