@@ -1,0 +1,38 @@
+.footer {
+  margin-top: 3em;
+  padding: 0 4em;
+  background-color: #936a49;
+}
+
+.footer__logo {
+  margin-top: 0.3em;
+  height: 15em;
+  width: 15em;
+}
+
+.footer__item {
+  margin-top: 1em;
+}
+
+.footer__item__title {
+  font-size: 1em;
+  margin-bottom: 1em;
+  color: white;
+}
+
+.footer__item__content {
+  font-size: 0.9em;
+  color: rgb(240, 233, 233);
+  cursor: pointer;
+  line-height: 1.8em;
+}
+
+.footer__item__content p:hover {
+  color: black;
+}
+
+.footer__item__button {
+  font-weight: bolder;
+  height: 2.7em;
+  margin-top: 2em;
+}

@@ -1,8 +1,8 @@
 import React from "react";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/Logo_module.png";
 import { Link } from "react-router-dom";
-import { Button, ConfigProvider, Flex } from "antd";
-import "./Footer.scss";
+import { Flex } from "antd";
+import "./Footer.css";
 
 function Footer() {
   return (
@@ -27,25 +27,6 @@ function Footer() {
           <h4 className="footer__item__title">Thời gian hoạt động</h4>
           <p className="footer__item__content">Thứ 2 - Thứ 6: 8:00 - 21:00</p>
           <p className="footer__item__content">Thứ 7 - Chủ nhật: 8:00 - 16:00</p>
-          <ConfigProvider
-            theme={{
-              components: {
-                Button: {
-                  defaultColor: "white",
-                  defaultBg: "#43321b",
-                  defaultBorderColor: "#43321b",
-                  defaultHoverBorderColor: "black",
-                  defaultHoverColor: "white",
-                  defaultHoverBg: "#936a49",
-                  defaultActiveBg: "#43321b",
-                  defaultActiveBorderColor: "#43321b",
-                  defaultActiveColor: "black",
-                },
-              },
-            }}
-          >
-            <Button className="footer__item__button">Đặt hàng ngay</Button>
-          </ConfigProvider>
         </div>
       </Flex>
     </div>

@@ -1,4 +1,4 @@
-import "./Header.scss";
+import "./Header.css";
 import { Button, ConfigProvider, Flex } from "antd";
 import logo2 from "../../../src/assets/logo.png";
 import { Link } from "react-router-dom";
@@ -22,9 +22,9 @@ function Header() {
             theme={{
               components: {
                 Button: {
-                  defaultColor: "rgb(44, 133, 51)",
+                  defaultColor: "#936a49",
                   defaultBg: "none",
-                  defaultBorderColor: "rgb(190, 190, 190)",
+                  defaultBorderColor: "rgb(243, 241, 241)",
                   defaultHoverBorderColor: "white",
                   defaultHoverColor: "none",
                   defaultHoverBg: "none",
@@ -43,8 +43,8 @@ function Header() {
             theme={{
               components: {
                 Button: {
-                  defaultColor: "black",
-                  defaultBg: "rgb(190, 190, 190)",
+                  defaultColor: "white",
+                  defaultBg: "#936a49",
                   defaultBorderColor: "rgb(190, 190, 190)",
                   defaultHoverBorderColor: "white",
                   defaultHoverColor: "black",
