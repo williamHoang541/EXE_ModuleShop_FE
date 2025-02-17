@@ -6,6 +6,7 @@ import ForgotPassword from "./pages/admin/ForgotPassword/ForgotPassword";
 import NewPassword from "./pages/admin/NewPassword/NewPassword";
 import OTPAuth from "./pages/admin/OTPAuth/OTPAuth";
 import Homepage from "./pages/homepage/Homepage";
+import Itemspage from "./pages/itemspage/Itemspage";
 const App = () => {
   return (
     <div>
@@ -16,7 +17,7 @@ const App = () => {
         <Route path={PATH_NAME.FORGOT_PASSWORD} element={<ForgotPassword />} />
         <Route path={PATH_NAME.NEW_PASSWORD} element={<NewPassword />} />
         <Route path={PATH_NAME.OTP_AUTHENTICATION} element={<OTPAuth />} />
-        <Route path={PATH_NAME.ITEMS} element={<OTPAuth />} />
+        <Route path={PATH_NAME.ITEMS} element={<Itemspage />} />
       </Routes>
     </div>
   );

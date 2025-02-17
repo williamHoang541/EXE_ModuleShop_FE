@@ -61,27 +61,26 @@
   width: 100%;
 }
 
-.slider-container {
-  width: 100%;
+.image-grid {
+  width: 80%; /* Giảm kích thước tổng thể của slider */
   margin: 0 auto;
-  text-align: center;
 }
 
-.slider-container .slick-slide {
+.image-grid .grid-item {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-.slider-container .slick-slide .slider-image {
+.image-grid .grid-item img {
+  width: 80%; 
+  height: 750px;
+  border-radius: 10px;
   object-fit: cover;
+  transition: transform 0.3s ease-in-out;
 }
 
-.slider2-container {
-  margin: 0;
-  padding: 0;
-  background-color: white;
+.image-grid .grid-item img:hover {
+  transform: scale(1.05); 
 }
 
-.slider2-container .slider2-image {
-  object-fit: cover;
-}
