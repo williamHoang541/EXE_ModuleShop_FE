@@ -7,6 +7,7 @@ import NewPassword from "./pages/admin/NewPassword/NewPassword";
 import OTPAuth from "./pages/admin/OTPAuth/OTPAuth";
 import Homepage from "./pages/homepage/Homepage";
 import Itemspage from "./pages/itemspage/Itemspage";
+import AboutUs from "./pages/AboutUs/AboutUs";
 const App = () => {
   return (
     <div>
@@ -18,6 +19,7 @@ const App = () => {
         <Route path={PATH_NAME.NEW_PASSWORD} element={<NewPassword />} />
         <Route path={PATH_NAME.OTP_AUTHENTICATION} element={<OTPAuth />} />
         <Route path={PATH_NAME.ITEMS} element={<Itemspage />} />
+        <Route path={PATH_NAME.ABOUT_US} element={<AboutUs />} />
       </Routes>
     </div>
   );

@@ -3,7 +3,6 @@ import { Button, ConfigProvider, Flex } from "antd";
 import logo2 from "../../../src/assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { PATH_NAME } from "../../constant/pathname";
-import { Forward as Link } from react-scroll
 
 
 function Header() {
@@ -17,8 +16,6 @@ function Header() {
         <Flex className="header__item__menu" >
           <p onClick={() => nav(PATH_NAME.HOMEPAGE)}>Trang chủ</p>
           <p onClick={() => nav(PATH_NAME.ITEMS)}>Sản phẩm</p>
-          <p onClick={() => nav()}>Chi nhánh</p>
-          <p onClick={() => nav(PATH_NAME.CONTACT)}>Liên hệ</p>
           <p onClick={() => nav(PATH_NAME.ABOUT_US)}>Về chúng tôi</p>
         </Flex>
         <Flex className="header__item__button">
