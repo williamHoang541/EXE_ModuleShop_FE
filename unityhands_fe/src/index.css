@@ -1,5 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
 
+:root{
+  --primary-background-color: #936a49;
+  --primary-color-text: #745334;
+  --primary-color-text-hover: #43321b;
+  
+}
+
 * {
   margin: 0;
   padding: 0;

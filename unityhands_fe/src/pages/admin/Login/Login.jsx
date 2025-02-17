@@ -1,9 +1,70 @@
 import "./Login.css";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
-import { Link } from "react-router-dom";
-import { PATH_NAME } from "../../../constant/pathname";
+import { Link, useNavigate } from "react-router-dom";
+import { PATH_NAME, API_KEY } from "../../../constant/pathname";
+import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+
+  // Hàm xử lý đăng nhập
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    const loginData = { email, password };
+    const url = `${API_KEY}Authorize/login`;
+    try {
+      const { data: token } = await axios.post(url, loginData);
+      localStorage.setItem("Authen", JSON.stringify(token));
+
+      // Giải mã token ngay lập tức, không cần gọi API dư thừa
+      const decodedToken = jwtDecode(token);
+      const userRole =
+        decodedToken[
+          "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+        ];
+
+        toast.success("Đăng nhập thành công!", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+
+        setTimeout(() => {
+          navigateBasedOnRole(userRole);
+        }, 2000);
+    } catch (error) {
+      console.error("Login error:", error);
+      toast.error(error.response?.data?.message || "Email hoặc mật khẩu không đúng!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    }
+  };
+
+  const navigateBasedOnRole = (role) => {
+    console.log("Navigating based on role:", role);
+    switch (role) {
+      case "admin":
+        navigate(PATH_NAME.HOME);
+        break;
+      case "user":
+        navigate(PATH_NAME.HOME);
+        break;
+      default:
+        toast.error("Tên đăng nhập không tồn tại", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+        break;
+    }
+  };
+
   const handleLoginSuccess = (credentialResponse) => {
     console.log("Google Login Success:", credentialResponse);
   };
@@ -13,6 +74,7 @@ const Login = () => {
   };
   return (
     <main className="login">
+    <ToastContainer />
       <div className="login_container">
         <div className="login_wrapper">
           <div className="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -23,7 +85,8 @@ const Login = () => {
           <div className="login_content_right col-xl-6 col-lg-6 col-md-6 col-12">
             <div className="login_box">
               <h3>Đăng nhập</h3>
-              <form autoComplete="off">
+              {/* {loginError && <p className="error-message">{loginError}</p>} */}
+              <form autoComplete="off" onSubmit={handleLogin}>
                 <div className="login_box_input">
                   <label htmlFor="email">Email</label>
                   <div className="box">
@@ -34,6 +97,8 @@ const Login = () => {
                         id="email"
                         className="input"
                         placeholder="Nhập địa chỉ email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                       />
                     </div>
@@ -49,6 +114,8 @@ const Login = () => {
                         id="password"
                         className="input"
                         placeholder="Nhập mật khẩu"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         required
                       />
                     </div>

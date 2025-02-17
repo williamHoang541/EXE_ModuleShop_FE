@@ -21,7 +21,7 @@
   padding: 8px 22px;
   width: 100%;
   border-radius: 16px;
-  background: linear-gradient(280.66deg, #43321b 0%, #745334 102.8%);
+  background: linear-gradient(280.66deg, var(--primary-color-text-hover) 0%, var(--primary-color-text) 102.8%);
   font-size: 17px;
   font-weight: 600;
   color: #fff;
@@ -31,7 +31,7 @@
 }
 
 .register_button:hover {
-  background: #745334;
+  background: var(--primary-color-text);
   box-shadow: none;
 }
 
@@ -45,12 +45,12 @@
 
 .register_text_login a {
   display: inline-block;
-  color: #745334;
+  color: var(--primary-color-text);
   cursor: pointer;
   font-weight: 550;
   margin-left: 5px;
 }
 
 .register_text_login a:hover {
-  color: #43321b;
+  color: var(--primary-color-text-hover);
 }

@@ -1,7 +1,7 @@
 .otp_email{
     font-size: 14px;
     margin-top: -10px;
-    color: #936a49;
+    color: var(--primary-background-color);
 }
 
 .otp_input{
@@ -18,7 +18,7 @@
 }
 
 .otp_input:focus {
-    border-color: #745334;
+    border-color: var(--primary-color-text);
   }
 
 .time{
@@ -29,7 +29,7 @@
 }
 
 .time span{
-    color: #745334;
+    color: var(--primary-color-text);
     cursor: pointer;
     font-weight: 500;
     line-height: 25px;
@@ -46,7 +46,7 @@
 }
 
 .send_again.active {
-    color: #745334;
+    color: var(--primary-color-text);
     cursor: pointer;
   }
   
