@@ -1,0 +1,21 @@
+.admin-header {
+    background-color: #936a49;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 20px;
+  }
+  
+  .admin-header .ant-avatar {
+    background-color: #ffffff;
+    color: #936a49;
+    font-weight: bold;
+  }
+  
+  .admin-header .ant-dropdown-menu {
+    background-color: white;
+  }
+  
+  .admin-header .ant-dropdown-menu-item:hover {
+    background-color: #f0e6dc;
+  }
+  
