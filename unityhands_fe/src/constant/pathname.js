@@ -8,5 +8,3 @@ export const PATH_NAME = {
     HOME: "/home",
 
 }
-
-export const API_KEY = "https://moduleshop-g8h8hxc8cwcqema8.westeurope-01.azurewebsites.net/api/";

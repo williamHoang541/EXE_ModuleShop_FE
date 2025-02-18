@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PATH_NAME, API_KEY } from "../../../constant/pathname";
+import { PATH_NAME } from "../../../constant/pathname";
 import "./ForgotPassword.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
