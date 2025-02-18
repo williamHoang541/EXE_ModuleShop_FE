@@ -12,6 +12,8 @@ import Dashboard from "./pages/admin/Dashboard/Dashboard";
 import AdminProducts from "./pages/admin/AdminProducts/AdminProducts";
 import AdminOrders from "./pages/admin/AdminOrders/AdminOrders";
 import Customers from "./pages/admin/Customers/Customers";
+import Home from "./pages/customer/Home/Home";
+import Layout_Customer from "./components/layout/Layout_Customer";
 const App = () => {
   return (
     <div>
@@ -28,6 +30,11 @@ const App = () => {
         <Route path={PATH_NAME.PRODUCTS} element={<AdminProducts />} />
         <Route path={PATH_NAME.ORDERS} element={<AdminOrders />} />
         <Route path={PATH_NAME.CUSTOMERS} element={<Customers />} />
+
+
+        <Route element={<Layout_Customer />}>
+        <Route path={PATH_NAME.HOME} element={<Home />} />
+        </Route>
       </Routes>
     </div>
   );
