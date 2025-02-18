@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
-import { PATH_NAME, API_KEY } from "../../../constant/pathname";
+import { PATH_NAME } from "../../../constant/pathname";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
