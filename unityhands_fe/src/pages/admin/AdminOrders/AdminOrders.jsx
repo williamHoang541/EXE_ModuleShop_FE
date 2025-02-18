@@ -12,7 +12,6 @@ import Sidebar from '../../../components/sidebar/Sidebar';
 import AdminHeader from '../../../components/AdminHeader/AdminHeader';
 const { Content } = Layout;
 
-// Dữ liệu mẫu đơn hàng
 const ordersData = [
   {
     key: "1",
@@ -52,7 +51,6 @@ const ordersData = [
   },
 ];
 
-// Cột hiển thị trong bảng
 const columns = [
   {
     title: "Mã đơn hàng",
@@ -127,8 +125,6 @@ function AdminOrders() {
                 </Button>
               </Space>
             </div>
-
-            {/* Thanh tìm kiếm */}
             <div className="search-bar">
               <Input
                 placeholder="Tìm kiếm đơn hàng..."
@@ -137,8 +133,6 @@ function AdminOrders() {
               />
               <Button icon={<FilterOutlined />}>Lọc</Button>
             </div>
-
-            {/* Bảng danh sách đơn hàng */}
             <Table columns={columns} dataSource={ordersData} pagination={{ pageSize: 5 }} />
           </div>
         </Content>

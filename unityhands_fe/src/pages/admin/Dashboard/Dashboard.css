@@ -5,9 +5,8 @@
   }
   
   .dashboard .ant-card {
-    border: 1px solid #936a49;
+    border: 0.5px solid #936a49;
     border-radius: 10px;
-    transition: transform 0.3s ease-in-out;
   }
   
   .dashboard .ant-card:hover {
@@ -23,5 +22,40 @@
     font-size: 1.5em;
     font-weight: bold;
     color: #43321b;
+  }
+  
+  .chart-card {
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #936a49;
+    background-color: white;
+  }
+  
+  .chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .chart-select {
+    width: 120px;
+  }
+  
+  .top-products-card {
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #936a49;
+    background-color: white;
+  }
+  
+  .top-products-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .top-products-header button {
+    font-size: 14px;
+    color: #936a49;
   }
   
