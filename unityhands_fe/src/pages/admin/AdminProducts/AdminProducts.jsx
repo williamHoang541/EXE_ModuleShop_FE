@@ -45,7 +45,6 @@ function AdminProducts() {
         },
       ];
       
-      // Cột hiển thị trong bảng
       const columns = [
         {
           title: "Sản phẩm",
@@ -110,14 +109,10 @@ function AdminProducts() {
                 </Button>
               </Space>
             </div>
-
-            {/* Thanh tìm kiếm */}
             <div className="search-bar">
               <Input placeholder="Tìm kiếm sản phẩm..." prefix={<SearchOutlined />} className="search-input" />
               <Button icon={<FilterOutlined />}>Lọc</Button>
             </div>
-
-            {/* Bảng danh sách sản phẩm */}
             <Table columns={columns} dataSource={productsData} pagination={{ pageSize: 5 }} />
           </div>
         </Content>

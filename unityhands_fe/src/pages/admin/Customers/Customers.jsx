@@ -13,7 +13,6 @@ import AdminHeader from '../../../components/AdminHeader/AdminHeader';
 
 const { Content } = Layout;
 
-// Dữ liệu mẫu khách hàng
 const customersData = [
   {
     key: "1",
@@ -53,7 +52,6 @@ const customersData = [
   },
 ];
 
-// Cột hiển thị trong bảng
 const columns = [
   {
     title: "Tên khách hàng",
@@ -122,14 +120,10 @@ function Customers() {
                 </Button>
               </Space>
             </div>
-
-            {/* Thanh tìm kiếm */}
             <div className="search-bar">
               <Input placeholder="Tìm kiếm khách hàng..." prefix={<SearchOutlined />} className="search-input" />
               <Button icon={<FilterOutlined />}>Lọc</Button>
             </div>
-
-            {/* Bảng danh sách khách hàng */}
             <Table columns={columns} dataSource={customersData} pagination={{ pageSize: 5 }} />
           </div>
         </Content>

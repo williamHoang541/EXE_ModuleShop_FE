@@ -36,7 +36,6 @@
     border-color: #7a5230;
   }
   
-  /* Tùy chỉnh bảng */
   .ant-table-thead > tr > th {
     background-color: #936a49 !important;
     color: white !important;
