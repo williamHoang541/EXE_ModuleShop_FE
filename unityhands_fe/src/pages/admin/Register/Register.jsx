@@ -30,7 +30,7 @@ const Register = () => {
 
     try {
        await axios.post(
-        `${API_KEY}Account/registration`,
+        "https://moduleshop-g8h8hxc8cwcqema8.westeurope-01.azurewebsites.net/api/Account/registration",
         {
           email,
           password
