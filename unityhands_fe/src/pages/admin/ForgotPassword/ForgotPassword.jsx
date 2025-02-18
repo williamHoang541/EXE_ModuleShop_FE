@@ -1,11 +1,12 @@
-import { PATH_NAME } from "../../../constant/pathname";
+import axios from "axios";
+import { PATH_NAME, API_KEY } from "../../../constant/pathname";
 import "./ForgotPassword.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
-    const [error, setError] = useState("");
     const navigate = useNavigate();
 
     // Hàm kiểm tra email hợp lệ
@@ -14,27 +15,37 @@ const ForgotPassword = () => {
   };
 
   // Xử lý khi bấm "Tiếp tục"
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); // Ngăn form submit mặc định
 
     if (!email) {
-      setError("Vui lòng nhập email.");
+      toast.error("Vui lòng nhập email.");
       return;
     }
 
     if (!validateEmail(email)) {
-      setError("Email không hợp lệ.");
+      toast.error("Email không hợp lệ.");
       return;
     }
 
-    setError(""); // Xóa lỗi nếu hợp lệ
-
-    // Chuyển sang trang new-password với email trong URL
-    navigate(`${PATH_NAME.NEW_PASSWORD}?email=${encodeURIComponent(email)}`);
+    try {
+      await axios.post(
+        `${API_KEY}Account/forgot-password?email=${encodeURIComponent(email)}`
+      );
+      toast.success("Mã xác thực đã được gửi đến email của bạn.", {
+        autoClose: 3000,
+        onClose: () => {
+          navigate(`${PATH_NAME.NEW_PASSWORD}?email=${encodeURIComponent(email)}`);
+        }
+      });
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Đã xảy ra lỗi, vui lòng thử lại.");
+    }
   };
 
   return (
     <main className="login">
+    <ToastContainer />
       <div className="login_container">
         <div className="login_wrapper">
           <div className="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -66,7 +77,6 @@ const ForgotPassword = () => {
                     </div>
                   </div>
                 </div>
-                {error && <p className="error-text">{error}</p>}
                
                 <button className="login_button" type="submit">
                   Tiếp tục
