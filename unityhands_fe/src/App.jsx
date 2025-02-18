@@ -8,6 +8,10 @@ import OTPAuth from "./pages/admin/OTPAuth/OTPAuth";
 import Homepage from "./pages/homepage/Homepage";
 import Itemspage from "./pages/itemspage/Itemspage";
 import AboutUs from "./pages/AboutUs/AboutUs";
+import Dashboard from "./pages/admin/Dashboard/Dashboard";
+import AdminProducts from "./pages/admin/AdminProducts/AdminProducts";
+import AdminOrders from "./pages/admin/AdminOrders/AdminOrders";
+import Customers from "./pages/admin/Customers/Customers";
 const App = () => {
   return (
     <div>
@@ -20,6 +24,10 @@ const App = () => {
         <Route path={PATH_NAME.OTP_AUTHENTICATION} element={<OTPAuth />} />
         <Route path={PATH_NAME.ITEMS} element={<Itemspage />} />
         <Route path={PATH_NAME.ABOUT_US} element={<AboutUs />} />
+        <Route path={PATH_NAME.DASH_BOARD} element={<Dashboard />} />
+        <Route path={PATH_NAME.PRODUCTS} element={<AdminProducts />} />
+        <Route path={PATH_NAME.ORDERS} element={<AdminOrders />} />
+        <Route path={PATH_NAME.CUSTOMERS} element={<Customers />} />
       </Routes>
     </div>
   );

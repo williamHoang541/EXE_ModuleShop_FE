@@ -1,0 +1,27 @@
+.dashboard {
+    padding: 20px;
+    background-color: #fdf8f2;
+    min-height: 100vh;
+  }
+  
+  .dashboard .ant-card {
+    border: 1px solid #936a49;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .dashboard .ant-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .dashboard .ant-statistic-title {
+    color: #936a49;
+    font-weight: bold;
+  }
+  
+  .dashboard .ant-statistic-content {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #43321b;
+  }
+  
