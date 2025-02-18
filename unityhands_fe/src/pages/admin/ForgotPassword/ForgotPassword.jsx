@@ -30,7 +30,7 @@ const ForgotPassword = () => {
 
     try {
       await axios.post(
-        `${API_KEY}Account/forgot-password?email=${encodeURIComponent(email)}`
+        `https://moduleshop-g8h8hxc8cwcqema8.westeurope-01.azurewebsites.net/api/Account/forgot-password?email=${encodeURIComponent(email)}`
       );
       toast.success("Mã xác thực đã được gửi đến email của bạn.", {
         autoClose: 3000,

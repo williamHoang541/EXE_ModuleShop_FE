@@ -1,7 +1,7 @@
 import "./Login.css";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { Link, useNavigate } from "react-router-dom";
-import { PATH_NAME, API_KEY } from "../../../constant/pathname";
+import { PATH_NAME } from "../../../constant/pathname";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
@@ -18,7 +18,7 @@ const Login = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     const loginData = { email, password };
-    const url = `${API_KEY}Authorize/login`;
+    const url = "https://moduleshop-g8h8hxc8cwcqema8.westeurope-01.azurewebsites.net/api/Authorize/login";
     try {
       const { data: token } = await axios.post(url, loginData);
       localStorage.setItem("Authen", JSON.stringify(token));
