@@ -1,13 +1,13 @@
 import React from "react";
 import logo from "../../assets/Logo_module.png";
 import { Link } from "react-router-dom";
-import { Flex } from "antd";
-import "./Footer.css";
+import { Button, ConfigProvider, Flex } from "antd";
+import "./Footer.css"
 
 function Footer() {
   return (
-    <div>
-      <Flex justify="space-between" className="footer">
+    <footer className="footer">
+      <Flex justify="space-between" className="footer_111">
         <Link to="/">
           <img className="footer__logo" src={logo} />
         </Link>
@@ -29,7 +29,7 @@ function Footer() {
           <p className="footer__item__content">Thứ 7 - Chủ nhật: 8:00 - 16:00</p>
         </div>
       </Flex>
-    </div>
+    </footer>
   );
 }
 
