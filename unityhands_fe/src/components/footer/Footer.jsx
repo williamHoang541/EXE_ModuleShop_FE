@@ -2,12 +2,12 @@ import React from "react";
 import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 import { Button, ConfigProvider, Flex } from "antd";
-import "./Footer.scss";
+import "./Footer.css"
 
 function Footer() {
   return (
-    <div>
-      <Flex justify="space-between" className="footer">
+    <footer className="footer">
+      <Flex justify="space-between" className="footer_111">
         <Link to="/">
           <img className="footer__logo" src={logo} />
         </Link>
@@ -48,7 +48,7 @@ function Footer() {
           </ConfigProvider>
         </div>
       </Flex>
-    </div>
+    </footer>
   );
 }
 

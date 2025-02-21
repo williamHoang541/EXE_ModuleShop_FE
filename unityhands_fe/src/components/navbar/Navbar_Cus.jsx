@@ -32,7 +32,6 @@ const Navbar_Cus = () => {
 
         <div className="header-right">
           <form
-            action="/search"
             method="get"
             className="header-form-search"
             role="search"

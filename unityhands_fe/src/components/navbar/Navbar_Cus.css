@@ -23,11 +23,11 @@
   height: 140px;
   width: 100%;
   max-width: 100%;
-  vertical-align: middle;
 }
 
 .header-logo-img {
   min-width: 140px;
+  outline: none;
 }
 
 .header-position-relative {
