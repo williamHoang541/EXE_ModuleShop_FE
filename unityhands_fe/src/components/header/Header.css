@@ -1,0 +1,43 @@
+.header {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  background-color: #ffffff;
+}
+
+.header__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2em;
+}
+
+.header__item__logo {
+  height: 3em;
+  width: auto;
+}
+
+.header__item__menu {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+  font-weight: 500;
+  color: #936a49;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.header__item__menu p {
+  margin: 0;
+}
+
+.header__item__menu p:hover {
+  color: #745334;
+}
+
+.header__item__button {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}

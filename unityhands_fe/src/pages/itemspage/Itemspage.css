@@ -1,0 +1,40 @@
+.itemspage-container {
+  padding: 4em;
+}
+
+.swiper__title {
+  font-size: 4em;
+  text-align: center;
+  color: #936a49;
+  margin-bottom: 1em;
+}
+.filters {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-input,
+.category-select {
+  width: 30%;
+}
+
+.price-slider {
+  flex-grow: 1;
+}
+
+.product-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.no-results {
+  text-align: center;
+  width: 100%;
+  font-size: 1.2em;
+  color: gray;
+}

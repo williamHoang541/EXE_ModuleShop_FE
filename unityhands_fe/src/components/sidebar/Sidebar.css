@@ -1,0 +1,32 @@
+.sidebar {
+    background-color: #936a49 !important;
+    min-height: 100vh;
+  }
+  
+  .sidebar .logo {
+    text-align: center;
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 20px 0;
+  }
+  
+  .sidebar .ant-menu {
+    background-color: #936a49;
+    border-right: none;
+  }
+  
+  .sidebar .ant-menu-item {
+    color: white;
+    font-size: 1.1em;
+    font-weight: 500;
+  }
+  
+  .sidebar .ant-menu-item:hover {
+    background-color: #7a5230;
+  }
+  
+  .sidebar .ant-menu-item-selected {
+    background-color: #7a5230 !important;
+  }
+  

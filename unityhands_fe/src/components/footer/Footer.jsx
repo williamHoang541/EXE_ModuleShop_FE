@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/Logo_module.png";
 import { Link } from "react-router-dom";
 import { FaMap, FaPhoneAlt } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
@@ -35,6 +35,7 @@ function Footer() {
           <p className="footer_item_content">Thứ 2 - Thứ 6: 8:00 - 21:00</p>
           <p className="footer_item_content">Thứ 7 - Chủ nhật: 8:00 - 16:00</p>
         </div>
+
 
         <div className="footer_container">
           <h3>Hướng dẫn</h3>
