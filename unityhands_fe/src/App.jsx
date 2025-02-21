@@ -5,7 +5,6 @@ import Register from "./pages/admin/Register/Register";
 import ForgotPassword from "./pages/admin/ForgotPassword/ForgotPassword";
 import NewPassword from "./pages/admin/NewPassword/NewPassword";
 import OTPAuth from "./pages/admin/OTPAuth/OTPAuth";
-import Homepage from "./pages/homepage/Homepage";
 import Itemspage from "./pages/itemspage/Itemspage";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import Dashboard from "./pages/admin/Dashboard/Dashboard";
@@ -18,7 +17,6 @@ const App = () => {
   return (
     <div>
       <Routes>
-        <Route path={PATH_NAME.HOMEPAGE} element={<Homepage />} />
         <Route path={PATH_NAME.LOGIN} element={<Login />} />
         <Route path={PATH_NAME.REGISTER} element={<Register />} />
         <Route path={PATH_NAME.FORGOT_PASSWORD} element={<ForgotPassword />} />
