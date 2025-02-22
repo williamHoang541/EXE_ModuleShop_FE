@@ -1,6 +1,3 @@
-import React from "react";
-import logo from "../../assets/Logo_module.png";
-import { Link } from "react-router-dom";
 import { FaMap, FaPhoneAlt } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
 import "./Footer.css";
