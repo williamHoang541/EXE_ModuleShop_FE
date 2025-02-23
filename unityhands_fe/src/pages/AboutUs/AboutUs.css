@@ -15,7 +15,7 @@
   }
   
   .about-text {
-    font-size: 1.1em;
+    font-size: 1.2em;
     line-height: 1.8;
     color: #444;
     text-align: center; 
@@ -69,14 +69,14 @@
   .about-thank-you {
     text-align: center;
     padding: 20px;
-    background-color: #936a49;
+    background-color: #745f4e;
     color: white;
     border-radius: 10px;
     margin-top: 40px;
   }
   
   .about-thank-you .about-text {
-    color: white;
+    color: rgb(211, 178, 132);
     font-size: 1.2em;
     font-weight: bold;
     max-width: 900px;

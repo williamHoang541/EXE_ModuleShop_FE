@@ -11,25 +11,25 @@ const teamMembers = [
     id: 1,
     name: "Nguyễn Văn A",
     role: "CEO & Founder",
-    image: "/about/ceo.jpg",
+    image: "/member/ceo.jpg",
   },
   {
     id: 2,
     name: "Trần Thị B",
     role: "Quản lý cửa hàng",
-    image: "/about/manager.jpg",
+    image: "/member/manager.jpg",
   },
   {
     id: 3,
     name: "Lê Văn C",
     role: "Nhân viên tư vấn",
-    image: "/about/staff1.jpg",
+    image: "/member/staff1.jpg",
   },
   {
     id: 4,
     name: "Phạm Thị D",
     role: "Nhân viên bán hàng",
-    image: "/about/staff2.jpg",
+    image: "/member/staff2.jpg",
   },
 ];
 
@@ -65,25 +65,26 @@ function AboutUs() {
           <Title level={2} className="section-title">
             Hình Ảnh Cửa Hàng
           </Title>
+
           <Divider />
-          <Row gutter={[16, 16]}>
+          <Row gutter={[16, 16]} justify="center" align="middle">
             <Col xs={24} sm={12} md={8}>
               <Image
-                src="/about/store1.jpg"
+                src="/items/do_go_3.jpg"
                 alt="Cửa hàng nội thất"
                 className="about-image"
               />
             </Col>
             <Col xs={24} sm={12} md={8}>
               <Image
-                src="/about/store2.jpg"
+                src="/items/do_go_4.jpg"
                 alt="Khu trưng bày sản phẩm"
                 className="about-image"
               />
             </Col>
             <Col xs={24} sm={12} md={8}>
               <Image
-                src="/about/store3.jpg"
+                src="/items/do_go_1.jpg"
                 alt="Góc trang trí nội thất"
                 className="about-image"
               />

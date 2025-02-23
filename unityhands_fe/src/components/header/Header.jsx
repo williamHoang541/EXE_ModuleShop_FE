@@ -17,21 +17,23 @@ function Header() {
           <p onClick={() => nav(PATH_NAME.HOMEPAGE)}>Trang chủ</p>
           <p onClick={() => nav(PATH_NAME.ITEMS)}>Sản phẩm</p>
           <p onClick={() => nav(PATH_NAME.ABOUT_US)}>Về chúng tôi</p>
+          <p onClick={() => nav(PATH_NAME.CONTACT_US)}>Liên hệ</p>
         </Flex>
         <Flex className="header__item__button">
           <ConfigProvider
             theme={{
               components: {
                 Button: {
-                  defaultColor: "#936a49",
-                  defaultBg: "none",
-                  defaultBorderColor: "rgb(243, 241, 241)",
+                  defaultColor: "white",
+                  defaultBg: "#936a49",
+                  defaultBorderColor: "rgb(190, 190, 190)",
                   defaultHoverBorderColor: "white",
-                  defaultHoverColor: "none",
-                  defaultHoverBg: "none",
+                  defaultHoverColor: "black",
+                  defaultHoverBg: "white",
                   defaultActiveBg: "none",
                   defaultActiveBorderColor: "black",
                   defaultActiveColor: "white",
+                  // defaultFontSize: "10px",
                 },
               },
             }}

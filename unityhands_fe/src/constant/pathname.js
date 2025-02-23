@@ -7,6 +7,7 @@ export const PATH_NAME = {
     OTP_AUTHENTICATION: "/forgot-password/otp-auth",
     ITEMS: "/items",
     ABOUT_US: "/about-us",
+    CONTACT_US: "/contact-us",
     DASH_BOARD: "/dashboard",
     PRODUCTS: "/products",
     ORDERS: "/orders",

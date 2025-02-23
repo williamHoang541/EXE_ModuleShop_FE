@@ -1,8 +1,8 @@
 .header {
   width: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
-  z-index: 10;
+  z-index: 1000;
   background-color: #ffffff;
 }
 
@@ -21,9 +21,9 @@
 .header__item__menu {
   display: flex;
   align-items: center;
-  gap: 2em;
+  gap: 3em;
   font-weight: 500;
-  color: #936a49;
+  color: #fbe8d8;
   font-size: 1.2em;
   cursor: pointer;
 }
@@ -33,7 +33,7 @@
 }
 
 .header__item__menu p:hover {
-  color: #745334;
+  color: #f3c9a2;
 }
 
 .header__item__button {
