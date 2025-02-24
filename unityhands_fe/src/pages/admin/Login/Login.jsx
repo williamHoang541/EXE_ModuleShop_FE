@@ -31,6 +31,8 @@ const Login = () => {
           "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
         ];
 
+        localStorage.setItem("isLoggedIn", "true");
+
       toast.success("Đăng nhập thành công!", {
         position: "top-right",
         autoClose: 2000,

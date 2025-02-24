@@ -1,5 +1,5 @@
 import "./Navbar_Cus.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PATH_NAME } from "../../constant/pathname";
 import logo from "../../assets/Logo_module.png";
 import { GoPerson } from "react-icons/go";
@@ -10,6 +10,11 @@ import { useEffect, useRef, useState } from "react";
 const Navbar_Cus = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const profileDropdownRef = useRef(null);
+  const navigate = useNavigate();
+
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem("isLoggedIn") === "true"; // Kiểm tra xem người dùng đã đăng nhập chưa
+  });
 
   const handleClickOutside = (event) => {
     if (
@@ -29,6 +34,13 @@ const Navbar_Cus = () => {
 
   const toggleProfileDropdown = () => {
     setIsProfileDropdownOpen((prev) => !prev);
+  };
+
+  // Xử lý đăng xuất
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn"); // Xóa trạng thái đăng nhập
+    setIsLoggedIn(false); // Cập nhật state
+    navigate(PATH_NAME.HOME); // Chuyển hướng về trang chủ
   };
 
   return (
@@ -77,21 +89,54 @@ const Navbar_Cus = () => {
             onClick={toggleProfileDropdown}
           >
             <GoPerson className="header-icons" />
-          </div>
-          {isProfileDropdownOpen && (
-            <div className="navbar-dropdowns">
-              <div className="navbar-profile-wrapper">
-                <Link to={PATH_NAME.LOGIN}>
-                  <div className="navbar-profile-item">Đăng nhập</div>
-                </Link>
-                </div>
-                <div className="navbar-profile-wrapper">
-                <Link to={PATH_NAME.REGISTER}>
-                  <div className="navbar-profile-item">Đăng ký</div>
-                </Link>
+            {isProfileDropdownOpen && (
+              <div className="navbar-dropdowns">
+                {isLoggedIn ? (
+                  <>
+                    <div className="navbar-profile-wrapper">
+                      <Link
+                        to={PATH_NAME.PROFILE}
+                        className="navbar-profile-item"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        Hồ sơ
+                      </Link>
+                    </div>
+                    <div className="navbar-profile-wrapper">
+                      <div
+                        className="navbar-profile-item"
+                        onClick={handleLogout}
+                      >
+                        Đăng xuất
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="navbar-profile-wrapper">
+                      <Link
+                        to={PATH_NAME.LOGIN}
+                        className="navbar-profile-item"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        Đăng nhập
+                      </Link>
+                    </div>
+                    <div className="navbar-profile-wrapper">
+                      <Link
+                        to={PATH_NAME.REGISTER}
+                        className="navbar-profile-item"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        Đăng ký
+                      </Link>
+                    </div>
+                  </>
+                )}
               </div>
-            </div>
-          )}
+            )}
+          </div>
+
           <div className="header-block-cart">
             <div className="header-cart">
               <BsCart3 className="header-icons" />
