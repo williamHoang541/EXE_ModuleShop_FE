@@ -37,7 +37,7 @@ const Login = () => {
 
         setTimeout(() => {
           navigateBasedOnRole(userRole);
-        }, 2000);
+        }, 1000);
     } catch (error) {
       console.error("Login error:", error);
       toast.error(error.response?.data?.message || "Email hoặc mật khẩu không đúng!", {
@@ -51,7 +51,7 @@ const Login = () => {
     console.log("Navigating based on role:", role);
     switch (role) {
       case "admin":
-        navigate(PATH_NAME.HOME);
+        navigate(PATH_NAME.DASH_BOARD);
         break;
       case "user":
         navigate(PATH_NAME.HOME);
