@@ -12,6 +12,7 @@ import AdminOrders from "./pages/admin/AdminOrders/AdminOrders";
 import Customers from "./pages/admin/Customers/Customers";
 import Home from "./pages/customer/Home/Home";
 import Layout_Customer from "./components/layout/Layout_Customer";
+import ProductDetail from "./pages/customer/ProductDetail/ProductDetail";
 const App = () => {
   return (
     <div>
@@ -30,6 +31,7 @@ const App = () => {
 
         <Route element={<Layout_Customer />}>
         <Route path={PATH_NAME.HOME} element={<Home />} />
+        <Route path={PATH_NAME.PRODUCT_DETAILS} element={<ProductDetail />} />
         </Route>
       </Routes>
     </div>

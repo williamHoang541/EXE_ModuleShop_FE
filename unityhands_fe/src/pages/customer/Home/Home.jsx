@@ -1,6 +1,8 @@
 import "./Home.css";
 import { BsCart3 } from "react-icons/bs";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { Link } from "react-router-dom";
+import { PATH_NAME } from "../../../constant/pathname";
 
 const Home = () => {
 
@@ -81,16 +83,16 @@ const Home = () => {
               </div>
             </div>
           </form>
-
+          
           <form className="home-cart-product">
             <div className="home-cart-img">
-              <a href="#" className="home-cart-detail">
+              <Link to={PATH_NAME.PRODUCT_DETAILS} className="home-cart-detail">
                 <img
                   className="home-thumbnail"
                   src="https://bizweb.dktcdn.net/thumb/large/100/501/740/products/2-d053f572-d9ac-46c3-8505-6b5b9b783e83.jpg?v=1701329060077"
                   alt=""
                 />
-              </a>
+              </Link>
             </div>
 
             <div className="home-cart-content">
@@ -103,6 +105,7 @@ const Home = () => {
               </div>
             </div>
           </form>
+        
 
           <form className="home-cart-product">
             <div className="home-cart-img">
