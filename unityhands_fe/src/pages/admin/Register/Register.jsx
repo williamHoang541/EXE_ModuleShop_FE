@@ -5,9 +5,11 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
+import  useTitle from "../../../constant/useTitle";
 
 const Register = () => {
   const navigate = useNavigate();
+  useTitle("Đăng ký");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -33,12 +35,20 @@ const Register = () => {
         "https://moduleshop-g8h8hxc8cwcqema8.westeurope-01.azurewebsites.net/api/Account/registration",
         {
           email,
-          password
+          password,
+          confirmPassword,
+        },
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
+      
       );
 
-      toast.success("Đăng ký thành công! Chuyển hướng sau 2 giây...");
-      setTimeout(() => navigate(PATH_NAME.LOGIN), 2000);
+      toast.success("Đăng ký thành công!");
+      setTimeout(() => navigate(PATH_NAME.LOGIN), 1000);
     } catch (error) {
       toast.error(error.response?.data?.message || "Đăng ký thất bại!");
     }

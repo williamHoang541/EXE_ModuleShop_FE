@@ -1,10 +1,10 @@
 export const PATH_NAME = {
-    HOMEPAGE: "/",
+    HOME: "/",
     LOGIN: "/login",
     REGISTER: "/register",
     FORGOT_PASSWORD: "/forgot-password",
     NEW_PASSWORD: "/forgot-password/new-password",
-    OTP_AUTHENTICATION: "/forgot-password/otp-auth",
+    PRODUCT_DETAILS: "/product-details",
     ITEMS: "/items",
     ABOUT_US: "/about-us",
     CONTACT_US: "/contact-us",

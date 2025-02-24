@@ -2,23 +2,24 @@ import "./Login.css";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { Link, useNavigate } from "react-router-dom";
 import { PATH_NAME } from "../../../constant/pathname";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import  useTitle from "../../../constant/useTitle";
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-
+  useTitle("Đăng nhập");
   // Hàm xử lý đăng nhập
   const handleLogin = async (event) => {
     event.preventDefault();
     const loginData = { email, password };
-    const url = "https://moduleshop-g8h8hxc8cwcqema8.westeurope-01.azurewebsites.net/api/Authorize/login";
+    const url =
+      "https://moduleshop-g8h8hxc8cwcqema8.westeurope-01.azurewebsites.net/api/Authorize/login";
     try {
       const { data: token } = await axios.post(url, loginData);
       localStorage.setItem("Authen", JSON.stringify(token));
@@ -30,20 +31,25 @@ const Login = () => {
           "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
         ];
 
-        toast.success("Đăng nhập thành công!", {
-          position: "top-right",
-          autoClose: 2000,
-        });
+        localStorage.setItem("isLoggedIn", "true");
 
-        setTimeout(() => {
-          navigateBasedOnRole(userRole);
-        }, 2000);
+      toast.success("Đăng nhập thành công!", {
+        position: "top-right",
+        autoClose: 2000,
+      });
+
+      setTimeout(() => {
+        navigateBasedOnRole(userRole);
+      }, 1000);
     } catch (error) {
       console.error("Login error:", error);
-      toast.error(error.response?.data?.message || "Email hoặc mật khẩu không đúng!", {
-        position: "top-right",
-        autoClose: 3000,
-      });
+      toast.error(
+        error.response?.data?.message || "Email hoặc mật khẩu không đúng!",
+        {
+          position: "top-right",
+          autoClose: 3000,
+        }
+      );
     }
   };
 
@@ -51,7 +57,7 @@ const Login = () => {
     console.log("Navigating based on role:", role);
     switch (role) {
       case "admin":
-        navigate(PATH_NAME.HOME);
+        navigate(PATH_NAME.DASH_BOARD);
         break;
       case "user":
         navigate(PATH_NAME.HOME);
@@ -74,7 +80,7 @@ const Login = () => {
   };
   return (
     <main className="login">
-    <ToastContainer />
+      <ToastContainer />
       <div className="login_container">
         <div className="login_wrapper">
           <div className="col-xl-6 col-lg-6 col-md-6 col-12">

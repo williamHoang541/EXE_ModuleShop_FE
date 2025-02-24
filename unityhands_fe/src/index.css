@@ -11,7 +11,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: sans-serif, 'Roboto';
+  font-family: 'Roboto', serif;
 }
 
 img {
@@ -20,4 +20,5 @@ img {
 
 a, a:hover{
   text-decoration: none;
+  
 }
