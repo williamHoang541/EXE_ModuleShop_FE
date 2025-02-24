@@ -24,16 +24,15 @@ const App = () => {
         <Route path={PATH_NAME.NEW_PASSWORD} element={<NewPassword />} />
         <Route path={PATH_NAME.ITEMS} element={<Itemspage />} />
         <Route path={PATH_NAME.ABOUT_US} element={<AboutUs />} />
-        <Route path={PATH_NAME.CONTACT_US} element={<ContactUs />} />
         <Route path={PATH_NAME.DASH_BOARD} element={<Dashboard />} />
         <Route path={PATH_NAME.PRODUCTS} element={<AdminProducts />} />
         <Route path={PATH_NAME.ORDERS} element={<AdminOrders />} />
         <Route path={PATH_NAME.CUSTOMERS} element={<Customers />} />
 
-
         <Route element={<Layout_Customer />}>
-        <Route path={PATH_NAME.HOME} element={<Home />} />
-        <Route path={PATH_NAME.PRODUCT_DETAILS} element={<ProductDetail />} />
+          <Route path={PATH_NAME.HOME} element={<Home />} />
+          <Route path={PATH_NAME.PRODUCT_DETAILS} element={<ProductDetail />} />
+          <Route path={PATH_NAME.CONTACT_US} element={<ContactUs />} />
         </Route>
       </Routes>
     </div>

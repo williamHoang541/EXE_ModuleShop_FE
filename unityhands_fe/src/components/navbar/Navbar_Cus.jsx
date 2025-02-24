@@ -86,10 +86,10 @@ const Navbar_Cus = () => {
               </li>
               <li
                 className={`header-nav-item ${
-                  location.pathname === "/contact" ? "active" : ""
+                  location.pathname === PATH_NAME.CONTACT_US ? "active" : ""
                 }`}
               >
-                <Link to="/contact">Liên hệ</Link>
+                <Link to={PATH_NAME.CONTACT_US}>Liên hệ</Link>
               </li>
             </ul>
           </nav>
