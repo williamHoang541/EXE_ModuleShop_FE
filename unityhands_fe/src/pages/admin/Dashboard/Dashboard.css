@@ -1,61 +1,117 @@
 .dashboard {
-    padding: 20px;
-    background-color: #fdf8f2;
-    min-height: 100vh;
-  }
-  
-  .dashboard .ant-card {
-    border: 0.5px solid #936a49;
-    border-radius: 10px;
-  }
-  
-  .dashboard .ant-card:hover {
-    transform: scale(1.05);
-  }
-  
-  .dashboard .ant-statistic-title {
-    color: #936a49;
-    font-weight: bold;
-  }
-  
-  .dashboard .ant-statistic-content {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #43321b;
-  }
-  
-  .chart-card {
-    padding: 20px;
-    border-radius: 10px;
-    border: 2px solid #936a49;
-    background-color: white;
-  }
-  
-  .chart-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .chart-select {
-    width: 120px;
-  }
-  
-  .top-products-card {
-    padding: 20px;
-    border-radius: 10px;
-    border: 2px solid #936a49;
-    background-color: white;
-  }
-  
-  .top-products-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .top-products-header button {
-    font-size: 14px;
-    color: #936a49;
-  }
-  
+  padding: 20px;
+  background-color: #fdf8f2;
+  min-height: 100vh;
+}
+
+/* --- Biểu đồ & Card Thống Kê --- */
+.chart-card {
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid #936a49;
+  background-color: white;
+}
+
+/* Chứa danh sách các Card thống kê */
+.stats-container {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  align-items: center;
+}
+
+/* Card thống kê */
+.stat-card {
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  background-color: white;
+  text-align: center;
+  width: 25em;
+}
+
+.stat-card:hover {
+  transform: scale(1.05);
+}
+
+.stat-card.active {
+  box-shadow: 0px 4px 15px rgba(147, 106, 73, 0.5);
+}
+
+.stat-card .ant-statistic-title {
+  color: #936a49;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 2em;
+}
+
+.stat-card .ant-statistic-content {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #43321b;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  color: #43321b;
+  margin-bottom: 16px;
+}
+
+.chart-select {
+  width: 120px;
+  border-radius: 5px;
+}
+
+.top-products-card {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: white;
+  border: 2px solid #936a49;
+}
+
+.top-products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top-products-header h3 {
+  color: #43321b;
+  font-weight: bold;
+}
+
+.top-products-header button {
+  font-size: 14px;
+  color: #936a49;
+}
+
+.top-products-card .ant-list-item {
+  border-bottom: 1px solid #e8c9a4;
+  padding: 12px 0;
+}
+
+.ant-list-item-meta-title {
+  color: #43321b;
+  font-weight: bold;
+}
+
+.ant-tag {
+  font-weight: bold;
+  font-size: 14px;
+  padding: 5px 10px;
+}
+
+.ant-tag-green {
+  background-color: #e6f4ea;
+  color: #287d3c;
+}
+
+.ant-tag-red {
+  background-color: #fbeaea;
+  color: #a3211b;
+}

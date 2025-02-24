@@ -8,18 +8,18 @@ import { PATH_NAME } from "../../constant/pathname";
 function Header() {
   const nav = useNavigate();
   return (
-    <header className="header">
-      <Flex justify="space-between" align="center" className="header__item">
+    <header className="custom__header">
+      <Flex justify="space-between" align="center" className="custom__header__item">
         <Link to="/">
-          <img className="header__item__logo" src={logo2} alt="Logo" />
+          <img className="custom__header__item__logo" src={logo2} alt="Logo" />
         </Link>
-        <Flex className="header__item__menu" >
+        <Flex className="custom__header__item__menu" >
           <p onClick={() => nav(PATH_NAME.HOMEPAGE)}>Trang chủ</p>
           <p onClick={() => nav(PATH_NAME.ITEMS)}>Sản phẩm</p>
           <p onClick={() => nav(PATH_NAME.ABOUT_US)}>Về chúng tôi</p>
           <p onClick={() => nav(PATH_NAME.CONTACT_US)}>Liên hệ</p>
         </Flex>
-        <Flex className="header__item__button">
+        <Flex className="custome__header__item__button">
           <ConfigProvider
             theme={{
               components: {
@@ -39,7 +39,7 @@ function Header() {
             }}
           >
             <Link to="/login">
-              <Button className="header__item__button__left">Đăng nhập</Button>
+              <Button className="custom__header__item__button__left">Đăng nhập</Button>
             </Link>
           </ConfigProvider>
           <ConfigProvider
@@ -60,7 +60,7 @@ function Header() {
             }}
           >
             <Link to="/register">
-              <Button className="header__item__button__right">Đăng kí</Button>
+              <Button className="custom__header__item__button__right">Đăng kí</Button>
             </Link>
           </ConfigProvider>
         </Flex>

@@ -2,32 +2,18 @@ import React from "react";
 import { Layout, Avatar, Dropdown, Menu } from "antd";
 import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 
-const { Header } = Layout;
-
-const menu = (
-    <Menu>
-      <Menu.Item key="1" icon={<UserOutlined />}>
-        Thông tin tài khoản
-      </Menu.Item>
-      <Menu.Item key="2" icon={<LogoutOutlined />}>
-        Đăng xuất
-      </Menu.Item>
-    </Menu>
-  );
+const { Header: Adminheader } = Layout;
 
 function AdminHeader() {
-    
   return (
     <>
-    <Header className="admin-header">
-      <div className="header-right">
-        <Dropdown overlay={menu} placement="bottomRight">
+      <Adminheader className="admin-header">
+        <div className="header-right">
           <Avatar icon={<UserOutlined />} />
-        </Dropdown>
-      </div>
-    </Header>
+        </div>
+      </Adminheader>
     </>
-  )
+  );
 }
 
-export default AdminHeader
+export default AdminHeader;

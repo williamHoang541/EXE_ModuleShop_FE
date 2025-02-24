@@ -1,81 +1,115 @@
-import React from "react";
-import { Layout, Card, Col, Row, Statistic, Select, List, Avatar, Tag, Button } from "antd";
-import { ShoppingCartOutlined, DollarOutlined, UserOutlined, EyeOutlined } from "@ant-design/icons";
-import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts";
+import React, { useEffect, useState } from "react";
+import {
+  Layout,
+  Card,
+  Col,
+  Row,
+  Statistic,
+  Select,
+  message,
+  Button,
+  List,
+  Avatar,
+  Tag,
+  Progress,
+} from "antd";
+import {
+  ShoppingCartOutlined,
+  DollarOutlined,
+  UserOutlined,
+  EyeOutlined,
+} from "@ant-design/icons";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  ResponsiveContainer,
+} from "recharts";
 import Sidebar from "../../../components/sidebar/Sidebar";
 import AdminHeader from "../../../components/AdminHeader/AdminHeader";
 import { Content } from "antd/es/layout/layout";
 import "./Dashboard.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 
-const revenueData = [
-  { date: "01 Jun", revenue: 200 },
-  { date: "02 Jun", revenue: 300 },
-  { date: "03 Jun", revenue: 400 },
-  { date: "04 Jun", revenue: 350 },
-  { date: "05 Jun", revenue: 450 },
-  { date: "06 Jun", revenue: 500 },
-  { date: "07 Jun", revenue: 550 },
-  { date: "08 Jun", revenue: 450 },
-  { date: "09 Jun", revenue: 480 },
-  { date: "10 Jun", revenue: 530 },
-  { date: "11 Jun", revenue: 400 },
-  { date: "12 Jun", revenue: 600 },
-];
+const Dashboard = () => {
+  const [selectedMetric, setSelectedMetric] = useState("revenue");
+  const [dashboardData, setDashboardData] = useState({
+    revenue: 0,
+    orders: 0,
+    customers: 0,
+    chartData: [],
+  });
+  const [product, setProduct] = useState([]);
+  const salesTarget = {
+    achieved: 1300, // Đã đạt được
+    target: 1800, // Mục tiêu
+  };
+  const navigate = useNavigate();
+  const salesPercentage = Math.round(
+    (salesTarget.achieved / salesTarget.target) * 100
+  );
 
-const topProducts = [
-  {
-    id: 1,
-    image: "/images/product1.jpg",
-    name: "Bàn gỗ sồi",
-    sold: 1249,
-    growth: "+15.2%",
-    growthColor: "green",
-  },
-  {
-    id: 2,
-    image: "/images/product2.jpg",
-    name: "Ghế gỗ cao cấp",
-    sold: 1145,
-    growth: "+13.9%",
-    growthColor: "green",
-  },
-  {
-    id: 3,
-    image: "/images/product3.jpg",
-    name: "Tủ quần áo gỗ",
-    sold: 1073,
-    growth: "+9.5%",
-    growthColor: "green",
-  },
-  {
-    id: 4,
-    image: "/images/product4.jpg",
-    name: "Giường ngủ gỗ",
-    sold: 1022,
-    growth: "+2.3%",
-    growthColor: "green",
-  },
-  {
-    id: 5,
-    image: "/images/product5.jpg",
-    name: "Kệ sách gỗ",
-    sold: 992,
-    growth: "-0.7%",
-    growthColor: "red",
-  },
-  {
-    id: 6,
-    image: "/images/product6.jpg",
-    name: "Tủ giày gỗ",
-    sold: 1201,
-    growth: "-1.1%",
-    growthColor: "red",
-  },
-];
+  const getTopProducts = async () => {
+    try {
+      const response = await axios.get(
+        "https://67bb583afbe0387ca139d151.mockapi.io/api/admin/product-rating"
+      );
+      setProduct(response.data);
+    } catch (error) {
+      message.error("Lỗi khi tải dữ liệu!");
+      console.error(error);
+    }
+  };
 
-function Dashboard() {
+  const getDashboardData = async () => {
+    try {
+      const response = await axios.get(
+        "https://67bb583afbe0387ca139d151.mockapi.io/api/admin/dashboard"
+      );
+
+      const chartData = response.data.map((item) => ({
+        date: `${item.day}/${item.month}/${item.year}`,
+        revenue: item.revenue,
+        orders: item.orders,
+        customers: item.customers,
+      }));
+
+      setDashboardData({
+        revenue: response.data.reduce((sum, item) => sum + item.revenue, 0),
+        orders: response.data.reduce((sum, item) => sum + item.orders, 0),
+        customers: response.data.reduce((sum, item) => sum + item.customers, 0),
+        chartData: chartData,
+      });
+    } catch (error) {
+      message.error("Lỗi khi tải dữ liệu!");
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getDashboardData();
+    getTopProducts();
+  }, []);
+
+  const getMetricTitle = () => {
+    switch (selectedMetric) {
+      case "revenue":
+        return "doanh thu";
+      case "orders":
+        return "đơn hàng";
+      case "customers":
+        return "khách hàng";
+      default:
+        return "";
+    }
+  };
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sidebar />
@@ -84,64 +118,122 @@ function Dashboard() {
         <Content style={{ padding: "20px" }}>
           <div className="dashboard">
             <Row gutter={[16, 16]}>
-              <Col span={8}>
-                <Card>
-                  <Statistic title="Tổng doanh thu" value="10,000,000 VND" prefix={<DollarOutlined />} />
-                </Card>
-              </Col>
-              <Col span={8}>
-                <Card>
-                  <Statistic title="Tổng đơn hàng" value={100} prefix={<ShoppingCartOutlined />} />
-                </Card>
-              </Col>
-              <Col span={8}>
-                <Card>
-                  <Statistic title="Khách hàng mới" value={25} prefix={<UserOutlined />} />
-                </Card>
-              </Col>
-            </Row>
-
-            <Row gutter={[16, 16]} style={{ marginTop: "20px" }}>
-              <Col span={16}>
+              <Col span={18}>
                 <Card className="chart-card">
+                  <div className="stats-container">
+                    <Card
+                      className={`stat-card ${
+                        selectedMetric === "revenue" ? "active" : ""
+                      }`}
+                      onClick={() => setSelectedMetric("revenue")}
+                    >
+                      <Statistic
+                        title="Tổng doanh thu"
+                        value={`${dashboardData.revenue.toLocaleString()} VND`}
+                        prefix={<DollarOutlined />}
+                      />
+                    </Card>
+                    <Card
+                      className={`stat-card ${
+                        selectedMetric === "orders" ? "active" : ""
+                      }`}
+                      onClick={() => setSelectedMetric("orders")}
+                    >
+                      <Statistic
+                        title="Tổng đơn hàng"
+                        value={dashboardData.orders}
+                        prefix={<ShoppingCartOutlined />}
+                      />
+                    </Card>
+                    <Card
+                      className={`stat-card ${
+                        selectedMetric === "customers" ? "active" : ""
+                      }`}
+                      onClick={() => setSelectedMetric("customers")}
+                    >
+                      <Statistic
+                        title="Khách hàng"
+                        value={dashboardData.customers}
+                        prefix={<UserOutlined />}
+                      />
+                    </Card>
+                  </div>
                   <div className="chart-header">
-                    <h3>Thống kê doanh thu</h3>
-                    <Select defaultValue="Tháng" className="chart-select">
+                    <h3>Thống kê {getMetricTitle()}</h3>
+                    <Select defaultValue="month" className="chart-select">
                       <Option value="month">Tháng</Option>
                       <Option value="year">Năm</Option>
                     </Select>
                   </div>
                   <ResponsiveContainer width="100%" height={300}>
-                    <LineChart data={revenueData}>
+                    <LineChart data={dashboardData.chartData}>
                       <XAxis dataKey="date" />
                       <YAxis />
                       <Tooltip />
-                      <CartesianGrid stroke="#ccc" />
-                      <Line type="monotone" dataKey="revenue" stroke="#936a49" strokeWidth={2} />
+                      <CartesianGrid stroke="#ddd" />
+                      <Line
+                        type="monotone"
+                        dataKey={selectedMetric}
+                        stroke="#936a49"
+                        strokeWidth={2}
+                        dot={{ fill: "#936a49", r: 4 }}
+                      />
                     </LineChart>
                   </ResponsiveContainer>
                 </Card>
               </Col>
-
-              <Col span={8}>
+              <Col span={6}>
+                <Card style={{ marginBottom: "20px", width: 300 }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div>
+                      <h3>Sales target</h3>
+                      <p style={{ marginBottom: 0 }}>
+                        <b>{salesTarget.achieved.toLocaleString()}K</b> /{" "}
+                        {salesTarget.target.toLocaleString()} Units
+                      </p>
+                      <span style={{ color: "gray" }}>Made this month</span>
+                    </div>
+                    <Progress
+                      type="circle"
+                      percent={salesPercentage}
+                      width={60}
+                    />
+                  </div>
+                </Card>
                 <Card className="top-products-card">
                   <div className="top-products-header">
                     <h3>Sản phẩm bán chạy</h3>
-                    <Button type="link" icon={<EyeOutlined />}>
+                    <Button
+                      type="link"
+                      icon={<EyeOutlined />}
+                      onClick={() => navigate("/products")}
+                    >
                       Xem tất cả
                     </Button>
                   </div>
                   <List
                     itemLayout="horizontal"
-                    dataSource={topProducts}
+                    dataSource={product}
                     renderItem={(item) => (
                       <List.Item>
                         <List.Item.Meta
-                          avatar={<Avatar shape="square" size={50} src={item.image} />}
+                          avatar={
+                            <Avatar shape="square" size={50} src={item.image} />
+                          }
                           title={<b>{item.name}</b>}
                           description={`Đã bán: ${item.sold}`}
                         />
-                        <Tag color={item.growthColor}>{item.growth}</Tag>
+                        <Tag color={item["sell-rating"] >= 0 ? "green" : "red"}>
+                          {item["sell-rating"] > 0
+                            ? `+${item["sell-rating"]}%`
+                            : `${item["sell-rating"]}%`}
+                        </Tag>
                       </List.Item>
                     )}
                   />
@@ -153,6 +245,6 @@ function Dashboard() {
       </Layout>
     </Layout>
   );
-}
+};
 
 export default Dashboard;
