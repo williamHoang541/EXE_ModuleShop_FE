@@ -1,5 +1,5 @@
 import "./Navbar_Cus.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { PATH_NAME } from "../../constant/pathname";
 import logo from "../../assets/Logo_module.png";
 import { GoPerson } from "react-icons/go";
@@ -11,6 +11,7 @@ const Navbar_Cus = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const profileDropdownRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem("isLoggedIn") === "true"; // Kiểm tra xem người dùng đã đăng nhập chưa
@@ -55,13 +56,41 @@ const Navbar_Cus = () => {
         <div className="header-position-relative">
           <nav className="header-nav">
             <ul className="header-items">
-              <li className="header-nav-item">
+              <li
+                className={`header-nav-item ${
+                  location.pathname === PATH_NAME.HOME ? "active" : ""
+                }`}
+              >
                 <Link to={PATH_NAME.HOME}>Trang chủ</Link>
               </li>
-              <li className="header-nav-item">Về chúng tôi</li>
-              <li className="header-nav-item">Sản phẩm</li>
-              <li className="header-nav-item">Hệ thống</li>
-              <li className="header-nav-item">Liên hệ</li>
+              <li
+                className={`header-nav-item ${
+                  location.pathname === "/about" ? "active" : ""
+                }`}
+              >
+                <Link to="/about">Về chúng tôi</Link>
+              </li>
+              <li
+                className={`header-nav-item ${
+                  location.pathname === "/products" ? "active" : ""
+                }`}
+              >
+                <Link to="/products">Sản phẩm</Link>
+              </li>
+              <li
+                className={`header-nav-item ${
+                  location.pathname === "/system" ? "active" : ""
+                }`}
+              >
+                <Link to="/system">Hệ thống</Link>
+              </li>
+              <li
+                className={`header-nav-item ${
+                  location.pathname === "/contact" ? "active" : ""
+                }`}
+              >
+                <Link to="/contact">Liên hệ</Link>
+              </li>
             </ul>
           </nav>
         </div>
