@@ -78,7 +78,7 @@ function Itemspage() {
 
   const handleCategoryChange = (value) => {
     setSelectedCategory(value);
-    filterProducts(searchTerm, value, priceRange);
+    filterProducts(searchTerm, value === "Tất cả" ? null : value, priceRange);
   };
 
   const handlePriceChange = (value) => {
@@ -103,7 +103,7 @@ function Itemspage() {
         <Header />
       </header>
       <div className="itemspage-container">
-      <p className="swiper__title">Sản phẩm</p>
+        <p className="swiper__title">Sản phẩm</p>
         <div className="filters">
           <Input
             placeholder="Tìm kiếm sản phẩm..."
@@ -117,6 +117,7 @@ function Itemspage() {
             onChange={handleCategoryChange}
             className="category-select"
           >
+            <Option value={null}>Tất cả</Option>
             <Option value="Bàn">Bàn</Option>
             <Option value="Ghế">Ghế</Option>
             <Option value="Tủ">Tủ</Option>

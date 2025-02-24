@@ -43,6 +43,11 @@
   border-radius: 5px;
 }
 
+.swiper {
+  margin-top: 5em; /* Tạo khoảng cách giữa hero và swiper */
+  padding-top: 2em; /* Giúp nội dung không bị đè */
+}
+
 .swiper__title {
   font-size: 4em;
   text-align: center;
