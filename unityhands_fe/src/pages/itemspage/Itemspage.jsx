@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Itemspage.css";
 import { Card, Col, Row, Select, Input, Slider } from "antd";
+import { ShoppingCartOutlined } from "@ant-design/icons";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 
@@ -148,10 +149,16 @@ function Itemspage() {
                     />
                   }
                 >
-                  <Card.Meta
-                    title={product.name}
-                    description={`Giá: ${product.price.toLocaleString()} VND`}
-                  />
+                  <div className="product-info">
+                    <h3 className="product-name">{product.name}</h3>
+                    <p className="product-price">{product.price.toLocaleString()} VND</p>
+                  </div>
+
+                  {/* Nút Thêm vào giỏ hàng */}
+                  <button className="add-to-cart-btn">
+                    <ShoppingCartOutlined className="cart-icon" />
+                    Thêm vào giỏ
+                  </button>
                 </Card>
               </Col>
             ))
@@ -159,6 +166,7 @@ function Itemspage() {
             <p className="no-results">Không tìm thấy sản phẩm nào</p>
           )}
         </Row>
+
       </div>
       <footer>
         <Footer />
