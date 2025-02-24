@@ -36,9 +36,7 @@ const teamMembers = [
 function AboutUs() {
   return (
     <>
-      <header>
-        <Header />
-      </header>
+      
       <div className="about-container">
         {/* Giới thiệu cửa hàng */}
         <section className="about-intro">
@@ -130,9 +128,7 @@ function AboutUs() {
           </Paragraph>
         </section>
       </div>
-      <footer>
-        <Footer />
-      </footer>
+    
     </>
   );
 }

@@ -65,17 +65,17 @@ const Navbar_Cus = () => {
               </li>
               <li
                 className={`header-nav-item ${
-                  location.pathname === "/about" ? "active" : ""
+                  location.pathname === PATH_NAME.ABOUT_US ? "active" : ""
                 }`}
               >
-                <Link to="/about">Về chúng tôi</Link>
+                <Link to={PATH_NAME.ABOUT_US}>Về chúng tôi</Link>
               </li>
               <li
                 className={`header-nav-item ${
-                  location.pathname === "/products" ? "active" : ""
+                  location.pathname === PATH_NAME.ITEMS ? "active" : ""
                 }`}
               >
-                <Link to="/products">Sản phẩm</Link>
+                <Link to={PATH_NAME.ITEMS}>Sản phẩm</Link>
               </li>
               <li
                 className={`header-nav-item ${
