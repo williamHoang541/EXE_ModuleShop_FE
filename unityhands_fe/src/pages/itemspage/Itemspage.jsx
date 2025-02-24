@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import "./Itemspage.css";
 import { Card, Col, Row, Select, Input, Slider } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
-import Header from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
+import useTitle from "../../constant/useTitle";
 
 const { Option } = Select;
 
@@ -67,6 +66,7 @@ const products = [
 ];
 
 function Itemspage() {
+  useTitle("Sản phẩm");
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);

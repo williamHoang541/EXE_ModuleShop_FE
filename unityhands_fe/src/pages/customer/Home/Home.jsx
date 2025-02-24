@@ -3,8 +3,42 @@ import { BsCart3 } from "react-icons/bs";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { PATH_NAME } from "../../../constant/pathname";
+import { useState } from "react";
 
 const Home = () => {
+  const products = [
+    {
+      id: 1,
+      name: "Bàn gỗ sồi",
+      category: "Bàn",
+      price: 5000000,
+      image: "../../../public/items/ban_go_soi.jpg",
+    },
+    {
+      id: 2,
+      name: "Ghế gỗ cao cấp",
+      category: "Ghế",
+      price: 2000000,
+      image: "../../../public/items/ghe_go_cao_cap.jpg",
+    },
+    {
+      id: 3,
+      name: "Tủ quần áo gỗ",
+      category: "Tủ",
+      price: 8000000,
+      image: "../../../public/items/do_go_1.jpg",
+    },
+  ];
+  const [cartCount, setCartCount] = useState(() => {
+    return parseInt(localStorage.getItem("cartCount")) || 0;
+  });
+
+  const handleAddToCart = () => {
+    const newCartCount = cartCount + 1;
+    setCartCount(newCartCount);
+    localStorage.setItem("cartCount", newCartCount);
+    window.dispatchEvent(new Event("storage"));
+  };
 
   return (
     <div className="home">
@@ -21,9 +55,9 @@ const Home = () => {
                   mái, sang trọng. Cá nhân hoá trong từng sản phẩm phù hợp với
                   mọi không gian sống.
                 </div>
-                <a href="#" className="home-btn-buy">
+                <Link to={PATH_NAME.ITEMS} className="home-btn-buy">
                   <BsCart3 /> Mua sắm ngay
-                </a>
+                </Link>
               </div>
               <div className="home-col-right">
                 <img
@@ -40,98 +74,42 @@ const Home = () => {
       <section className="home-section-2">
         <h3>Các sản phẩm nổi bật</h3>
         <div className="home-product-hot">
-          <form className="home-cart-product">
-            <div className="home-cart-img">
-              <a href="#" className="home-cart-detail">
-                <img
-                  className="home-thumbnail"
-                  src="https://bizweb.dktcdn.net/thumb/large/100/501/740/products/2-d053f572-d9ac-46c3-8505-6b5b9b783e83.jpg?v=1701329060077"
-                  alt=""
-                />
-              </a>
-            </div>
+          {products.map((product) => (
+            <div key={product.id} className="home-cart-product">
+              <div className="home-cart-img">
+                <Link
+                  to={PATH_NAME.PRODUCT_DETAILS}
+                  className="home-cart-detail"
+                >
+                  <img
+                    className="home-thumbnail"
+                    src={product.image}
+                    alt={product.name}
+                  />
+                </Link>
+              </div>
 
-            <div className="home-cart-content">
-              <div className="home-cart-label">Tủ quần áo 5 cánh hiện đại</div>
-              <div className="home-cart-coin">10.000.000₫</div>
-              <div className="home-cart-btn">
-                <button className="home-add-cart" type="submit">
-                  <BsCart3 className="home-icons" /> Thêm giỏ hàng
-                </button>
+              <div className="home-cart-content">
+                <div className="home-cart-label">
+                {product.name}
+                </div>
+                <div className="home-cart-coin">{product.price.toLocaleString("vi-VN")}₫</div>
+                <div className="home-cart-btn">
+                  <button
+                    className="home-add-cart"
+                    type="submit"
+                    onClick={handleAddToCart}
+                  >
+                    <BsCart3 className="home-icons" /> Thêm giỏ hàng
+                  </button>
+                </div>
               </div>
             </div>
-          </form>
-
-          <form className="home-cart-product">
-            <div className="home-cart-img">
-              <a href="#" className="home-cart-detail">
-                <img
-                  className="home-thumbnail"
-                  src="https://bizweb.dktcdn.net/thumb/large/100/501/740/products/2-d053f572-d9ac-46c3-8505-6b5b9b783e83.jpg?v=1701329060077"
-                  alt=""
-                />
-              </a>
-            </div>
-
-            <div className="home-cart-content">
-              <div className="home-cart-label">Tủ quần áo 5 cánh hiện đại</div>
-              <div className="home-cart-coin">10.000.000₫</div>
-              <div className="home-cart-btn">
-                <button className="home-add-cart" type="submit">
-                  <BsCart3 className="home-icons" /> Thêm giỏ hàng
-                </button>
-              </div>
-            </div>
-          </form>
-          
-          <form className="home-cart-product">
-            <div className="home-cart-img">
-              <Link to={PATH_NAME.PRODUCT_DETAILS} className="home-cart-detail">
-                <img
-                  className="home-thumbnail"
-                  src="https://bizweb.dktcdn.net/thumb/large/100/501/740/products/2-d053f572-d9ac-46c3-8505-6b5b9b783e83.jpg?v=1701329060077"
-                  alt=""
-                />
-              </Link>
-            </div>
-
-            <div className="home-cart-content">
-              <div className="home-cart-label">Tủ quần áo 5 cánh hiện đại</div>
-              <div className="home-cart-coin">10.000.000₫</div>
-              <div className="home-cart-btn">
-                <button className="home-add-cart" type="submit">
-                  <BsCart3 className="home-icons" /> Thêm giỏ hàng
-                </button>
-              </div>
-            </div>
-          </form>
-        
-
-          <form className="home-cart-product">
-            <div className="home-cart-img">
-              <a href="#" className="home-cart-detail">
-                <img
-                  className="home-thumbnail"
-                  src="https://bizweb.dktcdn.net/thumb/large/100/501/740/products/2-d053f572-d9ac-46c3-8505-6b5b9b783e83.jpg?v=1701329060077"
-                  alt=""
-                />
-              </a>
-            </div>
-
-            <div className="home-cart-content">
-              <div className="home-cart-label">Tủ quần áo 5 cánh hiện đại</div>
-              <div className="home-cart-coin">10.000.000₫</div>
-              <div className="home-cart-btn">
-                <button className="home-add-cart" type="submit">
-                  <BsCart3 className="home-icons" /> Thêm giỏ hàng
-                </button>
-              </div>
-            </div>
-          </form>
+          ))}
         </div>
 
         <div className="home-read-more">
-          <a href="#">Xem thêm</a>
+          <Link to={PATH_NAME.ITEMS}>Xem thêm</Link>
           <FaArrowRightLong className="home-icon-arrow" />
         </div>
       </section>

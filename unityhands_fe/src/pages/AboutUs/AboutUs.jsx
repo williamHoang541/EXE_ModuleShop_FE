@@ -1,8 +1,7 @@
-import React from "react";
+import useTitle from "../../constant/useTitle";
 import "./AboutUs.css";
 import { Card, Col, Row, Typography, Divider, Image } from "antd";
-import Header from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
+
 
 const { Title, Paragraph } = Typography;
 
@@ -34,6 +33,7 @@ const teamMembers = [
 ];
 
 function AboutUs() {
+  useTitle("Giới thiệu");
   return (
     <>
       

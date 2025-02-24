@@ -6,12 +6,31 @@ import { GoPerson } from "react-icons/go";
 import { BsCart3 } from "react-icons/bs";
 import { GoSearch } from "react-icons/go";
 import { useEffect, useRef, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Navbar_Cus = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const profileDropdownRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Lấy số lượng sản phẩm trong giỏ hàng từ localStorage
+  const [cartCount, setCartCount] = useState(() => {
+    return parseInt(localStorage.getItem("cartCount")) || 0;
+  });
+
+  // Cập nhật giỏ hàng khi có thay đổi từ localStorage
+  useEffect(() => {
+    const updateCartCount = () => {
+      setCartCount(parseInt(localStorage.getItem("cartCount")) || 0);
+    };
+
+    window.addEventListener("storage", updateCartCount);
+    return () => {
+      window.removeEventListener("storage", updateCartCount);
+    };
+  }, []);
 
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem("isLoggedIn") === "true"; // Kiểm tra xem người dùng đã đăng nhập chưa
@@ -41,11 +60,16 @@ const Navbar_Cus = () => {
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn"); // Xóa trạng thái đăng nhập
     setIsLoggedIn(false); // Cập nhật state
+    toast.success("Bạn đã đăng xuất thành công!", {
+      position: "top-right",
+      autoClose: 1000,
+    });
     navigate(PATH_NAME.HOME); // Chuyển hướng về trang chủ
   };
 
   return (
     <header className="header">
+    <ToastContainer/>
       <div className="header-container">
         <div className="header-logo-img">
           <Link to={PATH_NAME.HOME}>
@@ -169,7 +193,7 @@ const Navbar_Cus = () => {
           <div className="header-block-cart">
             <div className="header-cart">
               <BsCart3 className="header-icons" />
-              <span className="header-count-item">0</span>
+              <span className="header-count-item">{cartCount}</span>
             </div>
           </div>
         </div>
