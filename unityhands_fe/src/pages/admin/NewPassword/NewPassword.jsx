@@ -1,19 +1,20 @@
 import "./NewPassword.css";
 import { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { PATH_NAME } from "../../../constant/pathname";
 import OTPInput from "react-otp-input";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import  useTitle from "../../../constant/useTitle";
 
 const NewPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
   const [otp, setOtp] = useState("");
+  useTitle("Mật khẩu mới");
 
   // Xử lý khi nhấn "Cập nhật mật khẩu"
   const handleSubmit = async (e) => {

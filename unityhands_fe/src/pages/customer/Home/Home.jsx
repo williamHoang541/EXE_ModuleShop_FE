@@ -1,7 +1,9 @@
 import "./Home.css";
 import { BsCart3 } from "react-icons/bs";
 import { FaArrowRightLong } from "react-icons/fa6";
+
 const Home = () => {
+
   return (
     <div className="home">
       <section className="home-section-1">

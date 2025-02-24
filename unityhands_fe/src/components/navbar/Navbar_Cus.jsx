@@ -5,8 +5,32 @@ import logo from "../../assets/Logo_module.png";
 import { GoPerson } from "react-icons/go";
 import { BsCart3 } from "react-icons/bs";
 import { GoSearch } from "react-icons/go";
+import { useEffect, useRef, useState } from "react";
 
 const Navbar_Cus = () => {
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const profileDropdownRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (
+      profileDropdownRef.current &&
+      !profileDropdownRef.current.contains(event.target)
+    ) {
+      setIsProfileDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const toggleProfileDropdown = () => {
+    setIsProfileDropdownOpen((prev) => !prev);
+  };
+
   return (
     <header className="header">
       <div className="header-container">
@@ -31,11 +55,7 @@ const Navbar_Cus = () => {
         </div>
 
         <div className="header-right">
-          <form
-            method="get"
-            className="header-form-search"
-            role="search"
-          >
+          <form method="get" className="header-form-search" role="search">
             <input
               type="text"
               name="query"
@@ -51,9 +71,27 @@ const Navbar_Cus = () => {
               <GoSearch />
             </button>
           </form>
-          <div className="header-block-account">
+          <div
+            className="header-block-account"
+            ref={profileDropdownRef}
+            onClick={toggleProfileDropdown}
+          >
             <GoPerson className="header-icons" />
           </div>
+          {isProfileDropdownOpen && (
+            <div className="navbar-dropdowns">
+              <div className="navbar-profile-wrapper">
+                <Link to={PATH_NAME.LOGIN}>
+                  <div className="navbar-profile-item">Đăng nhập</div>
+                </Link>
+                </div>
+                <div className="navbar-profile-wrapper">
+                <Link to={PATH_NAME.REGISTER}>
+                  <div className="navbar-profile-item">Đăng ký</div>
+                </Link>
+              </div>
+            </div>
+          )}
           <div className="header-block-cart">
             <div className="header-cart">
               <BsCart3 className="header-icons" />

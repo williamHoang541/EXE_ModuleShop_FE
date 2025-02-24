@@ -5,9 +5,11 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
+import  useTitle from "../../../constant/useTitle";
 
 const Register = () => {
   const navigate = useNavigate();
+  useTitle("Đăng ký");
   const [formData, setFormData] = useState({
     email: "",
     password: "",

@@ -4,10 +4,12 @@ import "./ForgotPassword.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-
+import  useTitle from "../../../constant/useTitle";
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
+    useTitle("Quên mật khẩu");
+    
 
     // Hàm kiểm tra email hợp lệ
   const validateEmail = (email) => {
