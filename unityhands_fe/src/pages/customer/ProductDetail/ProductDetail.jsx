@@ -6,10 +6,10 @@ import { MdOutlineSwapHorizontalCircle } from "react-icons/md";
 import { GoShieldCheck } from "react-icons/go";
 import { FaCarSide } from "react-icons/fa";
 
-
 const ProductDetail = () => {
   return (
     <div className="product-detail">
+      <h1>Thông tin chi tiết</h1>
       <div className="product-detail-container">
         <div className="product-detail-thumbnail">
           <img
@@ -61,12 +61,12 @@ const ProductDetail = () => {
                 7 ngày hoàn trả miễn phí
               </div>
               <div className="product-detail-1">
-                <GoShieldCheck className="product-detail-icon-1" />{" "}
-                Bảo hành trong 12 tháng
+                <GoShieldCheck className="product-detail-icon-1" /> Bảo hành
+                trong 12 tháng
               </div>
               <div className="product-detail-1">
-                <FaCarSide className="product-detail-icon-1" />{" "}
-                Miễn phí vận chuyển
+                <FaCarSide className="product-detail-icon-1" /> Miễn phí vận
+                chuyển
               </div>
             </div>
           </div>

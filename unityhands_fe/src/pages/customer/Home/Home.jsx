@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { PATH_NAME } from "../../../constant/pathname";
 import { useState } from "react";
 
+
 const Home = () => {
   const products = [
     {
@@ -12,21 +13,21 @@ const Home = () => {
       name: "Bàn gỗ sồi",
       category: "Bàn",
       price: 5000000,
-      image: "../../../public/items/ban_go_soi.jpg",
+      image: "../../../../public/items/ban_go_soi.jpg",
     },
     {
       id: 2,
       name: "Ghế gỗ cao cấp",
       category: "Ghế",
       price: 2000000,
-      image: "../../../public/items/ghe_go_cao_cap.jpg",
+      image: "../../../../public/items/ghe_go_cao_cap.jpg",
     },
     {
       id: 3,
       name: "Tủ quần áo gỗ",
       category: "Tủ",
       price: 8000000,
-      image: "../../../public/items/do_go_1.jpg",
+      image: "../../../../public/items/do_go_1.jpg",
     },
   ];
   const [cartCount, setCartCount] = useState(() => {
