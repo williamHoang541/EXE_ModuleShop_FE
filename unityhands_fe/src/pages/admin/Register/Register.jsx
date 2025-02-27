@@ -6,6 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import  useTitle from "../../../constant/useTitle";
+import { BASE_URL } from "../../../constant/config";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const Register = () => {
 
     try {
        await axios.post(
-        "https://moduleshop-g8h8hxc8cwcqema8.westeurope-01.azurewebsites.net/api/Account/registration",
+        `${BASE_URL}Account/registration`,
         {
           email,
           password,

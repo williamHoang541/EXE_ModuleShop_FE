@@ -7,6 +7,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import  useTitle from "../../../constant/useTitle";
+import { BASE_URL } from "../../../constant/config";
 
 const NewPassword = () => {
   const [password, setPassword] = useState("");
@@ -32,7 +33,7 @@ const NewPassword = () => {
 
     try {
       await axios.post(
-        "https://moduleshop-g8h8hxc8cwcqema8.westeurope-01.azurewebsites.net/api/Account/reset-password",
+        `${BASE_URL}Account/reset-password`,
         null, 
         {
           params: {

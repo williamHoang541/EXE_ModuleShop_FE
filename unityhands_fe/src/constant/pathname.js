@@ -12,5 +12,6 @@ export const PATH_NAME = {
     PRODUCTS: "/products",
     ORDERS: "/orders",
     CUSTOMERS: "/customers",
-    SHOPPING_CARTS: "/shopping-cart"
+    SHOPPING_CARTS: "/shopping-cart",
+    PAYMENT: "/payment",
 }

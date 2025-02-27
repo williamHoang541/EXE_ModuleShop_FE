@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import  useTitle from "../../../constant/useTitle";
+import { BASE_URL } from "../../../constant/config";
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
@@ -32,7 +33,7 @@ const ForgotPassword = () => {
 
     try {
       await axios.post(
-        `https://moduleshop-g8h8hxc8cwcqema8.westeurope-01.azurewebsites.net/api/Account/forgot-password?email=${encodeURIComponent(email)}`
+        `${BASE_URL}Account/forgot-password?email=${encodeURIComponent(email)}`
       );
       toast.success("Mã xác thực đã được gửi đến email của bạn.", {
         autoClose: 3000,

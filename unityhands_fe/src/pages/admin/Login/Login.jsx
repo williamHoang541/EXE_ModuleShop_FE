@@ -8,6 +8,7 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import  useTitle from "../../../constant/useTitle";
+import { BASE_URL } from "../../../constant/config";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const Login = () => {
     event.preventDefault();
     const loginData = { email, password };
     const url =
-      "https://moduleshop-g8h8hxc8cwcqema8.westeurope-01.azurewebsites.net/api/Authorize/login";
+      `${BASE_URL}Authorize/login`;
     try {
       const { data: token } = await axios.post(url, loginData);
       localStorage.setItem("Authen", JSON.stringify(token));
