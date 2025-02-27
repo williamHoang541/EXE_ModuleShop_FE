@@ -15,6 +15,7 @@ import Home from "./pages/customer/Home/Home";
 import Layout_Customer from "./components/layout/Layout_Customer";
 import ProductDetail from "./pages/customer/ProductDetail/ProductDetail";
 import ShoppingCart from "./pages/customer/Shopping_cart/ShoppingCart";
+import Payment from "./pages/customer/Payment/Payment";
 const App = () => {
   return (
     <div>
@@ -37,6 +38,7 @@ const App = () => {
           <Route path={PATH_NAME.ITEMS} element={<Itemspage />} />
           <Route path={PATH_NAME.ABOUT_US} element={<AboutUs />} />
           <Route path={PATH_NAME.SHOPPING_CARTS} element={<ShoppingCart />} />
+          <Route path={PATH_NAME.PAYMENT} element={<Payment />} />
         </Route>
       </Routes>
     </div>
