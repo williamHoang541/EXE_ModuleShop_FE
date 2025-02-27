@@ -4,7 +4,7 @@ export const PATH_NAME = {
     REGISTER: "/register",
     FORGOT_PASSWORD: "/forgot-password",
     NEW_PASSWORD: "/forgot-password/new-password",
-    PRODUCT_DETAILS: "/product-details",
+    PRODUCT_DETAILS: "/product-details/:id",
     ITEMS: "/items",
     ABOUT_US: "/about-us",
     CONTACT_US: "/contact-us",
@@ -12,4 +12,5 @@ export const PATH_NAME = {
     PRODUCTS: "/products",
     ORDERS: "/orders",
     CUSTOMERS: "/customers",
+    SHOPPING_CARTS: "/shopping-cart"
 }

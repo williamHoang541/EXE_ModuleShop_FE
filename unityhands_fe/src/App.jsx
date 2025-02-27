@@ -14,6 +14,7 @@ import Customers from "./pages/admin/Customers/Customers";
 import Home from "./pages/customer/Home/Home";
 import Layout_Customer from "./components/layout/Layout_Customer";
 import ProductDetail from "./pages/customer/ProductDetail/ProductDetail";
+import ShoppingCart from "./pages/customer/Shopping_cart/ShoppingCart";
 const App = () => {
   return (
     <div>
@@ -35,6 +36,7 @@ const App = () => {
           <Route path={PATH_NAME.CONTACT_US} element={<ContactUs />} />
           <Route path={PATH_NAME.ITEMS} element={<Itemspage />} />
           <Route path={PATH_NAME.ABOUT_US} element={<AboutUs />} />
+          <Route path={PATH_NAME.SHOPPING_CARTS} element={<ShoppingCart />} />
         </Route>
       </Routes>
     </div>

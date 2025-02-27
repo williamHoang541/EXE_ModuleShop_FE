@@ -191,10 +191,10 @@ const Navbar_Cus = () => {
           </div>
 
           <div className="header-block-cart">
-            <div className="header-cart">
+            <Link to={PATH_NAME.SHOPPING_CARTS} className="header-cart">
               <BsCart3 className="header-icons" />
               <span className="header-count-item">{cartCount}</span>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

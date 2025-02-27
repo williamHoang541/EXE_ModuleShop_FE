@@ -1,0 +1,163 @@
+.shopping {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shopping-table-container {
+  width: 80%;
+}
+
+.shopping-table-container h2 {
+  color: #333;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.shopping-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid #ddd;
+}
+
+.shopping-table th,
+.shopping-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.shopping-table thead {
+  background: #f8f9fa;
+}
+
+.shopping-table th {
+  font-weight: bold;
+  color: #333;
+}
+
+.shopping-table tbody tr:hover {
+  background: #f1f1f1;
+}
+
+.shopping-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.shopping-img img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+.shopping-title p {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.shopping-title button {
+  background: none;
+  border: none;
+  color: var(--primary-color-text);
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.shopping-title button:hover {
+  color: var(--primary-color-text-hover);
+  font-weight: 550;
+}
+
+.shopping-coin,
+.shopping-payment {
+  font-weight: bold;
+  color: #ef1104;
+}
+
+.shopping-quantity {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 10px;
+  border: 1px solid #ddd;
+  width: fit-content;
+}
+
+.shopping-minus,
+.shopping-add {
+  background: transparent;
+  border: none;
+  color: #333;
+  padding: 5px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shopping-minus {
+  border-right: 1px solid #ddd;
+}
+
+.shopping-add {
+  border-left: 1px solid #ddd;
+}
+
+.shopping-minus:hover,
+.shopping-add:hover {
+  background: #ddd;
+}
+
+.shopping-bottom {
+  text-align: right;
+  margin-top: 10px;
+  
+}
+
+.shopping-total {
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  gap: 200px;
+  margin-bottom: 10px;
+}
+
+.shopping-total h5 {
+  font-size: 14px;
+  color: #333;
+}
+
+.shopping-total p {
+  font-weight: 550;
+  color: #ef1104;
+  font-size: 16px;
+}
+
+.shopping-btn {
+  border: 0;
+  padding: 15px;
+  width: 320px;
+  border-radius: 5px;
+  background: linear-gradient(
+    280.66deg,
+    var(--primary-color-text-hover) 0%,
+    var(--primary-color-text) 102.8%
+  );
+  font-size: 17px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+}
+
+.shopping-btn:hover{
+    background: var(--primary-color-text-hover);
+}
