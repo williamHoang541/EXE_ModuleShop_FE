@@ -17,6 +17,7 @@ import ProductDetail from "./pages/customer/ProductDetail/ProductDetail";
 import ShoppingCart from "./pages/customer/Shopping_cart/ShoppingCart";
 import Payment from "./pages/customer/Payment/Payment";
 import Account from "./pages/customer/Profile/account/Account";
+import Order from "./pages/customer/Profile/order/Order";
 const App = () => {
   return (
     <div>
@@ -41,6 +42,7 @@ const App = () => {
           <Route path={PATH_NAME.SHOPPING_CARTS} element={<ShoppingCart />} />
           <Route path={PATH_NAME.PAYMENT} element={<Payment />} />
           <Route path={PATH_NAME.ACCOUNT} element={<Account />} />
+          <Route path={PATH_NAME.ORDER} element={<Order />} />
         </Route>
       </Routes>
     </div>

@@ -1,8 +1,10 @@
 import "./Account.css";
 import Sidebar from "../sidebar/Sidebar";
 import { useState } from "react";
+import useTitle from "../../../../constant/useTitle";
 
 const Account = () => {
+  useTitle("Hồ sơ của bạn");
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("Văn Vinh");
   const [email, setEmail] = useState("vanvinh@example.com");
@@ -14,14 +16,12 @@ const Account = () => {
 
   const handleSaveClick = () => {
     setIsEditing(false);
-    
   };
   return (
     <div className="account">
       <section className="account-wrapper">
-      <h2>Hồ sơ của bạn</h2>
+        <h2>Hồ sơ của bạn</h2>
         <div className="account-row">
-        
           <div className="account-left">
             <Sidebar />
           </div>
