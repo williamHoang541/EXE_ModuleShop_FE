@@ -148,7 +148,7 @@ const Navbar_Cus = () => {
                   <>
                     <div className="navbar-profile-wrapper">
                       <Link
-                        to={PATH_NAME.PROFILE}
+                        to={PATH_NAME.ACCOUNT}
                         className="navbar-profile-item"
                         onClick={(e) => e.stopPropagation()}
                       >

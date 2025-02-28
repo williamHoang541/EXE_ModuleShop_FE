@@ -14,4 +14,6 @@ export const PATH_NAME = {
     CUSTOMERS: "/customers",
     SHOPPING_CARTS: "/shopping-cart",
     PAYMENT: "/payment",
+    ACCOUNT: "/account",
+    ORDER: "/account/order",
 }
