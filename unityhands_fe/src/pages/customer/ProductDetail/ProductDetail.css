@@ -86,6 +86,7 @@
 
 .product-detail-icons {
   font-size: 25px !important;
+  cursor: pointer;
 }
 
 .product-detail-bottom h3 {

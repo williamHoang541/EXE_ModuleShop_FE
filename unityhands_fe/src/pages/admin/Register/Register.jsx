@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
 import { PATH_NAME } from "../../../constant/pathname";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import { toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import  useTitle from "../../../constant/useTitle";
@@ -47,7 +47,7 @@ const Register = () => {
         }
       
       );
-
+      toast.dismiss();
       toast.success("Đăng ký thành công!");
       setTimeout(() => navigate(PATH_NAME.LOGIN), 1000);
     } catch (error) {
@@ -57,7 +57,6 @@ const Register = () => {
 
   return (
     <main className="login">
-    <ToastContainer />
       <div className="login_container">
         <div className="login_wrapper">
           <div className="col-xl-6 col-lg-6 col-md-6 col-12">

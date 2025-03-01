@@ -18,16 +18,27 @@ import ShoppingCart from "./pages/customer/Shopping_cart/ShoppingCart";
 import Payment from "./pages/customer/Payment/Payment";
 import Account from "./pages/customer/Profile/account/Account";
 import Order from "./pages/customer/Profile/order/Order";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const App = () => {
   return (
-    <div>
+    <>
+      <ToastContainer
+        limit={1} // Chỉ hiển thị tối đa 1 toast
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover={false}
+        draggable
+        
+      />
       <Routes>
         <Route path={PATH_NAME.LOGIN} element={<Login />} />
         <Route path={PATH_NAME.REGISTER} element={<Register />} />
         <Route path={PATH_NAME.FORGOT_PASSWORD} element={<ForgotPassword />} />
         <Route path={PATH_NAME.NEW_PASSWORD} element={<NewPassword />} />
-        
-        
+
         <Route path={PATH_NAME.DASH_BOARD} element={<Dashboard />} />
         <Route path={PATH_NAME.PRODUCTS} element={<AdminProducts />} />
         <Route path={PATH_NAME.ORDERS} element={<AdminOrders />} />
@@ -45,7 +56,7 @@ const App = () => {
           <Route path={PATH_NAME.ORDER} element={<Order />} />
         </Route>
       </Routes>
-    </div>
+    </>
   );
 };
 

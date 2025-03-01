@@ -1,50 +1,63 @@
 import "./Home.css";
 import { BsCart3 } from "react-icons/bs";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { PATH_NAME } from "../../../constant/pathname";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import { BASE_URL } from "../../../constant/config";
 
 const Home = () => {
-  const navigate = useNavigate();
-  const products = [
-    {
-      id: 1,
-      name: "Bàn gỗ sồi",
-      category: "Bàn",
-      price: 5000000,
-      image: "../../../../items/ban_go_soi.jpg",
-    },
-    {
-      id: 2,
-      name: "Ghế gỗ cao cấp",
-      category: "Ghế",
-      price: 2000000,
-      image: "../../../../items/ghe_go_cao_cap.jpg",
-    },
-    {
-      id: 3,
-      name: "Tủ quần áo gỗ",
-      category: "Tủ",
-      price: 8000000,
-      image: "../../../../items/do_go_1.jpg",
-    },
-  ];
+  const [loading, setLoading] = useState(true);
+
+  const [products, setProducts] = useState([]);
+  const [images, setImages] = useState([]);
   const [cartCount, setCartCount] = useState(() => {
     return parseInt(localStorage.getItem("cartCount")) || 0;
   });
+
+  const productApi =
+    `${BASE_URL}Product/get-all?PageNumber=1&PageSize=3`;
+  const imageApi =
+    `${BASE_URL}ProductImage/get-all`;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [productRes, imageRes] = await Promise.all([
+          axios.get(productApi),
+          axios.get(imageApi),
+        ]);
+
+        if (productRes.data?.$values) {
+          setProducts(productRes.data.$values);
+        }
+        if (imageRes.data?.$values) {
+          setImages(imageRes.data.$values);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu từ API:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleAddToCart = () => {
     const newCartCount = cartCount + 1;
     setCartCount(newCartCount);
     localStorage.setItem("cartCount", newCartCount);
     window.dispatchEvent(new Event("storage"));
+
+    toast.dismiss();
+    toast.success("Đã thêm vào giỏ hàng");
   };
-  
-  const handleProductDetail = (id) => {
-    navigate(`${PATH_NAME.PRODUCT_DETAILS.replace(":id", id)}`, { replace: true });
-  };
+
+  if (loading) return <div className="loader"></div>;
 
   return (
     <div className="home">
@@ -80,38 +93,46 @@ const Home = () => {
       <section className="home-section-2">
         <h3>Các sản phẩm nổi bật</h3>
         <div className="home-product-hot">
-          {products.map((product) => (
-            <div key={product.id} className="home-cart-product" onClick={()=>handleProductDetail(product.id)}>
-              <div className="home-cart-img">
-                <Link
-                  to={PATH_NAME.PRODUCT_DETAILS}
-                  className="home-cart-detail"
-                >
-                  <img
-                    className="home-thumbnail"
-                    src={product.image}
-                    alt={product.name}
-                  />
-                </Link>
-              </div>
-
-              <div className="home-cart-content">
-                <div className="home-cart-label">
-                {product.name}
-                </div>
-                <div className="home-cart-coin">{product.price.toLocaleString("vi-VN")}₫</div>
-                <div className="home-cart-btn">
-                  <button
-                    className="home-add-cart"
-                    type="submit"
-                    onClick={handleAddToCart}
+          {products.map((product) => {
+            const productImage = images.find(
+              (image) => image.productId === product.id && image.isPrimary
+            );
+            return (
+              <div key={product.id} className="home-cart-product">
+                <div className="home-cart-img">
+                  <Link
+                    to={PATH_NAME.PRODUCT_DETAILS.replace(":id", product.id)}
+                    className="home-cart-detail"
                   >
-                    <BsCart3 className="home-icons" /> Thêm giỏ hàng
-                  </button>
+                    <img
+                      className="home-thumbnail"
+                      src={productImage.imageUrl}
+                      alt={product.name}
+                    />
+                  </Link>
+                </div>
+
+                <div className="home-cart-content">
+                  <div className="home-cart-label">{product.name}</div>
+                  <div className="home-cart-coin">
+                    {product.price.toLocaleString("vi-VN")}₫
+                  </div>
+                  <div className="home-cart-btn">
+                    <button
+                      className="home-add-cart"
+                      type="submit"
+                      onClick={(e) => {
+                        e.stopPropagation(); // Ngăn sự kiện lan ra ngoài
+                        handleAddToCart();
+                      }}
+                    >
+                      <BsCart3 className="home-icons" /> Thêm giỏ hàng
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="home-read-more">

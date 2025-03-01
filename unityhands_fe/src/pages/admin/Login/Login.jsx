@@ -5,9 +5,9 @@ import { PATH_NAME } from "../../../constant/pathname";
 import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import { toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import  useTitle from "../../../constant/useTitle";
+import useTitle from "../../../constant/useTitle";
 import { BASE_URL } from "../../../constant/config";
 
 const Login = () => {
@@ -19,8 +19,7 @@ const Login = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     const loginData = { email, password };
-    const url =
-      `${BASE_URL}Authorize/login`;
+    const url = `${BASE_URL}Authorize/login`;
     try {
       const { data: token } = await axios.post(url, loginData);
       localStorage.setItem("Authen", JSON.stringify(token));
@@ -32,12 +31,9 @@ const Login = () => {
           "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
         ];
 
-        localStorage.setItem("isLoggedIn", "true");
-
-      toast.success("Đăng nhập thành công!", {
-        position: "top-right",
-        autoClose: 2000,
-      });
+      localStorage.setItem("isLoggedIn", "true");
+      toast.dismiss();
+      toast.success("Đăng nhập thành công!");
 
       setTimeout(() => {
         navigateBasedOnRole(userRole);
@@ -81,7 +77,6 @@ const Login = () => {
   };
   return (
     <main className="login">
-      <ToastContainer />
       <div className="login_container">
         <div className="login_wrapper">
           <div className="col-xl-6 col-lg-6 col-md-6 col-12">
