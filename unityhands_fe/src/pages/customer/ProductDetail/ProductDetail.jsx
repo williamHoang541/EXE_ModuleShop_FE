@@ -37,7 +37,7 @@ const ProductDetail = () => {
     fetchProduct();
   }, [id]);
 
-  if (!product) return <p>Loading...</p>;
+  if (!product) return <div className="loader"></div>;
 
   if (loading) return <div className="loader"></div>;
   return (

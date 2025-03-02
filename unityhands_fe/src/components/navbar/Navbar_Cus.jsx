@@ -26,7 +26,9 @@ const Navbar_Cus = () => {
       setCartCount(parseInt(localStorage.getItem("cartCount")) || 0);
     };
 
-    window.addEventListener("storage", updateCartCount);
+    window.addEventListener("storage", updateCartCount); // Lắng nghe sự thay đổi
+    updateCartCount(); // Cập nhật ngay khi component render
+  
     return () => {
       window.removeEventListener("storage", updateCartCount);
     };

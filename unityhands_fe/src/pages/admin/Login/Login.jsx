@@ -2,16 +2,18 @@ import "./Login.css";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { Link, useNavigate } from "react-router-dom";
 import { PATH_NAME } from "../../../constant/pathname";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useTitle from "../../../constant/useTitle";
 import { BASE_URL } from "../../../constant/config";
+import { AuthContext } from "../../../context/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   useTitle("Đăng nhập");
@@ -22,17 +24,21 @@ const Login = () => {
     const url = `${BASE_URL}Authorize/login`;
     try {
       const { data: token } = await axios.post(url, loginData);
-      localStorage.setItem("Authen", JSON.stringify(token));
 
       // Giải mã token ngay lập tức, không cần gọi API dư thừa
       const decodedToken = jwtDecode(token);
+      const userId = decodedToken["Id"];
       const userRole =
         decodedToken[
           "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
         ];
 
-      localStorage.setItem("isLoggedIn", "true");
-      toast.dismiss();
+      
+        if (!userId) {
+          toast.error("Lỗi: Không tìm thấy thông tin người dùng.");
+          return;
+        }
+        login(token, userId);
       toast.success("Đăng nhập thành công!");
 
       setTimeout(() => {
