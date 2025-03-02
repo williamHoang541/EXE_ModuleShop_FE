@@ -3,25 +3,24 @@ import { BsCart3 } from "react-icons/bs";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { PATH_NAME } from "../../../constant/pathname";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { BASE_URL } from "../../../constant/config";
+import { AuthContext } from "../../../context/AuthContext";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
-
+  const { userId, isLoggedIn } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [images, setImages] = useState([]);
   const [cartCount, setCartCount] = useState(() => {
     return parseInt(localStorage.getItem("cartCount")) || 0;
   });
 
-  const productApi =
-    `${BASE_URL}Product/get-all?PageNumber=1&PageSize=3`;
-  const imageApi =
-    `${BASE_URL}ProductImage/get-all`;
+  const productApi = `${BASE_URL}Product/get-all?PageNumber=1&PageSize=3`;
+  const imageApi = `${BASE_URL}ProductImage/get-all`;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,14 +46,59 @@ const Home = () => {
     fetchData();
   }, []);
 
-  const handleAddToCart = () => {
-    const newCartCount = cartCount + 1;
-    setCartCount(newCartCount);
-    localStorage.setItem("cartCount", newCartCount);
-    window.dispatchEvent(new Event("storage"));
+  const handleAddToCart = async (productId) => {
+    if (!isLoggedIn) {
+      toast.error("Bạn cần đăng nhập để thêm vào giỏ hàng");
+      return;
+    }
 
-    toast.dismiss();
-    toast.success("Đã thêm vào giỏ hàng");
+    try {
+      // Lấy giỏ hàng hiện tại
+      const cartResponse = await axios.get(`${BASE_URL}AddToCard/get-all`);
+      const allItems = Array.isArray(cartResponse.data?.$values)
+        ? cartResponse.data.$values
+        : [];
+      // Lọc giỏ hàng theo userId
+      const userCart = allItems.filter(
+        (item) => Number(item.accountId) === Number(userId)
+      );
+
+      // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
+      const existingItem = userCart.find(
+        (item) => item.productId === productId
+      );
+
+      if (existingItem) {
+        // Nếu sản phẩm đã tồn tại, cập nhật số lượng
+        const newQuantity = existingItem.quantity + 1;
+        await axios.put(`${BASE_URL}AddToCard/update-cart`, {
+          accountId: userId,
+          products: [{ productId, quantity: newQuantity }],
+        });
+
+        // Cập nhật giỏ hàng trên UI
+        setCartCount((prevCount) => prevCount + 1);
+        localStorage.setItem("cartCount", (cartCount + 1).toString());
+        window.dispatchEvent(new Event("storage"));
+      } else {
+        // Nếu sản phẩm chưa có, thêm mới vào giỏ hàng
+        await axios.post(`${BASE_URL}AddToCard/add-to-cart`, {
+          accountId: userId,
+          products: [{ productId, quantity: 1 }],
+        });
+
+        // Cập nhật số lượng giỏ hàng trên UI
+        
+        setCartCount(cartCount + 1);
+      localStorage.setItem("cartCount", (cartCount + 1).toString());
+      window.dispatchEvent(new Event("storage"));
+
+        toast.success("Đã thêm vào giỏ hàng!");
+      }
+    } catch (error) {
+      console.error("Lỗi khi thêm vào giỏ hàng:", error);
+      toast.error("Có lỗi xảy ra khi thêm vào giỏ hàng");
+    }
   };
 
   if (loading) return <div className="loader"></div>;
@@ -123,7 +167,7 @@ const Home = () => {
                       type="submit"
                       onClick={(e) => {
                         e.stopPropagation(); // Ngăn sự kiện lan ra ngoài
-                        handleAddToCart();
+                        handleAddToCart(product.id);
                       }}
                     >
                       <BsCart3 className="home-icons" /> Thêm giỏ hàng

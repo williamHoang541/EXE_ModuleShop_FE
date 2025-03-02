@@ -5,7 +5,7 @@ import { PATH_NAME } from "../../../constant/pathname";
 import { useContext, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
-import { toast} from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useTitle from "../../../constant/useTitle";
 import { BASE_URL } from "../../../constant/config";
@@ -33,12 +33,11 @@ const Login = () => {
           "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
         ];
 
-      
-        if (!userId) {
-          toast.error("Lỗi: Không tìm thấy thông tin người dùng.");
-          return;
-        }
-        login(token, userId);
+      if (!userId) {
+        toast.error("Lỗi: Không tìm thấy thông tin người dùng.");
+        return;
+      }
+      login(token, userId);
       toast.success("Đăng nhập thành công!");
 
       setTimeout(() => {

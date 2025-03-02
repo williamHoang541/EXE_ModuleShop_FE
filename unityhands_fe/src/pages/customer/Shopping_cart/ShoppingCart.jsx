@@ -6,6 +6,8 @@ import { AuthContext } from "../../../context/AuthContext";
 import { useContext, useEffect, useState } from "react";
 import { BASE_URL } from "../../../constant/config";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { PATH_NAME } from "../../../constant/pathname";
 
 const ShoppingCart = () => {
   const [loading, setLoading] = useState(true);
@@ -30,8 +32,21 @@ const ShoppingCart = () => {
           (item) => Number(item.accountId) === Number(userId)
         );
 
+        // Gộp các sản phẩm trùng nhau
+        const mergedCart = userCart.reduce((acc, item) => {
+          const existingItem = acc.find(
+            (cartItem) => cartItem.productId === item.productId
+          );
+          if (existingItem) {
+            existingItem.quantity += item.quantity; // Cộng dồn số lượng
+          } else {
+            acc.push({ ...item }); // Thêm mới vào danh sách
+          }
+          return acc;
+        }, []);
+
         // Lấy danh sách productId từ giỏ hàng
-        const productIds = userCart.map((item) => item.productId);
+        const productIds = mergedCart.map((item) => item.productId);
 
         // Gọi API lấy thông tin sản phẩm
         const productResponses = await Promise.all(
@@ -47,7 +62,7 @@ const ShoppingCart = () => {
         }, {});
 
         // Cập nhật giỏ hàng với thông tin sản phẩm
-        const updatedCart = userCart.map((item) => ({
+        const updatedCart = mergedCart.map((item) => ({
           ...item,
           product: productMap[item.productId] || {}, // Gán thông tin sản phẩm vào
         }));
@@ -68,6 +83,50 @@ const ShoppingCart = () => {
       fetchCart();
     }
   }, [userId]);
+
+  const updateCartItemQuantity = async (productId, newQuantity) => {
+    if (newQuantity < 1) {
+      // Nếu số lượng về 0 thì gọi hàm xóa sản phẩm
+      removeCartItem(productId);
+      return;
+    }
+
+    try {
+      const payload = {
+        accountId: userId, // ID của user
+        products: [{ productId, quantity: newQuantity }], // Danh sách sản phẩm cần cập nhật
+      };
+
+      await axios.put(`${BASE_URL}AddToCard/update-cart`, payload);
+
+      // Cập nhật lại giỏ hàng trên UI
+      setCartItems((prevItems) =>
+        prevItems.map((item) =>
+          item.productId === productId
+            ? { ...item, quantity: newQuantity }
+            : item
+        )
+      );
+    } catch (error) {
+      console.error("Lỗi khi cập nhật số lượng sản phẩm:", error);
+    }
+  };
+
+  const removeCartItem = async (productId) => {
+    try {
+      await axios.delete(`${BASE_URL}AddToCard/delete`, {
+        params: { accountId: userId },
+        data: [productId], // Truyền productId cần xóa vào mảng
+      });
+
+      // Cập nhật lại giỏ hàng sau khi xóa thành công
+      setCartItems((prevItems) =>
+        prevItems.filter((item) => item.productId !== productId)
+      );
+    } catch (error) {
+      console.error("Lỗi khi xóa sản phẩm:", error);
+    }
+  };
 
   if (loading) return <div className="loader"></div>;
   return (
@@ -99,7 +158,9 @@ const ShoppingCart = () => {
                       </div>
                       <div className="shopping-title">
                         <p>{item.product?.name}</p>
-                        <button>Xóa</button>
+                        <button onClick={() => removeCartItem(item.productId)}>
+                          Xóa
+                        </button>
                       </div>
                     </div>
                   </td>
@@ -112,11 +173,27 @@ const ShoppingCart = () => {
                   </td>
                   <td>
                     <div className="shopping-quantity">
-                      <button className="shopping-minus">
+                      <button
+                        className="shopping-minus"
+                        onClick={() =>
+                          updateCartItemQuantity(
+                            item.productId,
+                            item.quantity - 1
+                          )
+                        }
+                      >
                         <FiMinus />
                       </button>
                       <p>{item.quantity}</p>
-                      <button className="shopping-add">
+                      <button
+                        className="shopping-add"
+                        onClick={() =>
+                          updateCartItemQuantity(
+                            item.productId,
+                            item.quantity + 1
+                          )
+                        }
+                      >
                         <IoMdAdd />
                       </button>
                     </div>
@@ -151,7 +228,9 @@ const ShoppingCart = () => {
               ₫
             </p>
           </div>
-          <button className="shopping-btn">Thanh toán</button>
+          <Link to={PATH_NAME.PAYMENT}>
+            <button className="shopping-btn">Thanh toán</button>
+          </Link>
         </div>
       </div>
     </div>

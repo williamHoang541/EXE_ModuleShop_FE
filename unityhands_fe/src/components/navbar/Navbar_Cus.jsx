@@ -5,38 +5,80 @@ import logo from "../../assets/Logo_module.png";
 import { GoPerson } from "react-icons/go";
 import { BsCart3 } from "react-icons/bs";
 import { GoSearch } from "react-icons/go";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from "../../context/AuthContext";
+import axios from "axios";
+import { BASE_URL } from "../../constant/config";
 
 const Navbar_Cus = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const profileDropdownRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const { isLoggedIn, logout, userId } = useContext(AuthContext);
+  const [cartTotalQuantity, setCartTotalQuantity] = useState(0);
 
-  // Lấy số lượng sản phẩm trong giỏ hàng từ localStorage
-  const [cartCount, setCartCount] = useState(() => {
-    return parseInt(localStorage.getItem("cartCount")) || 0;
-  });
+  
+
+  const fetchCartTotalQuantity = async () => {
+    if (!isLoggedIn) return;
+
+    try {
+      const cartResponse = await axios.get(`${BASE_URL}AddToCard/get-all`);
+      const allItems = Array.isArray(cartResponse.data?.$values)
+        ? cartResponse.data.$values
+        : [];
+
+      // Lọc sản phẩm theo userId
+      const userCart = allItems.filter(
+        (item) => Number(item.accountId) === Number(userId)
+      );
+
+      // Tính tổng số lượng sản phẩm trong giỏ hàng
+      const totalQuantity = userCart.reduce(
+        (sum, item) => sum + item.quantity,
+        0
+      );
+
+      setCartTotalQuantity(totalQuantity);
+    } catch (error) {
+      console.error("Lỗi khi lấy dữ liệu giỏ hàng:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCartTotalQuantity();
+
+    const handleStorageChange = () => {
+      fetchCartTotalQuantity();
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [isLoggedIn]);
 
   // Cập nhật giỏ hàng khi có thay đổi từ localStorage
-  useEffect(() => {
-    const updateCartCount = () => {
-      setCartCount(parseInt(localStorage.getItem("cartCount")) || 0);
-    };
+  // useEffect(() => {
+  //   const updateCartCount = () => {
+  //     setCartCount(parseInt(localStorage.getItem("cartCount")) || 0);
+  //   };
 
-    window.addEventListener("storage", updateCartCount); // Lắng nghe sự thay đổi
-    updateCartCount(); // Cập nhật ngay khi component render
+  //   window.addEventListener("storage", updateCartCount); // Lắng nghe sự thay đổi
+  //   updateCartCount(); // Cập nhật ngay khi component render
   
-    return () => {
-      window.removeEventListener("storage", updateCartCount);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("storage", updateCartCount);
+  //   };
+  // }, []);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem("isLoggedIn") === "true"; // Kiểm tra xem người dùng đã đăng nhập chưa
-  });
+  // const [isLoggedIn, setIsLoggedIn] = useState(() => {
+  //   return localStorage.getItem("isLoggedIn") === "true"; // Kiểm tra xem người dùng đã đăng nhập chưa
+  // });
 
   const handleClickOutside = (event) => {
     if (
@@ -60,8 +102,7 @@ const Navbar_Cus = () => {
 
   // Xử lý đăng xuất
   const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn"); // Xóa trạng thái đăng nhập
-    setIsLoggedIn(false); // Cập nhật state
+    logout();
     toast.success("Bạn đã đăng xuất thành công!", {
       position: "top-right",
       autoClose: 1000,
@@ -195,7 +236,7 @@ const Navbar_Cus = () => {
           <div className="header-block-cart">
             <Link to={PATH_NAME.SHOPPING_CARTS} className="header-cart">
               <BsCart3 className="header-icons" />
-              <span className="header-count-item">{cartCount}</span>
+              <span className="header-count-item">{cartTotalQuantity}</span>
             </Link>
           </div>
         </div>
