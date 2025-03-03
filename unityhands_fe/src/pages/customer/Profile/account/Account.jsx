@@ -1,22 +1,95 @@
 import "./Account.css";
 import Sidebar from "../sidebar/Sidebar";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useTitle from "../../../../constant/useTitle";
+import { AuthContext } from "../../../../context/AuthContext";
+import axios from "axios";
+import { BASE_URL } from "../../../../constant/config";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Account = () => {
   useTitle("Hồ sơ của bạn");
+  const { userId } = useContext(AuthContext);
   const [isEditing, setIsEditing] = useState(false);
-  const [name, setName] = useState("Văn Vinh");
-  const [email, setEmail] = useState("vanvinh@example.com");
-  const [address, setAddress] = useState("Hà Nội, Việt Nam");
+  const [userData, setUserData] = useState({
+    fullName: "",
+    email: "",
+    address: "",
+    imageUrl: "",
+  });
+  const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleEditClick = () => {
-    setIsEditing(true);
+  // Gọi API để lấy thông tin người dùng
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (!userId) return; // Kiểm tra nếu chưa có userId thì không gọi API
+
+      try {
+        const response = await axios.get(`${BASE_URL}Account/get/${userId}`);
+        const data = response.data;
+        setUserData({
+          fullName: data.fullName || "Chưa cập nhật",
+          email: data.email || "Chưa có email",
+          address: data.address || "Chưa có địa chỉ",
+          imageUrl:
+            data.imageUrl ||
+            "https://cdn-icons-png.flaticon.com/512/847/847969.png",
+        });
+      } catch (error) {
+        console.error("Lỗi khi lấy thông tin tài khoản:", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, [userId]);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+
+      // Hiển thị ảnh ngay lập tức
+      const imageUrl = URL.createObjectURL(file);
+      setUserData((prev) => ({ ...prev, imageUrl }));
+    }
   };
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
+    const formData = new FormData();
+    formData.append("FullName", userData.fullName);
+    formData.append("Email", userData.email);
+    formData.append("Address", userData.address);
+    if (selectedFile) {
+      formData.append("ImageUrl", selectedFile); // Upload ảnh nếu có
+    }
+
+    try {
+      await axios.put(`${BASE_URL}Account/update/${userId}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      toast.success("Cập nhật thành công!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      window.location.reload(); // Load lại trang sau khi cập nhật
+    } catch (error) {
+      console.error("Lỗi khi cập nhật tài khoản:", error);
+      toast.error("Cập nhật thất bại!");
+    }
+
     setIsEditing(false);
   };
+
+  const handleImageClick = () => {
+    if (isEditing) {
+      document.getElementById("fileInput").click(); // Kích hoạt input file ẩn
+    }
+  };
+
   return (
     <div className="account">
       <section className="account-wrapper">
@@ -31,10 +104,18 @@ const Account = () => {
               <h3>Trang tài khoản</h3>
             </div>
             <div className="account-infor">
-              <div className="profile-sidebar-avatar">
-                <img
-                  src="https://cdn11.dienmaycholon.vn/filewebdmclnew/public/userupload/files/Image%20FP_2024/avatar-dep-cho-nam-2.jpg"
-                  alt="avatar"
+              <div
+                className="profile-sidebar-avatar"
+                onClick={handleImageClick}
+                style={{ cursor: isEditing ? "pointer" : "default" }}
+              >
+                <img src={userData.imageUrl} alt="avatar" />
+                <input
+                  type="file"
+                  id="fileInput"
+                  accept="image/*"
+                  style={{ display: "none" }} // Ẩn input file
+                  onChange={handleFileChange}
                 />
               </div>
 
@@ -45,12 +126,14 @@ const Account = () => {
                   {isEditing ? (
                     <input
                       type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      value={userData.fullName}
+                      onChange={(e) =>
+                        setUserData({ ...userData, fullName: e.target.value })
+                      }
                       className="account-input"
                     />
                   ) : (
-                    <span>{name}</span>
+                    <span>{userData.fullName}</span>
                   )}
                 </div>
 
@@ -60,12 +143,14 @@ const Account = () => {
                   {isEditing ? (
                     <input
                       type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      value={userData.email}
+                      onChange={(e) =>
+                        setUserData({ ...userData, email: e.target.value })
+                      }
                       className="account-input"
                     />
                   ) : (
-                    <span>{email}</span>
+                    <span>{userData.email}</span>
                   )}
                 </div>
 
@@ -75,12 +160,14 @@ const Account = () => {
                   {isEditing ? (
                     <input
                       type="text"
-                      value={address}
-                      onChange={(e) => setAddress(e.target.value)}
+                      value={userData.address}
+                      onChange={(e) =>
+                        setUserData({ ...userData, address: e.target.value })
+                      }
                       className="account-input"
                     />
                   ) : (
-                    <span>{address}</span>
+                    <span>{userData.address}</span>
                   )}
                 </div>
               </div>
@@ -90,7 +177,10 @@ const Account = () => {
                     Lưu
                   </button>
                 ) : (
-                  <button className="edit-button" onClick={handleEditClick}>
+                  <button
+                    className="edit-button"
+                    onClick={() => setIsEditing(true)}
+                  >
                     Chỉnh sửa
                   </button>
                 )}

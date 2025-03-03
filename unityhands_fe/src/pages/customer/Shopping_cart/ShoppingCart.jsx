@@ -8,6 +8,7 @@ import { BASE_URL } from "../../../constant/config";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { PATH_NAME } from "../../../constant/pathname";
+import { FaDropbox } from "react-icons/fa";
 
 const ShoppingCart = () => {
   const [loading, setLoading] = useState(true);
@@ -200,7 +201,7 @@ const ShoppingCart = () => {
                   </td>
                   <td>
                     <div className="shopping-payment">
-                      {" "}
+                     
                       {item.product?.price
                         ? (
                             item.product.price * item.quantity
@@ -213,7 +214,10 @@ const ShoppingCart = () => {
             </tbody>
           </table>
         ) : (
+          <div className="shopping-box-empty">
+          <FaDropbox />
           <p>Giỏ hàng trống</p>
+          </div>
         )}
         <div className="shopping-bottom">
           <div className="shopping-total">
