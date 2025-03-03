@@ -16,9 +16,25 @@ import Customers from "./pages/admin/pages/Customers/Customers";
 import AdminOrders from "./pages/admin/pages/AdminOrders/AdminOrders";
 import Dashboard from "./pages/admin/pages/AdminDashboard/Dashboard";
 import AdminCategory from "./pages/admin/pages/AdminCategory/AdminCategory";
+import ShoppingCart from "./pages/customer/Shopping_cart/ShoppingCart";
+import Payment from "./pages/customer/Payment/Payment";
+import Account from "./pages/customer/Profile/account/Account";
+import Order from "./pages/customer/Profile/order/Order";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const App = () => {
   return (
-    <div>
+    <>
+      <ToastContainer
+        limit={1} // Chỉ hiển thị tối đa 1 toast
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover={false}
+        draggable
+        
+      />
       <Routes>
         <Route path={PATH_NAME.LOGIN} element={<Login />} />
         <Route path={PATH_NAME.REGISTER} element={<Register />} />
@@ -39,9 +55,25 @@ const App = () => {
         <Route element={<Layout_Customer />}>
           <Route path={PATH_NAME.HOME} element={<Home />} />
           <Route path={PATH_NAME.PRODUCT_DETAILS} element={<ProductDetail />} />
+
+        <Route path={PATH_NAME.DASH_BOARD} element={<Dashboard />} />
+        <Route path={PATH_NAME.PRODUCTS} element={<AdminProducts />} />
+        <Route path={PATH_NAME.ORDERS} element={<AdminOrders />} />
+        <Route path={PATH_NAME.CUSTOMERS} element={<Customers />} />
+
+        <Route element={<Layout_Customer />}>
+          <Route path={PATH_NAME.HOME} element={<Home />} />
+          <Route path={PATH_NAME.PRODUCT_DETAILS} element={<ProductDetail />} />
+          <Route path={PATH_NAME.CONTACT_US} element={<ContactUs />} />
+          <Route path={PATH_NAME.ITEMS} element={<Itemspage />} />
+          <Route path={PATH_NAME.ABOUT_US} element={<AboutUs />} />
+          <Route path={PATH_NAME.SHOPPING_CARTS} element={<ShoppingCart />} />
+          <Route path={PATH_NAME.PAYMENT} element={<Payment />} />
+          <Route path={PATH_NAME.ACCOUNT} element={<Account />} />
+          <Route path={PATH_NAME.ORDER} element={<Order />} />
         </Route>
       </Routes>
-    </div>
+    </>
   );
 };
 

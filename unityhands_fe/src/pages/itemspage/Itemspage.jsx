@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import "./Itemspage.css";
 import { Card, Col, Row, Select, Input, Slider } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
-import Header from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
+import useTitle from "../../constant/useTitle";
 
 const { Option } = Select;
 
@@ -67,6 +66,7 @@ const products = [
 ];
 
 function Itemspage() {
+  useTitle("Sản phẩm");
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -100,9 +100,6 @@ function Itemspage() {
 
   return (
     <>
-      <header>
-        <Header />
-      </header>
       <div className="itemspage-container">
         <p className="swiper__title">Sản phẩm</p>
         <div className="filters">
@@ -151,7 +148,9 @@ function Itemspage() {
                 >
                   <div className="product-info">
                     <h3 className="product-name">{product.name}</h3>
-                    <p className="product-price">{product.price.toLocaleString()} VND</p>
+                    <p className="product-price">
+                      {product.price.toLocaleString()} VND
+                    </p>
                   </div>
 
                   {/* Nút Thêm vào giỏ hàng */}
@@ -166,11 +165,7 @@ function Itemspage() {
             <p className="no-results">Không tìm thấy sản phẩm nào</p>
           )}
         </Row>
-
       </div>
-      <footer>
-        <Footer />
-      </footer>
     </>
   );
 }

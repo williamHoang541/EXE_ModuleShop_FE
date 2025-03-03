@@ -5,17 +5,80 @@ import logo from "../../assets/Logo_module.png";
 import { GoPerson } from "react-icons/go";
 import { BsCart3 } from "react-icons/bs";
 import { GoSearch } from "react-icons/go";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from "../../context/AuthContext";
+import axios from "axios";
+import { BASE_URL } from "../../constant/config";
 
 const Navbar_Cus = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const profileDropdownRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const { isLoggedIn, logout, userId } = useContext(AuthContext);
+  const [cartTotalQuantity, setCartTotalQuantity] = useState(0);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem("isLoggedIn") === "true"; // Kiểm tra xem người dùng đã đăng nhập chưa
-  });
+  
+
+  const fetchCartTotalQuantity = async () => {
+    if (!isLoggedIn) return;
+
+    try {
+      const cartResponse = await axios.get(`${BASE_URL}AddToCard/get-all`);
+      const allItems = Array.isArray(cartResponse.data?.$values)
+        ? cartResponse.data.$values
+        : [];
+
+      // Lọc sản phẩm theo userId
+      const userCart = allItems.filter(
+        (item) => Number(item.accountId) === Number(userId)
+      );
+
+      // Tính tổng số lượng sản phẩm trong giỏ hàng
+      const totalQuantity = userCart.reduce(
+        (sum, item) => sum + item.quantity,
+        0
+      );
+
+      setCartTotalQuantity(totalQuantity);
+    } catch (error) {
+      console.error("Lỗi khi lấy dữ liệu giỏ hàng:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCartTotalQuantity();
+
+    const handleStorageChange = () => {
+      fetchCartTotalQuantity();
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [isLoggedIn]);
+
+  // Cập nhật giỏ hàng khi có thay đổi từ localStorage
+  // useEffect(() => {
+  //   const updateCartCount = () => {
+  //     setCartCount(parseInt(localStorage.getItem("cartCount")) || 0);
+  //   };
+
+  //   window.addEventListener("storage", updateCartCount); // Lắng nghe sự thay đổi
+  //   updateCartCount(); // Cập nhật ngay khi component render
+  
+  //   return () => {
+  //     window.removeEventListener("storage", updateCartCount);
+  //   };
+  // }, []);
+
+  // const [isLoggedIn, setIsLoggedIn] = useState(() => {
+  //   return localStorage.getItem("isLoggedIn") === "true"; // Kiểm tra xem người dùng đã đăng nhập chưa
+  // });
 
   const handleClickOutside = (event) => {
     if (
@@ -39,13 +102,17 @@ const Navbar_Cus = () => {
 
   // Xử lý đăng xuất
   const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn"); // Xóa trạng thái đăng nhập
-    setIsLoggedIn(false); // Cập nhật state
+    logout();
+    toast.success("Bạn đã đăng xuất thành công!", {
+      position: "top-right",
+      autoClose: 1000,
+    });
     navigate(PATH_NAME.HOME); // Chuyển hướng về trang chủ
   };
 
   return (
     <header className="header">
+    <ToastContainer/>
       <div className="header-container">
         <div className="header-logo-img">
           <Link to={PATH_NAME.HOME}>
@@ -65,17 +132,17 @@ const Navbar_Cus = () => {
               </li>
               <li
                 className={`header-nav-item ${
-                  location.pathname === "/about" ? "active" : ""
+                  location.pathname === PATH_NAME.ABOUT_US ? "active" : ""
                 }`}
               >
-                <Link to="/about">Về chúng tôi</Link>
+                <Link to={PATH_NAME.ABOUT_US}>Về chúng tôi</Link>
               </li>
               <li
                 className={`header-nav-item ${
-                  location.pathname === "/products" ? "active" : ""
+                  location.pathname === PATH_NAME.ITEMS ? "active" : ""
                 }`}
               >
-                <Link to="/products">Sản phẩm</Link>
+                <Link to={PATH_NAME.ITEMS}>Sản phẩm</Link>
               </li>
               <li
                 className={`header-nav-item ${
@@ -86,10 +153,10 @@ const Navbar_Cus = () => {
               </li>
               <li
                 className={`header-nav-item ${
-                  location.pathname === "/contact" ? "active" : ""
+                  location.pathname === PATH_NAME.CONTACT_US ? "active" : ""
                 }`}
               >
-                <Link to="/contact">Liên hệ</Link>
+                <Link to={PATH_NAME.CONTACT_US}>Liên hệ</Link>
               </li>
             </ul>
           </nav>
@@ -124,7 +191,7 @@ const Navbar_Cus = () => {
                   <>
                     <div className="navbar-profile-wrapper">
                       <Link
-                        to={PATH_NAME.PROFILE}
+                        to={PATH_NAME.ACCOUNT}
                         className="navbar-profile-item"
                         onClick={(e) => e.stopPropagation()}
                       >
@@ -167,10 +234,10 @@ const Navbar_Cus = () => {
           </div>
 
           <div className="header-block-cart">
-            <div className="header-cart">
+            <Link to={PATH_NAME.SHOPPING_CARTS} className="header-cart">
               <BsCart3 className="header-icons" />
-              <span className="header-count-item">0</span>
-            </div>
+              <span className="header-count-item">{cartTotalQuantity}</span>
+            </Link>
           </div>
         </div>
       </div>

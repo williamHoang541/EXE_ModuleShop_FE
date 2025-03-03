@@ -3,10 +3,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PATH_NAME } from "../../../constant/pathname";
 import OTPInput from "react-otp-input";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import  useTitle from "../../../constant/useTitle";
+import { BASE_URL } from "../../../constant/config";
 
 const NewPassword = () => {
   const [password, setPassword] = useState("");
@@ -32,7 +33,7 @@ const NewPassword = () => {
 
     try {
       await axios.post(
-        "https://moduleshop-g8h8hxc8cwcqema8.westeurope-01.azurewebsites.net/api/Account/reset-password",
+        `${BASE_URL}Account/reset-password`,
         null, 
         {
           params: {
@@ -42,7 +43,7 @@ const NewPassword = () => {
           },
         }
       );
-
+      toast.dismiss();
       toast.success("Mật khẩu đã được cập nhật thành công!");
       setTimeout(() => navigate(PATH_NAME.LOGIN), 1000);
     } catch (error) {
@@ -54,7 +55,6 @@ const NewPassword = () => {
 
   return (
     <main className="login">
-      <ToastContainer />
       <div className="login_container">
         <div className="login_wrapper">
           <div className="col-xl-6 col-lg-6 col-md-6 col-12">

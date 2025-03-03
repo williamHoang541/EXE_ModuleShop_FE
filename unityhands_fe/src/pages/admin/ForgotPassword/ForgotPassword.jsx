@@ -3,8 +3,9 @@ import { PATH_NAME } from "../../../constant/pathname";
 import "./ForgotPassword.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast} from "react-toastify";
 import  useTitle from "../../../constant/useTitle";
+import { BASE_URL } from "../../../constant/config";
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
@@ -32,10 +33,10 @@ const ForgotPassword = () => {
 
     try {
       await axios.post(
-        `https://moduleshop-g8h8hxc8cwcqema8.westeurope-01.azurewebsites.net/api/Account/forgot-password?email=${encodeURIComponent(email)}`
+        `${BASE_URL}Account/forgot-password?email=${encodeURIComponent(email)}`
       );
+      toast.dismiss();
       toast.success("Mã xác thực đã được gửi đến email của bạn.", {
-        autoClose: 3000,
         onClose: () => {
           navigate(`${PATH_NAME.NEW_PASSWORD}?email=${encodeURIComponent(email)}`);
         }
@@ -47,7 +48,6 @@ const ForgotPassword = () => {
 
   return (
     <main className="login">
-    <ToastContainer />
       <div className="login_container">
         <div className="login_wrapper">
           <div className="col-xl-6 col-lg-6 col-md-6 col-12">
