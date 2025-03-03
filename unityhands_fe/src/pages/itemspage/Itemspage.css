@@ -20,7 +20,7 @@
   flex-wrap: wrap;
   gap: 15px;
   margin-bottom: 30px;
-  background: #f9f9f9;
+  background: #e3e3e366;
   padding: 15px;
   border-radius: 8px;
 }
@@ -155,6 +155,8 @@
 
 :where(.css-dev-only-do-not-override-19lec04).ant-slider .ant-slider-handle:focus::after {
   box-shadow: 0 0 0 2.5px var(--primary-color-text) !important;
-  
- 
+}
+
+:where(.css-dev-only-do-not-override-19lec04).ant-input-outlined:focus, :where(.css-dev-only-do-not-override-19lec04).ant-input-outlined:focus-within {
+  box-shadow: 0 0 0 1px var(--primary-background-color) !important;
 }
