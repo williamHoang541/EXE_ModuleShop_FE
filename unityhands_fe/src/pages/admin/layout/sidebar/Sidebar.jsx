@@ -1,7 +1,7 @@
 import './Sidebar.css'
 import React from "react";
 import { Layout, Menu } from "antd";
-import { DashboardOutlined, ShoppingCartOutlined, UserOutlined, ShopOutlined, LogoutOutlined } from "@ant-design/icons";
+import { DashboardOutlined, ShoppingCartOutlined, UserOutlined, ShopOutlined, LogoutOutlined, BarsOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
 const { Sider } = Layout;
@@ -13,6 +13,9 @@ function Sidebar() {
       <Menu theme="dark" mode="inline">
         <Menu.Item key="dashboard" icon={<DashboardOutlined />}>
           <Link to="/admin/dashboard">Dashboard</Link>
+        </Menu.Item>
+        <Menu.Item key="category" icon={<BarsOutlined />}>
+          <Link to="/admin/category">Danh mục</Link>
         </Menu.Item>
         <Menu.Item key="products" icon={<ShopOutlined />}>
           <Link to="/admin/products">Sản phẩm</Link>

@@ -10,6 +10,7 @@ export const PATH_NAME = {
     CONTACT_US: "/contact-us",
     DASH_BOARD: "/admin/dashboard",
     ADMIN_PRODUCTS: "/admin/products",
+    ADMIN_CATEGORY: "/admin/category",
     ADMIN_ORDERS: "/admin/orders",
     ADMIN_CUSTOMERS: "/admin/customers",
 }

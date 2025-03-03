@@ -15,6 +15,7 @@ import AdminProducts from "./pages/admin/pages/AdminProducts/AdminProducts";
 import Customers from "./pages/admin/pages/Customers/Customers";
 import AdminOrders from "./pages/admin/pages/AdminOrders/AdminOrders";
 import Dashboard from "./pages/admin/pages/AdminDashboard/Dashboard";
+import AdminCategory from "./pages/admin/pages/AdminCategory/AdminCategory";
 const App = () => {
   return (
     <div>
@@ -29,6 +30,7 @@ const App = () => {
 
         <Route  element={<MainDashboard />}>
           <Route path={PATH_NAME.DASH_BOARD} element={<Dashboard />} /> 
+          <Route path={PATH_NAME.ADMIN_CATEGORY} element={<AdminCategory />} /> 
           <Route path={PATH_NAME.ADMIN_PRODUCTS} element={<AdminProducts />} />
           <Route path={PATH_NAME.ADMIN_ORDERS} element={<AdminOrders />} />
           <Route path={PATH_NAME.ADMIN_CUSTOMERS} element={<Customers />} />

@@ -49,9 +49,7 @@ function AdminProducts() {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const response = await api.get(
-        "https://moduleshop-g8h8hxc8cwcqema8.westeurope-01.azurewebsites.net/api/Product/get-all"
-      );
+      const response = await api.get("/Product/get-all");
       const productsData = response.data.$values.map((product) => ({
         key: product.id,
         id: product.id,
@@ -70,9 +68,7 @@ function AdminProducts() {
 
   const fetchCategory = async () => {
     try {
-      const response = await api.get(
-        "https://moduleshop-g8h8hxc8cwcqema8.westeurope-01.azurewebsites.net/api/Category/get-all"
-      );
+      const response = await api.get("/Category/get-all");
       setCategory(response.data.$values);
     } catch (error) {
       message.error("Lỗi khi tải danh mục!");
@@ -102,8 +98,7 @@ function AdminProducts() {
     }
 
     try {
-      const response = await api.post(
-        "https://moduleshop-g8h8hxc8cwcqema8.westeurope-01.azurewebsites.net/api/Product/create",
+      const response = await api.post("/Product/create",
         formData,
         {
           headers: {
