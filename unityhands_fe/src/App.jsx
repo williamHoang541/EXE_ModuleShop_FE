@@ -40,9 +40,6 @@ const App = () => {
         <Route path={PATH_NAME.REGISTER} element={<Register />} />
         <Route path={PATH_NAME.FORGOT_PASSWORD} element={<ForgotPassword />} />
         <Route path={PATH_NAME.NEW_PASSWORD} element={<NewPassword />} />
-        <Route path={PATH_NAME.ITEMS} element={<Itemspage />} />
-        <Route path={PATH_NAME.ABOUT_US} element={<AboutUs />} />
-        <Route path={PATH_NAME.CONTACT_US} element={<ContactUs />} />
 
         <Route  element={<MainDashboard />}>
           <Route path={PATH_NAME.DASH_BOARD} element={<Dashboard />} /> 

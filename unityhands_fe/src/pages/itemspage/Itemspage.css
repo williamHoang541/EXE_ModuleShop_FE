@@ -5,9 +5,9 @@
 }
 
 .swiper__title {
-  font-size: 3em;
+  font-size: 30px;
   text-align: center;
-  color: #936a49;
+  color: #333;
   margin-bottom: 1em;
   font-weight: bold;
   text-transform: uppercase;
@@ -23,7 +23,6 @@
   background: #f9f9f9;
   padding: 15px;
   border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .search-input,
@@ -136,4 +135,26 @@
 
 .add-to-cart-btn:hover {
   background-color: #7a5232;
+}
+
+.items-home-product {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-evenly;
+}
+
+:where(.css-dev-only-do-not-override-19lec04).ant-slider .ant-slider-track {
+  background-color: var(--primary-color-text) !important;
+}
+
+:where(.css-dev-only-do-not-override-19lec04).ant-slider
+  .ant-slider-handle::after {
+  box-shadow: 0 0 0 2px var(--primary-color-text) !important;
+}
+
+:where(.css-dev-only-do-not-override-19lec04).ant-slider .ant-slider-handle:focus::after {
+  box-shadow: 0 0 0 2.5px var(--primary-color-text) !important;
+  
+ 
 }
