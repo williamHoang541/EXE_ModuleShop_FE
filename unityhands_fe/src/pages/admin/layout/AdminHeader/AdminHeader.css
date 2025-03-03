@@ -1,0 +1,14 @@
+.ant-layout-header .admin-header :where(.css-dev-only-do-not-override-xex5fb) {
+  background-color: #936a49 !important;
+  display: flex;
+  align-items: center; 
+  justify-content: flex-end;
+  height: 5em; 
+  width: 100%;
+}
+
+.admin-header .ant-avatar {
+  background-color: #ffffff;
+  color: #936a49;
+  font-weight: bold;
+}

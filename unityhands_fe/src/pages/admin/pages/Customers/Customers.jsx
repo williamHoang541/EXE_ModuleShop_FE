@@ -8,8 +8,6 @@ import {
   EditOutlined,
   FilterOutlined,
 } from "@ant-design/icons";
-import Sidebar from '../../../components/sidebar/Sidebar';
-import AdminHeader from '../../../components/AdminHeader/AdminHeader';
 
 const { Content } = Layout;
 
@@ -105,11 +103,6 @@ const columns = [
 function Customers() {
   return (
     <>
-    <Layout style={{ minHeight: "100vh" }}>
-      <Sidebar />
-      <Layout>
-        <AdminHeader />
-        <Content style={{ padding: "20px" }}>
           <div className="admin-customers">
             <div className="customers-header">
               <h2>Quản lý khách hàng</h2>
@@ -126,9 +119,6 @@ function Customers() {
             </div>
             <Table columns={columns} dataSource={customersData} pagination={{ pageSize: 5 }} />
           </div>
-        </Content>
-      </Layout>
-    </Layout>
     </>
   )
 }

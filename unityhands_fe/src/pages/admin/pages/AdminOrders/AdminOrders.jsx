@@ -1,4 +1,4 @@
-import './AdminOrders.css'
+import "./AdminOrders.css";
 import { Layout, Table, Button, Input, Space, Tag } from "antd";
 import {
   SearchOutlined,
@@ -8,8 +8,6 @@ import {
   DeleteOutlined,
   FilterOutlined,
 } from "@ant-design/icons";
-import Sidebar from '../../../components/sidebar/Sidebar';
-import AdminHeader from '../../../components/AdminHeader/AdminHeader';
 const { Content } = Layout;
 
 const ordersData = [
@@ -110,36 +108,36 @@ const columns = [
 function AdminOrders() {
   return (
     <>
-    <Layout style={{ minHeight: "100vh" }}>
-      <Sidebar />
-      <Layout>
-        <AdminHeader />
-        <Content style={{ padding: "20px" }}>
-          <div className="admin-orders">
-            <div className="orders-header">
-              <h2>Quản lý đơn hàng</h2>
-              <Space>
-                <Button icon={<ExportOutlined />}>Xuất Excel</Button>
-                <Button type="primary" icon={<PlusOutlined />} className="add-order-button">
-                  Thêm đơn hàng
-                </Button>
-              </Space>
-            </div>
-            <div className="search-bar">
-              <Input
-                placeholder="Tìm kiếm đơn hàng..."
-                prefix={<SearchOutlined />}
-                className="search-input"
-              />
-              <Button icon={<FilterOutlined />}>Lọc</Button>
-            </div>
-            <Table columns={columns} dataSource={ordersData} pagination={{ pageSize: 5 }} />
-          </div>
-        </Content>
-      </Layout>
-    </Layout>
+      <div className="admin-orders">
+        <div className="orders-header">
+          <h2>Quản lý đơn hàng</h2>
+          <Space>
+            <Button icon={<ExportOutlined />}>Xuất Excel</Button>
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              className="add-order-button"
+            >
+              Thêm đơn hàng
+            </Button>
+          </Space>
+        </div>
+        <div className="search-bar">
+          <Input
+            placeholder="Tìm kiếm đơn hàng..."
+            prefix={<SearchOutlined />}
+            className="search-input"
+          />
+          <Button icon={<FilterOutlined />}>Lọc</Button>
+        </div>
+        <Table
+          columns={columns}
+          dataSource={ordersData}
+          pagination={{ pageSize: 5 }}
+        />
+      </div>
     </>
-  )
+  );
 }
 
-export default AdminOrders
+export default AdminOrders;

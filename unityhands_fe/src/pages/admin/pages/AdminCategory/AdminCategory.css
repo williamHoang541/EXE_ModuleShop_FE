@@ -1,0 +1,16 @@
+.admin-category {
+    padding: 20px;
+    background-color: #fff;
+  }
+  
+  .category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .ant-table {
+    border-radius: 10px;
+  }
+  
