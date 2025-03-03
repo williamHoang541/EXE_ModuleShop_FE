@@ -48,58 +48,58 @@ const Dashboard = () => {
     {
       key: "1",
       order: "#92627",
-      status: "Paid",
+      status: "Đã thanh toán",
       date: "09/07/2022",
-      customer: "Tara Fletcher",
-      amount: 279.00,
+      customer: "Hồ Quang Hiếu",
+      amount: 279.000,
     },
     {
       key: "2",
       order: "#92509",
-      status: "Pending",
+      status: "Đang xử lý",
       date: "26/06/2022",
-      customer: "Joyce Freeman",
-      amount: 831.00,
+      customer: "Tăng Ngọc Hà",
+      amount: 831.000,
     },
     {
       key: "3",
       order: "#91631",
-      status: "Paid",
+      status: "Đã thanh toán",
       date: "18/06/2022",
-      customer: "Brittany Hale",
-      amount: 142.00,
+      customer: "Phan Đình Phùng",
+      amount: 142.000,
     },
     {
       key: "4",
       order: "#90963",
-      status: "Paid",
+      status: "Đã thanh toán",
       date: "11/06/2022",
-      customer: "Luke Cook",
-      amount: 232.00,
+      customer: "Nguyễn Thanh Tùng",
+      amount: 232.000,
     },
     {
       key: "5",
       order: "#89332",
-      status: "Pending",
+      status: "Đang xử lý",
       date: "02/06/2022",
-      customer: "Eileen Horton",
-      amount: 597.00,
+      customer: "Trường Giang",
+      amount: 597.000,
     },
     {
       key: "6",
       order: "#89107",
-      status: "Failed",
+      status: "Hủy đơn",
       date: "17/04/2022",
-      customer: "Frederick Adams",
-      amount: 72.00,
+      customer: "Lê Dương Bảo Lâm",
+      amount: 721.000,
     },
     {
       key: "7",
       order: "#89021",
-      status: "Paid",
+      status: "Đã thanh toán",
       date: "13/04/2022",
-      customer: "Lee Wheeler",
-      amount: 110.00,
+      customer: "Nhã Phương",
+      amount: 910.000,
     },
   ]);
   const salesTarget = {
@@ -191,7 +191,7 @@ const Dashboard = () => {
       dataIndex: "status",
       key: "status",
       render: (status) => {
-        let color = status === "Paid" ? "green" : status === "Pending" ? "orange" : "red";
+        let color = status === "Đã thanh toán" ? "green" : status === "Đang xử lý" ? "orange" : "red";
         return (
           <Tag color={color} style={{ fontWeight: "bold" }}>
             {status}
@@ -213,7 +213,7 @@ const Dashboard = () => {
       title: "SỐ TIỀN",
       dataIndex: "amount",
       key: "amount",
-      render: (amount) => <b>${amount.toFixed(2)}</b>,
+      render: (amount) => <b>{amount.toFixed(3)} VND</b>,
     },
   ];
 
@@ -317,7 +317,7 @@ const Dashboard = () => {
                     <Button
                       type="link"
                       icon={<EyeOutlined />}
-                      onClick={() => navigate("/products")}
+                      onClick={() => navigate("/admin/products")}
                     >
                       Xem tất cả
                     </Button>
@@ -350,7 +350,7 @@ const Dashboard = () => {
                 <Card className="recent-orders-card">
                   <div className="recent-orders-header">
                     <h3>Đơn hàng gần đây</h3>
-                    <Button type="default" onClick={() => navigate("/orders")}>Xem tất cả</Button>
+                    <Button type="default" onClick={() => navigate("/admin/orders")}>Xem tất cả</Button>
                   </div>
                   <Table columns={orderColumns} dataSource={orders} pagination={false} />
                 </Card>
