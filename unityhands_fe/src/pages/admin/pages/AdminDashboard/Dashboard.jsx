@@ -12,6 +12,7 @@ import {
   Avatar,
   Tag,
   Progress,
+  Table,
 } from "antd";
 import {
   ShoppingCartOutlined,
@@ -28,9 +29,6 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
-import Sidebar from "../../../components/sidebar/Sidebar";
-import AdminHeader from "../../../components/AdminHeader/AdminHeader";
-import { Content } from "antd/es/layout/layout";
 import "./Dashboard.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -46,9 +44,67 @@ const Dashboard = () => {
     chartData: [],
   });
   const [product, setProduct] = useState([]);
+  const [orders, setOrders] = useState([
+    {
+      key: "1",
+      order: "#92627",
+      status: "Paid",
+      date: "09/07/2022",
+      customer: "Tara Fletcher",
+      amount: 279.00,
+    },
+    {
+      key: "2",
+      order: "#92509",
+      status: "Pending",
+      date: "26/06/2022",
+      customer: "Joyce Freeman",
+      amount: 831.00,
+    },
+    {
+      key: "3",
+      order: "#91631",
+      status: "Paid",
+      date: "18/06/2022",
+      customer: "Brittany Hale",
+      amount: 142.00,
+    },
+    {
+      key: "4",
+      order: "#90963",
+      status: "Paid",
+      date: "11/06/2022",
+      customer: "Luke Cook",
+      amount: 232.00,
+    },
+    {
+      key: "5",
+      order: "#89332",
+      status: "Pending",
+      date: "02/06/2022",
+      customer: "Eileen Horton",
+      amount: 597.00,
+    },
+    {
+      key: "6",
+      order: "#89107",
+      status: "Failed",
+      date: "17/04/2022",
+      customer: "Frederick Adams",
+      amount: 72.00,
+    },
+    {
+      key: "7",
+      order: "#89021",
+      status: "Paid",
+      date: "13/04/2022",
+      customer: "Lee Wheeler",
+      amount: 110.00,
+    },
+  ]);
   const salesTarget = {
-    achieved: 1300, // Đã đạt được
-    target: 1800, // Mục tiêu
+    achieved: 1300, 
+    target: 1800, 
   };
   const navigate = useNavigate();
   const salesPercentage = Math.round(
@@ -92,9 +148,22 @@ const Dashboard = () => {
     }
   };
 
+  const getRecentOrders = async () => {
+    try {
+      const response = await axios.get(
+        "https://67bb583afbe0387ca139d151.mockapi.io/api/admin/orders"
+      );
+      setOrders(response.data);
+    } catch (error) {
+      // message.error("Lỗi khi tải đơn hàng!");
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getDashboardData();
     getTopProducts();
+    getRecentOrders();
   }, []);
 
   const getMetricTitle = () => {
@@ -110,15 +179,48 @@ const Dashboard = () => {
     }
   };
 
+  const orderColumns = [
+    {
+      title: "ĐƠN HÀNG",
+      dataIndex: "order",
+      key: "order",
+      render: (text) => <b>{text}</b>,
+    },
+    {
+      title: "TRẠNG THÁI",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => {
+        let color = status === "Paid" ? "green" : status === "Pending" ? "orange" : "red";
+        return (
+          <Tag color={color} style={{ fontWeight: "bold" }}>
+            {status}
+          </Tag>
+        );
+      },
+    },
+    {
+      title: "NGÀY ĐẶT HÀNG",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "KHÁCH HÀNG",
+      dataIndex: "customer",
+      key: "customer",
+    },
+    {
+      title: "SỐ TIỀN",
+      dataIndex: "amount",
+      key: "amount",
+      render: (amount) => <b>${amount.toFixed(2)}</b>,
+    },
+  ];
+
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Sidebar />
-      <Layout>
-        <AdminHeader />
-        <Content style={{ padding: "20px" }}>
           <div className="dashboard">
             <Row gutter={[16, 16]}>
-              <Col span={18}>
+              <Col span={17}>
                 <Card className="chart-card">
                   <div className="stats-container">
                     <Card
@@ -182,8 +284,10 @@ const Dashboard = () => {
                   </ResponsiveContainer>
                 </Card>
               </Col>
-              <Col span={6}>
-                <Card style={{ marginBottom: "20px", width: 300 }}>
+              <Col span={7}>
+                <Card
+                  className="sale-target-card"
+                >
                   <div
                     style={{
                       display: "flex",
@@ -191,18 +295,19 @@ const Dashboard = () => {
                       alignItems: "center",
                     }}
                   >
-                    <div>
-                      <h3>Sales target</h3>
-                      <p style={{ marginBottom: 0 }}>
+                    <div className="sale-target-info">
+                      <h3>Mục tiêu</h3>
+                      <p>
                         <b>{salesTarget.achieved.toLocaleString()}K</b> /{" "}
-                        {salesTarget.target.toLocaleString()} Units
+                        {salesTarget.target.toLocaleString()} Đơn
                       </p>
-                      <span style={{ color: "gray" }}>Made this month</span>
+                      <span style={{ color: "gray" }}>Tháng này</span>
                     </div>
                     <Progress
                       type="circle"
                       percent={salesPercentage}
                       width={60}
+                      strokeColor="#936a49"
                     />
                   </div>
                 </Card>
@@ -219,7 +324,7 @@ const Dashboard = () => {
                   </div>
                   <List
                     itemLayout="horizontal"
-                    dataSource={product}
+                    dataSource={product.slice(0, 5)}
                     renderItem={(item) => (
                       <List.Item>
                         <List.Item.Meta
@@ -240,10 +345,18 @@ const Dashboard = () => {
                 </Card>
               </Col>
             </Row>
+            <Row>
+              <Col span={24}>
+                <Card className="recent-orders-card">
+                  <div className="recent-orders-header">
+                    <h3>Đơn hàng gần đây</h3>
+                    <Button type="default" onClick={() => navigate("/orders")}>Xem tất cả</Button>
+                  </div>
+                  <Table columns={orderColumns} dataSource={orders} pagination={false} />
+                </Card>
+              </Col>
+            </Row>
           </div>
-        </Content>
-      </Layout>
-    </Layout>
   );
 };
 

@@ -26,10 +26,8 @@ import {
   FilterOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
-import axios from "axios";
-import AdminHeader from "../../../components/AdminHeader/AdminHeader";
-import Sidebar from "../../../components/sidebar/Sidebar";
 import "./AddminProducts.css";
+import api from "../../../../constant/axios";
 
 const { Content } = Layout;
 
@@ -51,7 +49,7 @@ function AdminProducts() {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
+      const response = await api.get(
         "https://moduleshop-g8h8hxc8cwcqema8.westeurope-01.azurewebsites.net/api/Product/get-all"
       );
       const productsData = response.data.$values.map((product) => ({
@@ -72,7 +70,7 @@ function AdminProducts() {
 
   const fetchCategory = async () => {
     try {
-      const response = await axios.get(
+      const response = await api.get(
         "https://moduleshop-g8h8hxc8cwcqema8.westeurope-01.azurewebsites.net/api/Category/get-all"
       );
       setCategory(response.data.$values);
@@ -104,7 +102,7 @@ function AdminProducts() {
     }
 
     try {
-      const response = await axios.post(
+      const response = await api.post(
         "https://moduleshop-g8h8hxc8cwcqema8.westeurope-01.azurewebsites.net/api/Product/create",
         formData,
         {
@@ -186,12 +184,8 @@ function AdminProducts() {
   ];
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Sidebar />
-      <Layout>
-        <AdminHeader />
-        <Content style={{ padding: "20px" }}>
-          <div className="admin-products">
+    <>
+    <div className="admin-products">
             <div className="products-header">
               <h2>Quản lý sản phẩm</h2>
               <Space>
@@ -220,9 +214,6 @@ function AdminProducts() {
               pagination={{ pageSize: 5 }}
             />
           </div>
-        </Content>
-      </Layout>
-
       <Modal
         title="Thêm sản phẩm mới"
         open={isModalVisible}
@@ -339,8 +330,8 @@ function AdminProducts() {
             </Upload>
           </Form.Item>
         </Form>
-      </Modal>
-    </Layout>
+      </Modal></>
+          
   );
 }
 

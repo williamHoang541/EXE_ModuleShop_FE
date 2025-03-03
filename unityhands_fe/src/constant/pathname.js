@@ -8,8 +8,8 @@ export const PATH_NAME = {
     ITEMS: "/items",
     ABOUT_US: "/about-us",
     CONTACT_US: "/contact-us",
-    DASH_BOARD: "/dashboard",
-    PRODUCTS: "/products",
-    ORDERS: "/orders",
-    CUSTOMERS: "/customers",
+    DASH_BOARD: "/admin/dashboard",
+    ADMIN_PRODUCTS: "/admin/products",
+    ADMIN_ORDERS: "/admin/orders",
+    ADMIN_CUSTOMERS: "/admin/customers",
 }

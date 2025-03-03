@@ -1,0 +1,25 @@
+.layout-dashboard {
+    min-height: 100vh;
+  }
+  
+  .header-dashboard {
+    background: #936a49;
+    color: white;
+    padding: 0 20px;
+    width: 100%;
+  }
+  
+  .sider-dashboard {
+    background: #1f1f1f;
+  }
+  
+  .main-content {
+    padding: 20px;
+    min-height: 86vh;
+    overflow-y: auto;
+  }
+  
+  .drawer-sidebar .ant-drawer-body {
+    padding: 0;
+  }
+  
