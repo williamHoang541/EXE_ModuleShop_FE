@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 const { Sider } = Layout;
 function Sidebar() {
   const navigate = useNavigate();
-  const { logout, userId } = useContext(AuthContext); // Lấy `logout` từ context
+  const { logout, userId } = useContext(AuthContext);
 
   const handleLogout = () => {
     if (!userId) {
@@ -29,19 +29,18 @@ function Sidebar() {
     }
 
     console.log("User ID before logout:", userId);
-    logout(); // Gọi hàm logout từ AuthContext
+    logout(); 
 
     toast.success("Bạn đã đăng xuất thành công!", {
       position: "top-right",
       autoClose: 1000,
     });
 
-    navigate("/"); // Chuyển hướng về trang chủ
+    navigate("/"); 
   };
   return (
     <>
       <Sider width={250} className="sidebar">
-        <div className="logo">Admin Dashboard</div>
         <Menu theme="dark" mode="inline">
           <Menu.Item key="dashboard" icon={<DashboardOutlined />}>
             <Link to="/admin/dashboard">Dashboard</Link>

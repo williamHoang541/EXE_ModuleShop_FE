@@ -58,7 +58,7 @@
 
 .sidebar .ant-menu-item-selected {
   color: white;
-  border-left: 3px solid white;
+  border-left: 3px solid #936a49;
   background-color: transparent;
 }
 
