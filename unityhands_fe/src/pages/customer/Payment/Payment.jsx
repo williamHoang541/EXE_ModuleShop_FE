@@ -9,6 +9,7 @@ import { AuthContext } from "../../../context/AuthContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BASE_URL } from "../../../constant/config";
+import qr from "../../../assets/qr.jpg";
 
 const Payment = () => {
   useTitle("Thanh toán");
@@ -102,7 +103,7 @@ const Payment = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "ward") {
-      const selectedWard = wards.find(w => w.code == value);
+      const selectedWard = wards.find((w) => w.code == value);
       setFormData({
         ...formData,
         ward: value,
@@ -118,8 +119,6 @@ const Payment = () => {
       toast.error("Vui lòng đăng nhập để đặt hàng!");
       return;
     }
-
-    
 
     // Định dạng dữ liệu gửi API
     const orderData = {
@@ -263,6 +262,24 @@ const Payment = () => {
                 Thu hộ (COD)
               </label>
             </div>
+
+            {formData.paymentMethod === "online payment" && (
+              <div className="qr-code-container">
+                <p>Quét mã QR để thanh toán:</p>
+                <img src={qr} alt="QR Code" className="qr-code-img" />
+                <div className="qr-text">
+                  <p>
+                    <strong>Ngân hàng:</strong>MB Bank
+                  </p>
+                  <p>
+                    <strong>Số tài khoản:</strong>123456
+                  </p>
+                  <p>
+                    <strong>Chủ tài khoản:</strong> Nguyen Van A
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
