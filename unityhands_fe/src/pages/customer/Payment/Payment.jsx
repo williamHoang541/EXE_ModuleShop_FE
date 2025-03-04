@@ -9,6 +9,7 @@ import { AuthContext } from "../../../context/AuthContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BASE_URL } from "../../../constant/config";
+import qr from "../../../assets/qr.jpg";
 
 const Payment = () => {
   useTitle("Thanh toán");
@@ -71,7 +72,7 @@ const Payment = () => {
         .then((response) => setDistricts(response.data.districts))
         .catch((error) => console.error("Lỗi lấy quận/huyện:", error));
 
-      setShippingFee(30000 + Math.floor(Math.random() * 20000)); // Phí ngẫu nhiên từ 30k - 50k
+      setShippingFee(30000); // Phí ngẫu nhiên từ 30k - 50k
     } else {
       setDistricts([]);
     }
@@ -102,7 +103,7 @@ const Payment = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "ward") {
-      const selectedWard = wards.find(w => w.code == value);
+      const selectedWard = wards.find((w) => w.code == value);
       setFormData({
         ...formData,
         ward: value,
@@ -119,17 +120,9 @@ const Payment = () => {
       return;
     }
 
-    // Tính tổng tiền đơn hàng
-    const totalAmount =
-      cartData.reduce(
-        (total, item) => total + item.product?.price * item.quantity,
-        0
-      ) + (shippingFee || 0);
-
     // Định dạng dữ liệu gửi API
     const orderData = {
       accountId: userId,
-      totalAmount: totalAmount,
       shippingAddress: `${formData.address}, ${formData.wardName}, ${formData.districtName}, ${formData.provinceName}`,
       paymentMethod: formData.paymentMethod,
       notes: formData.note,
@@ -269,6 +262,24 @@ const Payment = () => {
                 Thu hộ (COD)
               </label>
             </div>
+
+            {formData.paymentMethod === "online payment" && (
+              <div className="qr-code-container">
+                <p>Quét mã QR để thanh toán:</p>
+                <img src={qr} alt="QR Code" className="qr-code-img" />
+                <div className="qr-text">
+                  <p>
+                    <strong>Ngân hàng:</strong>MB Bank
+                  </p>
+                  <p>
+                    <strong>Số tài khoản:</strong>123456
+                  </p>
+                  <p>
+                    <strong>Chủ tài khoản:</strong> Nguyen Van A
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
