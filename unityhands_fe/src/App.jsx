@@ -26,7 +26,6 @@ const App = () => {
   return (
     <>
       <ToastContainer
-        limit={1} // Chỉ hiển thị tối đa 1 toast
         position="top-right"
         autoClose={2000}
         hideProgressBar={false}
