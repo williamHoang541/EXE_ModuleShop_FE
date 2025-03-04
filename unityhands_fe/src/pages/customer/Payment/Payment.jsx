@@ -71,7 +71,7 @@ const Payment = () => {
         .then((response) => setDistricts(response.data.districts))
         .catch((error) => console.error("Lỗi lấy quận/huyện:", error));
 
-      setShippingFee(30000 + Math.floor(Math.random() * 20000)); // Phí ngẫu nhiên từ 30k - 50k
+      setShippingFee(30000); // Phí ngẫu nhiên từ 30k - 50k
     } else {
       setDistricts([]);
     }
@@ -119,17 +119,11 @@ const Payment = () => {
       return;
     }
 
-    // Tính tổng tiền đơn hàng
-    const totalAmount =
-      cartData.reduce(
-        (total, item) => total + item.product?.price * item.quantity,
-        0
-      ) + (shippingFee || 0);
+    
 
     // Định dạng dữ liệu gửi API
     const orderData = {
       accountId: userId,
-      totalAmount: totalAmount,
       shippingAddress: `${formData.address}, ${formData.wardName}, ${formData.districtName}, ${formData.provinceName}`,
       paymentMethod: formData.paymentMethod,
       notes: formData.note,
