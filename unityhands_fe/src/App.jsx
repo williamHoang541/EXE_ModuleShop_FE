@@ -30,7 +30,7 @@ const App = () => {
         autoClose={2000}
         hideProgressBar={false}
         closeOnClick
-        pauseOnHover={false}
+        pauseOnHover
         draggable
         
       />

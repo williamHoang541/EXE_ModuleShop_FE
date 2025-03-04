@@ -36,7 +36,7 @@ const Register = () => {
       if (result.status === "fulfilled") {
         toast.success("Đăng ký thành công!", {
           position: "top-right",
-          autoClose: 2000,
+          autoClose: 500,
           onClose: () => navigate(PATH_NAME.LOGIN),
         });
       } else {
