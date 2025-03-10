@@ -29,7 +29,11 @@ const Register = () => {
     }
 
     Promise.allSettled([
-      axios.post(`${BASE_URL}Account/registration`, { email, password, confirmPassword }),
+      axios.post(`${BASE_URL}Account/registration`, {
+        email,
+        password,
+        confirmPassword,
+      }),
     ]).then((results) => {
       const result = results[0];
 
@@ -40,10 +44,19 @@ const Register = () => {
           onClose: () => navigate(PATH_NAME.LOGIN),
         });
       } else {
-        toast.error(result.reason.response?.data?.message || "Đăng ký thất bại!", {
-          position: "top-right",
-          autoClose: 3000,
-        });
+        const errorMessage =
+          result.reason.response?.data?.message || "Đăng ký thất bại!";
+        if (errorMessage.includes("Email already exists")) {
+          toast.error("Email đã tồn tại!", {
+            position: "top-right",
+            autoClose: 1000,
+          });
+        } else {
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 1000,
+          });
+        }
       }
     });
   };
