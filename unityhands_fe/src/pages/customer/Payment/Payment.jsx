@@ -1,14 +1,20 @@
 import "./Payment.css";
 import useTitle from "../../../constant/useTitle";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MdArrowBackIos } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { PATH_NAME } from "../../../constant/pathname";
 import axios from "axios";
+import { AuthContext } from "../../../context/AuthContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { BASE_URL } from "../../../constant/config";
+import qr from "../../../assets/qr.jpg";
 
 const Payment = () => {
   useTitle("Thanh toán");
-
+  const { userId } = useContext(AuthContext);
+  const [cartData, setCartData] = useState([]);
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
@@ -26,6 +32,14 @@ const Payment = () => {
     paymentMethod: "bank",
   });
 
+  // Lấy dữ liệu giỏ hàng từ localStorage khi vào trang
+  useEffect(() => {
+    const storedCart = localStorage.getItem("cartData");
+    if (storedCart) {
+      setCartData(JSON.parse(storedCart));
+    }
+  }, []);
+
   // Lấy danh sách tỉnh/thành phố từ API khi component mount
   useEffect(() => {
     axios
@@ -37,12 +51,17 @@ const Payment = () => {
   // Khi chọn tỉnh/thành phố → Lấy danh sách quận/huyện
   const handleProvinceChange = (e) => {
     const provinceCode = e.target.value;
+    const selectedProvince = provinces.find((p) => p.code == provinceCode);
     setFormData({
       ...formData,
       province: provinceCode,
+      provinceName: selectedProvince ? selectedProvince.name : "",
       district: "",
+      districtName: "",
       ward: "",
+      wardName: "",
     });
+    setDistricts([]);
     setWards([]); // Xóa danh sách phường khi đổi tỉnh
     setShippingFee(null); //Reset phí khi đổi tỉnh
 
@@ -52,21 +71,29 @@ const Payment = () => {
         .then((response) => setDistricts(response.data.districts))
         .catch((error) => console.error("Lỗi lấy quận/huyện:", error));
 
-        setShippingFee(30000 + Math.floor(Math.random() * 20000)); // Phí ngẫu nhiên từ 30k - 50k
+      setShippingFee(30000); // Phí ngẫu nhiên từ 30k - 50k
     } else {
       setDistricts([]);
     }
   };
 
-   // Khi chọn quận/huyện → Lấy danh sách phường/xã
-   const handleDistrictChange = (e) => {
+  // Khi chọn quận/huyện → Lấy danh sách phường/xã
+  const handleDistrictChange = (e) => {
     const districtCode = e.target.value;
-    setFormData({ ...formData, district: districtCode, ward: "" });
+    const selectedDistrict = districts.find((d) => d.code == districtCode);
+    setFormData({
+      ...formData,
+      district: districtCode,
+      districtName: selectedDistrict ? selectedDistrict.name : "",
+      ward: "",
+      wardName: "",
+    });
 
     if (districtCode) {
-      axios.get(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`)
-        .then(response => setWards(response.data.wards))
-        .catch(error => console.error("Lỗi lấy phường/xã:", error));
+      axios
+        .get(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`)
+        .then((response) => setWards(response.data.wards))
+        .catch((error) => console.error("Lỗi lấy phường/xã:", error));
     } else {
       setWards([]);
     }
@@ -74,7 +101,55 @@ const Payment = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    if (name === "ward") {
+      const selectedWard = wards.find((w) => w.code == value);
+      setFormData({
+        ...formData,
+        ward: value,
+        wardName: selectedWard ? selectedWard.name : "",
+      });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleOrder = async () => {
+    if (!userId) {
+      toast.error("Vui lòng đăng nhập để đặt hàng!");
+      return;
+    }
+
+    // Định dạng dữ liệu gửi API
+    const orderData = {
+      accountId: userId,
+      shippingAddress: `${formData.address}, ${formData.wardName}, ${formData.districtName}, ${formData.provinceName}`,
+      paymentMethod: formData.paymentMethod,
+      notes: formData.note,
+      deliveryInfo: `Email: ${formData.email}, Họ tên: ${formData.name}, SĐT: ${formData.phone}`,
+    };
+
+    console.log("Dữ liệu gửi lên API:", orderData);
+    try {
+      const response = await axios.post(`${BASE_URL}Order/create`, orderData);
+      if (response.status === 200) {
+        toast.success("Đặt hàng thành công!");
+        const orderId = response.data.id;
+
+        // Fetch the checkout URL
+        const checkoutResponse = await axios.post(`${BASE_URL}Payment/${orderId}/checkout`);
+        const checkoutUrl = checkoutResponse.data.checkoutUrl;
+
+        if (checkoutUrl) {
+          // Redirect to the checkout URL
+          window.location.href = checkoutUrl;
+        } else {
+          toast.error("Không thể lấy URL thanh toán, vui lòng thử lại!");
+        }
+      }
+    } catch (error) {
+      console.error("Lỗi khi đặt hàng:", error);
+      toast.error("Đặt hàng thất bại, vui lòng thử lại!");
+    }
   };
 
   return (
@@ -108,7 +183,7 @@ const Payment = () => {
             onChange={handleChange}
           />
 
-           <select name="province" onChange={handleProvinceChange}>
+          <select name="province" onChange={handleProvinceChange}>
             <option value="">Chọn tỉnh/thành</option>
             {provinces.map((province) => (
               <option key={province.code} value={province.code}>
@@ -117,7 +192,11 @@ const Payment = () => {
             ))}
           </select>
 
-          <select name="district" onChange={handleDistrictChange} disabled={!formData.province}>
+          <select
+            name="district"
+            onChange={handleDistrictChange}
+            disabled={!formData.province}
+          >
             <option value="">Chọn quận/huyện</option>
             {districts.map((district) => (
               <option key={district.code} value={district.code}>
@@ -126,7 +205,11 @@ const Payment = () => {
             ))}
           </select>
 
-          <select name="ward" onChange={handleChange} disabled={!formData.district}>
+          <select
+            name="ward"
+            onChange={handleChange}
+            disabled={!formData.district}
+          >
             <option value="">Chọn phường/xã</option>
             {wards.map((ward) => (
               <option key={ward.code} value={ward.code}>
@@ -146,7 +229,14 @@ const Payment = () => {
         <div className="checkout-middle">
           <h3>Vận chuyển</h3>
           {formData.province ? (
-            <p className="shipping-fee">Phí vận chuyển: <strong>{shippingFee ? `${shippingFee.toLocaleString()}₫` : "Đang tính..."}</strong></p>
+            <p className="shipping-fee">
+              Phí vận chuyển:{" "}
+              <strong>
+                {shippingFee
+                  ? `${shippingFee.toLocaleString()}₫`
+                  : "Đang tính..."}
+              </strong>
+            </p>
           ) : (
             <p className="shipping-info">Vui lòng nhập thông tin giao hàng</p>
           )}
@@ -157,8 +247,8 @@ const Payment = () => {
                 <input
                   type="radio"
                   name="paymentMethod"
-                  value="bank"
-                  checked={formData.paymentMethod === "bank"}
+                  value="online payment"
+                  checked={formData.paymentMethod === "online payment"}
                   onChange={handleChange}
                 />
                 Chuyển khoản
@@ -175,41 +265,88 @@ const Payment = () => {
                 Thu hộ (COD)
               </label>
             </div>
+
+            {formData.paymentMethod === "online payment" && (
+              <div className="qr-code-container">
+                <p>Quét mã QR để thanh toán:</p>
+                <img src={qr} alt="QR Code" className="qr-code-img" />
+                <div className="qr-text">
+                  <p>
+                    <strong>Ngân hàng:</strong>MB Bank
+                  </p>
+                  <p>
+                    <strong>Số tài khoản:</strong>123456
+                  </p>
+                  <p>
+                    <strong>Chủ tài khoản:</strong> Nguyen Van A
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Cột 3: Đơn hàng */}
         <div className="checkout-right">
-          <h3>Đơn hàng (2 sản phẩm)</h3>
-          <div className="order-item">
-            <div className="order-item-product">
-              <div className="order-item-img">
-                <img
-                  src="https://bizweb.dktcdn.net/100/501/740/products/1-a2ce9601-2b45-4ed0-b64e-e27e38bf817d.jpg?v=1701328440557"
-                  alt=""
-                />
-                <div className="order-item-quantity">1</div>
+          <h3>Đơn hàng ({cartData.length} sản phẩm)</h3>
+          {cartData.length > 0 ? (
+            cartData.map((item) => (
+              <div className="order-item" key={item.productId}>
+                <div className="order-item-product">
+                  <div className="order-item-img">
+                    <img
+                      src={item.product?.productImages?.$values[0]?.imageUrl}
+                      alt={item.product?.name}
+                    />
+                    <div className="order-item-quantity">{item.quantity}</div>
+                  </div>
+
+                  <p>{item.product?.name}</p>
+                </div>
+
+                <span>{item.product?.price?.toLocaleString()}₫</span>
               </div>
+            ))
+          ) : (
+            <p>Giỏ hàng trống</p>
+          )}
 
-              <p>Tủ Quần Áo Đa Năng</p>
-            </div>
-
-            <span>9.500.000₫</span>
-          </div>
           <div className="order-item-sale">
             <input type="text" placeholder="Nhập mã giảm giá" />
             <button className="apply-btn">Áp dụng</button>
           </div>
-
           <div className="order-summary">
             <p>
-              Tạm tính: <span>42.550.000₫</span>
+              Tạm tính:
+              <span>
+                {cartData
+                  .reduce(
+                    (total, item) =>
+                      total + item.product?.price * item.quantity,
+                    0
+                  )
+                  .toLocaleString()}
+                ₫
+              </span>
             </p>
             <p>
-              Phí vận chuyển: <span>-</span>
+              Phí vận chuyển:
+              <span>
+                {shippingFee ? `${shippingFee.toLocaleString()}₫` : "-"}
+              </span>
             </p>
             <p className="total">
-              Tổng cộng: <strong>42.550.000₫</strong>
+              Tổng cộng:
+              <strong>
+                {(
+                  cartData.reduce(
+                    (total, item) =>
+                      total + item.product?.price * item.quantity,
+                    0
+                  ) + (shippingFee || 0)
+                ).toLocaleString()}
+                ₫
+              </strong>
             </p>
           </div>
           <div className="order-item-back">
@@ -217,7 +354,9 @@ const Payment = () => {
               <MdArrowBackIos className="order-icon-arrow" />
               <Link to={PATH_NAME.SHOPPING_CARTS}>Quay lại giỏ hàng</Link>
             </div>
-            <button className="order-btn">ĐẶT HÀNG</button>
+            <button className="order-btn" onClick={handleOrder}>
+              ĐẶT HÀNG
+            </button>
           </div>
         </div>
       </div>
