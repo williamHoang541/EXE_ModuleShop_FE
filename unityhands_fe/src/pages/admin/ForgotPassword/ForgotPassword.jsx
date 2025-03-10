@@ -3,16 +3,16 @@ import { PATH_NAME } from "../../../constant/pathname";
 import "./ForgotPassword.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast} from "react-toastify";
-import  useTitle from "../../../constant/useTitle";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import useTitle from "../../../constant/useTitle";
 import { BASE_URL } from "../../../constant/config";
 const ForgotPassword = () => {
-    const [email, setEmail] = useState("");
-    const navigate = useNavigate();
-    useTitle("Quên mật khẩu");
-    
+  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+  useTitle("Quên mật khẩu");
 
-    // Hàm kiểm tra email hợp lệ
+  // Hàm kiểm tra email hợp lệ
   const validateEmail = (email) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
@@ -32,22 +32,38 @@ const ForgotPassword = () => {
     }
 
     try {
-      await axios.post(
-        `${BASE_URL}Account/forgot-password?email=${encodeURIComponent(email)}`
-      );
-      toast.dismiss();
-      toast.success("Mã xác thực đã được gửi đến email của bạn.", {
-        onClose: () => {
-          navigate(`${PATH_NAME.NEW_PASSWORD}?email=${encodeURIComponent(email)}`);
-        }
-      });
+      const response =await axios.post(`${BASE_URL}Account/forgot-password?email=${encodeURIComponent(email)}`);
+      console.log("API Response:", response); 
+
+      if (response.status === 200) {
+        console.log("Toast should appear now!"); 
+        console.log("Before toast success!");
+        toast.success("Mã xác thực đã được gửi đến email của bạn.", {
+          position: "top-right",
+          autoClose: 500, // Hiển thị thông báo 1.5 giây
+          onClose: () => navigate(`${PATH_NAME.NEW_PASSWORD}?email=${encodeURIComponent(email)}`),
+        });
+        console.log("After toast success!");
+      
+        // Chờ 1.5 giây rồi chuyển trang
+        // setTimeout(() => {
+        //   navigate(`${PATH_NAME.NEW_PASSWORD}?email=${encodeURIComponent(email)}`);
+        // }, 1700); // Thêm 200ms để chắc chắn toast đã đóng
+      }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Đã xảy ra lỗi, vui lòng thử lại.");
+      toast.error(
+        error.response?.data?.message || "Đã xảy ra lỗi, vui lòng thử lại.",
+        {
+          position: "top-right",
+          autoClose: 2000,
+        }
+      );
     }
   };
 
   return (
     <main className="login">
+    <ToastContainer />
       <div className="login_container">
         <div className="login_wrapper">
           <div className="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -79,7 +95,7 @@ const ForgotPassword = () => {
                     </div>
                   </div>
                 </div>
-               
+
                 <button className="login_button" type="submit">
                   Tiếp tục
                 </button>

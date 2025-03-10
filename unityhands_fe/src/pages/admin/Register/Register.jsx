@@ -2,57 +2,50 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
 import { PATH_NAME } from "../../../constant/pathname";
 import axios from "axios";
-import { toast} from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useState } from "react";
-import  useTitle from "../../../constant/useTitle";
+import { useRef } from "react";
+import useTitle from "../../../constant/useTitle";
 import { BASE_URL } from "../../../constant/config";
 
 const Register = () => {
   const navigate = useNavigate();
   useTitle("Đăng ký");
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    confirmPassword: ""
-  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  // Dùng useRef thay vì useState để giảm re-render
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const confirmPasswordRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, password, confirmPassword } = formData;
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+    const confirmPassword = confirmPasswordRef.current.value;
 
     if (password !== confirmPassword) {
       toast.error("Mật khẩu nhập lại không khớp!");
       return;
     }
 
-    try {
-       await axios.post(
-        `${BASE_URL}Account/registration`,
-        {
-          email,
-          password,
-          confirmPassword,
-        },
+    Promise.allSettled([
+      axios.post(`${BASE_URL}Account/registration`, { email, password, confirmPassword }),
+    ]).then((results) => {
+      const result = results[0];
 
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      
-      );
-      toast.dismiss();
-      toast.success("Đăng ký thành công!");
-      setTimeout(() => navigate(PATH_NAME.LOGIN), 1000);
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Đăng ký thất bại!");
-    }
+      if (result.status === "fulfilled") {
+        toast.success("Đăng ký thành công!", {
+          position: "top-right",
+          autoClose: 500,
+          onClose: () => navigate(PATH_NAME.LOGIN),
+        });
+      } else {
+        toast.error(result.reason.response?.data?.message || "Đăng ký thất bại!", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+      }
+    });
   };
 
   return (
@@ -73,11 +66,9 @@ const Register = () => {
                     <div className="box_email">
                       <input
                         type="email"
-                        name="email"
+                        ref={emailRef}
                         className="input"
                         placeholder="Nhập địa chỉ email"
-                        value={formData.email}
-                        onChange={handleChange}
                         required
                       />
                     </div>
@@ -87,11 +78,9 @@ const Register = () => {
                     <div className="box_password">
                       <input
                         type="password"
-                        name="password"
+                        ref={passwordRef}
                         className="input"
                         placeholder="Nhập mật khẩu"
-                        value={formData.password}
-                        onChange={handleChange}
                         required
                       />
                     </div>
@@ -101,11 +90,9 @@ const Register = () => {
                     <div className="box_password">
                       <input
                         type="password"
-                        name="confirmPassword"
+                        ref={confirmPasswordRef}
                         className="input"
                         placeholder="Nhập lại mật khẩu"
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
                         required
                       />
                     </div>

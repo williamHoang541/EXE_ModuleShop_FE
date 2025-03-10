@@ -37,12 +37,19 @@ const Login = () => {
         toast.error("Lỗi: Không tìm thấy thông tin người dùng.");
         return;
       }
-      login(token, userId);
-      toast.success("Đăng nhập thành công!");
 
-      setTimeout(() => {
-        navigateBasedOnRole(userRole);
-      }, 1000);
+      login(token, userId);
+      toast.success("Đăng nhập thành công!", {
+        position: "top-right",
+        autoClose: 500,
+        onClose: () => {
+          navigateBasedOnRole(userRole);
+        },
+      });
+
+      // setTimeout(() => {
+      //   navigateBasedOnRole(userRole);
+      // }, 1000);
     } catch (error) {
       console.error("Login error:", error);
       toast.error(
