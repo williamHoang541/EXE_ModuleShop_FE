@@ -26,8 +26,8 @@ const Itemspage = () => {
     return parseInt(localStorage.getItem("cartCount")) || 0;
   });
 
-  const productApi = `${BASE_URL}Product/get-all`;
-  const imageApi = `${BASE_URL}ProductImage/get-all`;
+  const productApi = `${BASE_URL}Product/get-all?PageSize=100`;
+  const imageApi = `${BASE_URL}ProductImage/get-all?PageSize=100`;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -150,39 +150,6 @@ const Itemspage = () => {
             className="price-slider"
           />
         </div>
-        {/* <Row gutter={[16, 16]}>
-          {filteredProducts.length > 0 ? (
-            filteredProducts.map((product) => (
-              <Col key={product.id} xs={24} sm={12} md={8} lg={6}>
-                <Card
-                  hoverable
-                  cover={
-                    <img
-                      alt={product.name}
-                      src={product.image}
-                      className="product-image"
-                    />
-                  }
-                >
-                  <div className="product-info">
-                    <h3 className="product-name">{product.name}</h3>
-                    <p className="product-price">
-                      {product.price.toLocaleString()} VND
-                    </p>
-                  </div>
-
-                  
-                  <button className="add-to-cart-btn">
-                    <ShoppingCartOutlined className="cart-icon" />
-                    Thêm vào giỏ
-                  </button>
-                </Card>
-              </Col>
-            ))
-          ) : (
-            <p className="no-results">Không tìm thấy sản phẩm nào</p>
-          )}
-        </Row> */}
 
         <div className="items-home-product">
           {filteredProducts.length > 0 ? (
@@ -199,7 +166,7 @@ const Itemspage = () => {
                     >
                       <img
                         className="home-thumbnail"
-                        src={productImage.imageUrl}
+                        src={productImage?.imageUrl || "/default-image.jpg"} // Hình ảnh mặc định nếu không có
                         alt={product.name}
                       />
                     </Link>
