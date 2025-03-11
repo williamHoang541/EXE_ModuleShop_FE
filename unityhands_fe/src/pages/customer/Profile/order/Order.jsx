@@ -42,8 +42,8 @@ const Order = () => {
               <h3>Đơn hàng của bạn</h3>
             </div>
             <div className="order-table-container">
-            {loading ? (
-              <div className="loader"></div>
+              {loading ? (
+                <div className="loader"></div>
               ) : orders.length === 0 ? (
                 <p>Không có đơn hàng nào.</p>
               ) : (
@@ -64,13 +64,32 @@ const Order = () => {
                       <tr key={order.id}>
                         <td>#{order.id}</td>
                         <td>{order.shippingAddress}</td>
-                        <td>{new Date(order.orderDate).toLocaleDateString()}</td>
-                        <td>{(order.totalAmount).toLocaleString()}₫</td>
-                        <td className={order.paymentStatus === "waiting for deliver" ? "not-pay" : ""}>
-                          {order.paymentStatus === "waiting for deliver" ? "Chưa thanh toán" : order.paymentStatus}
+                        <td>
+                          {new Date(order.orderDate).toLocaleDateString()}
                         </td>
-                        <td>{order.status === "waiting" ? "Chờ vận chuyển" : order.status}</td>
-                        <td>{order.paymentMethod === "cod" ? "COD" : order.paymentMethod === "online payment" ? "Chuyển khoản" : order.paymentMethod}</td>
+                        <td>{order.totalAmount.toLocaleString()}₫</td>
+                        <td
+                          className={
+                            order.paymentStatus === "done" ? "paid" : "pending"
+                          }
+                        >
+                          {order.paymentStatus === "done"
+                            ? "Đã thanh toán"
+                            : "Chưa thanh toán"}
+                        </td>
+
+                        <td>
+                          {order.status === "waiting"
+                            ? "Chờ vận chuyển"
+                            : "Đã vận chuyển"}
+                        </td>
+                        <td>
+                          {order.paymentMethod === "cod"
+                            ? "COD"
+                            : order.paymentMethod === "online payment"
+                            ? "Chuyển khoản"
+                            : order.paymentMethod}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
