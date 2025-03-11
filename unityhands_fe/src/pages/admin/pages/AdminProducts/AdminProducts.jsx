@@ -71,7 +71,7 @@ function AdminProducts() {
         price: `${product.price.toLocaleString()} VND`,
         quantity: product.stockQuantity,
         material: product.materialType,
-        image: imageMap[product.id], // Dùng ảnh từ API hoặc ảnh mặc định
+        image: imageMap[product.id] || "/items/do_go_1.jpg", // Dùng ảnh từ API hoặc ảnh mặc định
       }));
   
       setProducts(productsData);
@@ -143,8 +143,6 @@ function AdminProducts() {
       cancelText: "Hủy",
       onOk: async () => {
         try {
-          console.log(id);
-          
           const response = await api.delete(`/Product/delete/${id}`);
           if (response.status === 200) {
             message.success("Xóa sản phẩm thành công!");
