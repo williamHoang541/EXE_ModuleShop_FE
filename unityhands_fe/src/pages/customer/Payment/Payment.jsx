@@ -9,7 +9,7 @@ import { AuthContext } from "../../../context/AuthContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BASE_URL } from "../../../constant/config";
-//import qr from "/items/ngan_hang.jpg";
+import qr from "../../../assets/qr.jpg";
 
 const Payment = () => {
   useTitle("Thanh toán");
