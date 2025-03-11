@@ -235,7 +235,7 @@ function AdminProducts() {
         dimensions.width || 0
       }cm x Cao ${dimensions.height || 0}cm`,
     });
-  }, []);
+  }, [dimensions]);
 
   const columns = [
     {
