@@ -18,4 +18,6 @@ export const PATH_NAME = {
     PAYMENT: "/payment",
     ACCOUNT: "/account",
     ORDER: "/account/order",
+    PAYMENT_SUCCESS: "/payment-success",
+    PAYMENT_FAILED: "/payment-failed",
 }

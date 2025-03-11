@@ -142,6 +142,18 @@ const Payment = () => {
 
         // Chuyển hướng về trang đơn hàng
         navigate(PATH_NAME.HOME);
+        const orderId = response.data.id;
+
+        // Fetch the checkout URL
+        const checkoutResponse = await axios.post(`${BASE_URL}Payment/${orderId}/checkout`);
+        const checkoutUrl = checkoutResponse.data.checkoutUrl;
+
+        if (checkoutUrl) {
+          // Redirect to the checkout URL
+          window.location.href = checkoutUrl;
+        } else {
+          toast.error("Không thể lấy URL thanh toán, vui lòng thử lại!");
+        }
       }
     } catch (error) {
       console.error("Lỗi khi đặt hàng:", error);

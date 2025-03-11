@@ -20,6 +20,8 @@ import ShoppingCart from "./pages/customer/Shopping_cart/ShoppingCart";
 import Payment from "./pages/customer/Payment/Payment";
 import Account from "./pages/customer/Profile/account/Account";
 import Order from "./pages/customer/Profile/order/Order";
+import PaymentSuccess from "./pages/customer/PaymentSuccess/PaymentSuccess";
+import PaymentFailed from "./pages/customer/PaymentFailed/PaymentFailed";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const App = () => {
@@ -60,6 +62,8 @@ const App = () => {
           <Route path={PATH_NAME.PAYMENT} element={<Payment />} />
           <Route path={PATH_NAME.ACCOUNT} element={<Account />} />
           <Route path={PATH_NAME.ORDER} element={<Order />} />
+          <Route path={PATH_NAME.PAYMENT_SUCCESS} element={<PaymentSuccess />} />
+          <Route path={PATH_NAME.PAYMENT_FAILED} element={<PaymentFailed />} />
         </Route>
       </Routes>
     </>
