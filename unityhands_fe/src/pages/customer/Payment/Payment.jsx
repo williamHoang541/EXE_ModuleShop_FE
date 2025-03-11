@@ -9,7 +9,7 @@ import { AuthContext } from "../../../context/AuthContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BASE_URL } from "../../../constant/config";
-import qr from "../../../assets/qr.jpg";
+import qr from "/items/ngan_hang.jpg";
 
 const Payment = () => {
   useTitle("Thanh toán");
@@ -281,13 +281,13 @@ const Payment = () => {
                 <img src={qr} alt="QR Code" className="qr-code-img" />
                 <div className="qr-text">
                   <p>
-                    <strong>Ngân hàng:</strong>MB Bank
+                    <strong>Ngân hàng:</strong>TP Bank
                   </p>
                   <p>
-                    <strong>Số tài khoản:</strong>123456
+                    <strong>Số tài khoản:</strong>0718 3995 901
                   </p>
                   <p>
-                    <strong>Chủ tài khoản:</strong> Nguyen Van A
+                    <strong>Chủ tài khoản:</strong> Tăng Dư Yến
                   </p>
                 </div>
               </div>
