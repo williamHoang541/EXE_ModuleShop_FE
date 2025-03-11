@@ -117,28 +117,42 @@ const Dashboard = () => {
 
   const getDashboardData = async () => {
     try {
-      const response = await axios.get(
-        "https://67bb583afbe0387ca139d151.mockapi.io/api/admin/dashboard"
-      );
-
-      const chartData = response.data.map((item) => ({
-        date: `${item.day}/${item.month}/${item.year}`,
-        revenue: item.revenue,
-        orders: item.orders,
-        customers: item.customers,
+      const response = await axios.get(`${BASE_URL}Order/get-all`);
+      const orders = response.data.$values;
+  
+      // Group orders by date
+      const groupedData = orders.reduce((acc, order) => {
+        const date = new Date(order.orderDate).toLocaleDateString("vi-VN"); // Format date
+        if (!acc[date]) {
+          acc[date] = { revenue: 0, orders: 0, customers: new Set() };
+        }
+        acc[date].revenue += order.paymentStatus === "done" ? order.totalAmount : 0;
+        acc[date].orders += 1;
+        acc[date].customers.add(order.accountId);
+        return acc;
+      }, {});
+  
+      // Convert grouped data into chart format
+      const chartData = Object.keys(groupedData).map((date) => ({
+        date,
+        revenue: groupedData[date].revenue,
+        orders: groupedData[date].orders,
+        customers: groupedData[date].customers.size,
       }));
-
+  
+      // Aggregate total stats
       setDashboardData({
-        revenue: response.data.reduce((sum, item) => sum + item.revenue, 0),
-        orders: response.data.reduce((sum, item) => sum + item.orders, 0),
-        customers: response.data.reduce((sum, item) => sum + item.customers, 0),
-        chartData: chartData,
+        revenue: chartData.reduce((sum, item) => sum + item.revenue, 0),
+        orders: chartData.reduce((sum, item) => sum + item.orders, 0),
+        customers: new Set(orders.map((o) => o.accountId)).size, // Unique customers
+        chartData,
       });
     } catch (error) {
       message.error("Lỗi khi tải dữ liệu!");
       console.error(error);
     }
   };
+  
 
   useEffect(() => {
     fetchCustomersCount();
