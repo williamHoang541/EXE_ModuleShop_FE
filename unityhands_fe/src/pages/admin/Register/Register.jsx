@@ -37,6 +37,7 @@ const Register = () => {
     ]).then((results) => {
       const result = results[0];
 
+
       if (result.status === "fulfilled") {
         toast.success("Đăng ký thành công!", {
           position: "top-right",

@@ -19,7 +19,7 @@ const Payment = () => {
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
-  const [shippingFee, setShippingFee] = useState(null);
+  // const [shippingFee, setShippingFee] = useState(null);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -64,7 +64,7 @@ const Payment = () => {
     });
     setDistricts([]);
     setWards([]); // Xóa danh sách phường khi đổi tỉnh
-    setShippingFee(null); //Reset phí khi đổi tỉnh
+    // setShippingFee(null); //Reset phí khi đổi tỉnh
 
     if (provinceCode) {
       axios
@@ -72,7 +72,7 @@ const Payment = () => {
         .then((response) => setDistricts(response.data.districts))
         .catch((error) => console.error("Lỗi lấy quận/huyện:", error));
 
-      setShippingFee(30000); // Phí ngẫu nhiên từ 30k - 50k
+      // setShippingFee(30000); // Phí ngẫu nhiên từ 30k - 50k
     } else {
       setDistricts([]);
     }
@@ -241,9 +241,10 @@ const Payment = () => {
             <p className="shipping-fee">
               Phí vận chuyển:{" "}
               <strong>
-                {shippingFee
+                {/* {shippingFee
                   ? `${shippingFee.toLocaleString()}₫`
-                  : "Đang tính..."}
+                  : "Đang tính..."} */}
+                  0
               </strong>
             </p>
           ) : (
@@ -341,7 +342,8 @@ const Payment = () => {
             <p>
               Phí vận chuyển:
               <span>
-                {shippingFee ? `${shippingFee.toLocaleString()}₫` : "-"}
+                {/* {shippingFee ? `${shippingFee.toLocaleString()}₫` : "-"} */}
+                0
               </span>
             </p>
             <p className="total">
@@ -352,7 +354,7 @@ const Payment = () => {
                     (total, item) =>
                       total + item.product?.price * item.quantity,
                     0
-                  ) + (shippingFee || 0)
+                  ) + (0)
                 ).toLocaleString()}
                 ₫
               </strong>
