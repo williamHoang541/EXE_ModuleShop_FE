@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
 import { PATH_NAME } from "../../../constant/pathname";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRef } from "react";
 import useTitle from "../../../constant/useTitle";
@@ -24,7 +24,10 @@ const Register = () => {
     const confirmPassword = confirmPasswordRef.current.value;
 
     if (password !== confirmPassword) {
-      toast.error("Mật khẩu nhập lại không khớp!");
+      toast.error("Mật khẩu nhập lại không khớp!",{
+        autoClose: 500,
+        position: "top-right",
+      });
       return;
     }
 
@@ -50,12 +53,12 @@ const Register = () => {
         if (errorMessage.includes("Email already exists")) {
           toast.error("Email đã tồn tại!", {
             position: "top-right",
-            autoClose: 1000,
+            autoClose: 500,
           });
         } else {
           toast.error(errorMessage, {
             position: "top-right",
-            autoClose: 1000,
+            autoClose: 500,
           });
         }
       }
@@ -64,6 +67,7 @@ const Register = () => {
 
   return (
     <main className="login">
+     <ToastContainer />
       <div className="login_container">
         <div className="login_wrapper">
           <div className="col-xl-6 col-lg-6 col-md-6 col-12">
