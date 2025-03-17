@@ -111,3 +111,27 @@
   font-size: 24px !important;
   color: #d89b39 !important;
 }
+
+@media (max-width: 576px) {
+  .product-detail h1 {
+    font-size: 30px;
+  }
+
+  .product-detail {
+    padding: 10px;
+  }
+
+  .product-detail-container {
+    padding: 10px;
+    flex-direction: column;
+  }
+  .product-detail-thumbnail {
+    width: 390px;
+    height: 390px;
+  }
+
+  .product-detail-top h2 {
+    font-size: 24px;
+  }
+
+}

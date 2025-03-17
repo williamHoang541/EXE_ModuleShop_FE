@@ -36,8 +36,6 @@ const ForgotPassword = () => {
       console.log("API Response:", response); 
 
       if (response.status === 200) {
-        console.log("Toast should appear now!"); 
-        console.log("Before toast success!");
         toast.success("Mã xác thực đã được gửi đến email của bạn.", {
           position: "top-right",
           autoClose: 500, // Hiển thị thông báo 1.5 giây
@@ -55,7 +53,7 @@ const ForgotPassword = () => {
         error.response?.data?.message || "Đã xảy ra lỗi, vui lòng thử lại.",
         {
           position: "top-right",
-          autoClose: 2000,
+          autoClose: 500,
         }
       );
     }
@@ -71,7 +69,7 @@ const ForgotPassword = () => {
               <div className="login_content_left"></div>
             </div>
           </div>
-          <div className="login_content_right col-xl-6 col-lg-6 col-md-6 col-12">
+          <div className="login_content_rights col-xl-6 col-lg-6 col-md-6 col-12">
             <div className="login_box">
               <h3>Quên mật khẩu</h3>
               <div className="description">

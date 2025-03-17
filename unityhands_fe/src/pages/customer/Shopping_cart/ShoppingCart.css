@@ -120,7 +120,6 @@
 .shopping-bottom {
   text-align: right;
   margin-top: 10px;
-  
 }
 
 .shopping-total {
@@ -158,12 +157,11 @@
   cursor: pointer;
 }
 
-.shopping-btn:hover{
-    background: var(--primary-color-text-hover);
+.shopping-btn:hover {
+  background: var(--primary-color-text-hover);
 }
 
-
-.shopping-box-empty{
+.shopping-box-empty {
   font-size: 30px;
   display: flex;
   flex-direction: column;
@@ -172,3 +170,33 @@
   color: #808080;
 }
 
+@media (max-width: 576px) {
+  .shopping-table thead {
+    display: none;
+  }
+
+  .shopping-table th:nth-child(2),
+  .shopping-table td:nth-child(2) {
+    display: none;
+  }
+
+  .shopping-title {
+    width: 60px;
+  }
+
+  .shopping-table-container {
+    width: 100%;
+  }
+
+  .shopping-total {
+    justify-content: space-between;
+    gap: 0;
+  }
+
+  .shopping-btn {
+    width: 100%;
+  }
+  .shopping-box-empty {
+    font-size: 20px;
+  }
+}

@@ -73,7 +73,7 @@ const Account = () => {
 
       toast.success("Cập nhật thành công!", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 500,
       });
       window.location.reload(); // Load lại trang sau khi cập nhật
     } catch (error) {

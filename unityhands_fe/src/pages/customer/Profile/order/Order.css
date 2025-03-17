@@ -25,7 +25,6 @@
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-  padding-bottom: 20px;
 }
 
 .order-title {
@@ -61,9 +60,9 @@
   color: #333;
 }
 
-.pending{
-    color: #ef1104 !important;
-    font-weight: 550;
+.pending {
+  color: #ef1104 !important;
+  font-weight: 550;
 }
 
 .paid {
@@ -75,4 +74,18 @@
   font-size: 14px;
   color: #fff;
   padding: 12px;
+}
+
+@media (max-width: 576px) {
+  .order-wrapper {
+    padding: 20px;
+  }
+  .order-row {
+    flex-direction: column;
+  }
+
+  .order-title,
+  .order-table-container {
+    text-align: center;
+  }
 }
