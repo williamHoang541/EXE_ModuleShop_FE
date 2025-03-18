@@ -75,8 +75,9 @@ const Dashboard = () => {
     try {
       const response = await axios.get(`${BASE_URL}Order/get-all?PageSize=50`);
       console.log("Orders Response:", response.data);
-
       const orders = response.data.$values;
+      // Sắp xếp đơn hàng theo ngày giảm dần (mới nhất trước)
+      orders.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
       const ordersData = orders.map((order) => ({
         key: order.id,
         orderId: `#DH${order.id}`, // Mã đơn hàng
