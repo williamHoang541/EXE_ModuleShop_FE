@@ -56,7 +56,7 @@ const Login = () => {
         error.response?.data?.message || "Email hoặc mật khẩu không đúng!",
         {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 500,
         }
       );
     }
@@ -74,7 +74,7 @@ const Login = () => {
       default:
         toast.error("Tên đăng nhập không tồn tại", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 500,
         });
         break;
     }

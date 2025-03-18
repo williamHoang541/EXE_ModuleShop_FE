@@ -285,3 +285,22 @@
     display: block;
   }
 }
+
+@media (max-width: 576px) {
+  .login_content_left_wrapper {
+    background-color: transparent;
+  }
+
+  .login_content_left {
+    background-image: url("../../../assets/Logo_module.png");
+    height: 250px;
+  }
+
+  .login_box h3 {
+    text-align: center;
+  }
+
+  .login_content_right {
+    align-items: start;
+  }
+}

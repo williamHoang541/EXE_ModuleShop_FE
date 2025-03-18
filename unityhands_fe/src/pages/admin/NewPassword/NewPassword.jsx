@@ -53,7 +53,7 @@ const NewPassword = () => {
       toast.error(
         error.response?.data?.message || "Cập nhật mật khẩu thất bại!",{
           position: "top-right",
-        autoClose: 3000,
+        autoClose: 500,
         }
       );
     }

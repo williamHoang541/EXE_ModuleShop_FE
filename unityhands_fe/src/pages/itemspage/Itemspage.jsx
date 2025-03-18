@@ -158,14 +158,14 @@ const Itemspage = () => {
                 (image) => image.productId === product.id && image.isPrimary
               );
               return (
-                <div key={product.id} className="home-cart-product">
+                <div key={product.id} className="item-cart-product">
                   <div className="home-cart-img">
                     <Link
                       to={PATH_NAME.PRODUCT_DETAILS.replace(":id", product.id)}
-                      className="home-cart-detail"
+                      className="item-cart-detail"
                     >
                       <img
-                        className="home-thumbnail"
+                        className="item-thumbnail"
                         src={productImage?.imageUrl || "/default-image.jpg"} // Hình ảnh mặc định nếu không có
                         alt={product.name}
                       />
@@ -174,7 +174,7 @@ const Itemspage = () => {
 
                   <div className="home-cart-content">
                     <div className="home-cart-label">{product.name}</div>
-                    <div className="home-cart-coin">
+                    <div className="item-cart-coin">
                       {product.price.toLocaleString("vi-VN")}₫
                     </div>
                     <div className="home-cart-btn">

@@ -70,9 +70,35 @@
   color: #333;
 }
 
-.profile-sidebar-container{
+.profile-sidebar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: end;
+}
+
+@media (max-width: 576px) {
+  .profile-sidebar-container {
+    align-items: start;
+    width: 100%;
+  }
+  .profile-sidebar-top {
+    width: 100%;
+  }
+
+  .profile-sidebar-bottom {
+    width: 100%;
+  }
+
+  .profile-sidebar-bottom ul {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: end;
+  }
+
+  .profile-sidebar-bottom ul li.active {
+    border-left: 0;
+  }
+
+  .profile-sidebar-bottom ul li {
+    width: 100%;
+}
 }
