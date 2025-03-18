@@ -73,9 +73,11 @@ const Dashboard = () => {
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${BASE_URL}Order/get-all`);
+      const response = await axios.get(`${BASE_URL}Order/get-all?PageSize=50`);
+      console.log("Orders Response:", response.data);
+
       const orders = response.data.$values;
-      const ordersData = response.data.$values.map((order) => ({
+      const ordersData = orders.map((order) => ({
         key: order.id,
         orderId: `#DH${order.id}`, // Mã đơn hàng
         date: new Date(order.orderDate).toLocaleDateString("vi-VN"), // Chuyển đổi ngày tháng
@@ -89,7 +91,6 @@ const Dashboard = () => {
             : "Thanh toán Online",
         total: `${order.totalAmount.toLocaleString()} VND`,
       }));
-
       const revenue = orders
         .filter((order) => order.paymentStatus === "done")
         .reduce((sum, order) => sum + order.totalAmount, 0);
@@ -117,30 +118,51 @@ const Dashboard = () => {
 
   const getDashboardData = async () => {
     try {
-      const response = await axios.get(
-        "https://67bb583afbe0387ca139d151.mockapi.io/api/admin/dashboard"
-      );
-
-      const chartData = response.data.map((item) => ({
-        date: `${item.day}/${item.month}/${item.year}`,
-        revenue: item.revenue,
-        orders: item.orders,
-        customers: item.customers,
+      const response = await axios.get(`${BASE_URL}Order/get-all?PageSize=50`);
+      const orders = response.data.$values;
+  
+      // Ensure all orders are counted correctly
+      const groupedData = orders.reduce((acc, order) => {
+        const date = new Date(order.orderDate).toLocaleDateString("vi-VN"); // Format date
+  
+        if (!acc[date]) {
+          acc[date] = { revenue: 0, orders: 0, customers: new Set() };
+        }
+  
+        if (order.paymentStatus === "done") {
+          acc[date].revenue += order.totalAmount;
+        }
+  
+        acc[date].orders += 1;
+        acc[date].customers.add(order.accountId);
+        return acc;
+      }, {});
+  
+      // Convert grouped data to an array for recharts
+      const chartData = Object.keys(groupedData).map((date) => ({
+        date,
+        revenue: groupedData[date].revenue,
+        orders: groupedData[date].orders,
+        customers: groupedData[date].customers.size,
       }));
-
+  
+      // Ensure correct total calculations
       setDashboardData({
-        revenue: response.data.reduce((sum, item) => sum + item.revenue, 0),
-        orders: response.data.reduce((sum, item) => sum + item.orders, 0),
-        customers: response.data.reduce((sum, item) => sum + item.customers, 0),
-        chartData: chartData,
+        revenue: chartData.reduce((sum, item) => sum + item.revenue, 0),
+        orders: orders.length,
+        customers: new Set(orders.map((o) => o.accountId)).size,
+        chartData,
       });
     } catch (error) {
       message.error("Lỗi khi tải dữ liệu!");
       console.error(error);
     }
   };
+  
+  
 
   useEffect(() => {
+    console.log("Updated Dashboard Data:", dashboardData);
     fetchCustomersCount();
     getDashboardData();
     getTopProducts();
