@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import useTitle from "../../../constant/useTitle";
 import { BASE_URL } from "../../../constant/config";
 import { AuthContext } from "../../../context/AuthContext";
+import { message } from "antd";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -39,14 +40,15 @@ const Login = () => {
       }
 
       login(token, userId);
-      toast.success("Đăng nhập thành công!", {
-        position: "top-right",
-        autoClose: 500,
-        onClose: () => {
-          navigateBasedOnRole(userRole);
-        },
-      });
-
+      // toast.success("Đăng nhập thành công!", {
+      //   position: "top-right",
+      //   autoClose: 500,
+      //   onClose: () => {
+      //     // navigateBasedOnRole(userRole);
+      //   },
+      // });
+      message.success("Đăng nhập thành công!")
+      navigateBasedOnRole(userRole);
       // setTimeout(() => {
       //   navigateBasedOnRole(userRole);
       // }, 1000);
