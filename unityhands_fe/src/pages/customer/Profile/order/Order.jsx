@@ -16,7 +16,7 @@ const Order = () => {
     if (!userId) return;
 
     axios
-      .get(`${BASE_URL}Order/get-all`)
+      .get(`${BASE_URL}Order/get-all?PageSize=100`)
       .then((response) => {
         // Lọc đơn hàng theo userId
         const filteredOrders = response.data.$values.filter(
